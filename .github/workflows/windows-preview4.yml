@@ -23,7 +23,7 @@ jobs:
         run: |
           python -m pip install aqtinstall==3.3.0 pefile
           if ($LASTEXITCODE) { throw 'Python tools failed' }
-          python -m aqt install-qt windows desktop 6.8.3 win64_msvc2022_64 -O C:\Qt --modules qtsvg
+          python -m aqt install-qt windows desktop 6.8.3 win64_msvc2022_64 -O C:\Qt
           if ($LASTEXITCODE) { throw 'Qt install failed' }
       - name: Build exact Preview 4 and test reused audited runtime
         shell: cmd
