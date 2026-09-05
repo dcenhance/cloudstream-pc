@@ -1303,6 +1303,15 @@ private:
         statusMonitor->start();
         pages = new QStackedWidget;
         pages->setObjectName("appPages");
+        connect(pages, &QStackedWidget::currentChanged, this, [this] {
+            // Embedded details/player dialogs are siblings of the stacked pages,
+            // not entries in their layout. Qt raises the selected page above them;
+            // dismiss them on navigation before transparent page areas can mix.
+            for (auto *dialog : pages->findChildren<QDialog *>(
+                     QString(), Qt::FindDirectChildrenOnly)) {
+                if (!dialog->isWindow()) dialog->close();
+            }
+        });
         pages->addWidget(homePage());
         pages->addWidget(searchPage());
         pages->addWidget(libraryPage());
@@ -4979,10 +4988,9 @@ private:
         if (singleWindow && pages) {
             dialog->setWindowFlags(Qt::Widget);
             dialog->setGeometry(pages->rect());
+            // QPointer clears itself; an older dialog's destruction must not
+            // clear the newer active dialog (or touch members during teardown).
             activeDetailsDialog = dialog;
-            connect(dialog, &QObject::destroyed, this, [this] {
-                activeDetailsDialog = nullptr;
-            });
         }
         auto *root = new QVBoxLayout(dialog);
         root->setContentsMargins(0, 0, 0, 0);
@@ -4996,7 +5004,16 @@ private:
         auto *process = new QProcess(dialog);
         helper.configure(process, {"load", jar, "auto", provider, url});
         const QPointer<QDialog> safeDialog(dialog);
-        CloudStream::ProcessCompletion::watch(process, this,
+        connect(dialog, &QDialog::finished, process, [process, dialog] {
+            // Navigation can dismiss details before the provider answers.
+            // Stop delivery before killing it: its result owns pointers into the UI.
+            QObject::disconnect(process, nullptr, dialog, nullptr);
+            if (process->state() != QProcess::NotRunning) {
+                process->kill();
+                process->waitForFinished(250);
+            }
+        });
+        CloudStream::ProcessCompletion::watch(process, dialog,
                 [this, process, safeDialog, root, loading, jar, provider, url, autoPlay]
                 (int exitCode, QProcess::ExitStatus, bool startFailure) {
             if (!safeDialog) return;

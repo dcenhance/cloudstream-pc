@@ -38,6 +38,7 @@ run_test smooth-scroll-controller "$ROOT/tests/smooth-scroll-controller.pro" tes
 run_test gamepad-navigation "$ROOT/tests/gamepad-navigation.pro" test_gamepad_navigation
 run_test extension-list-filter "$ROOT/tests/extension-list-filter.pro" test_extension_list_filter
 run_test extension-install-batch "$ROOT/tests/extension-install-batch.pro" test_extension_install_batch
+run_test single-window-surfaces "$ROOT/tests/single-window-surfaces.pro" test_single_window_surfaces
 run_test details-presentation "$ROOT/tests/details-presentation.pro" test_details_presentation
 run_test episode-catalog "$ROOT/tests/episode-catalog.pro" test_episode_catalog
 run_test source-catalog "$ROOT/tests/source-catalog.pro" test_source_catalog

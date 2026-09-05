@@ -19,20 +19,20 @@ An independent desktop adaptation of [recloudstream/cloudstream](https://github.
 | Platform | Status |
 | --- | --- |
 | Linux x86-64 | Built and tested on Nobara/KDE Wayland |
-| Windows x86-64 | Built with MSVC 2022 and Qt 6.8.3; tested in a Windows 10 QEMU VM |
+| Windows x86-64 | Preview 3 built with MSVC 2022 / Qt 6.8.3 and previously tested in Windows 10; Preview 4 changes are source-only, not built or tested on Windows |
 
 Windows VM playback was tested with software rendering. Physical Windows GPU acceleration and controller input remain unverified. Other distributions, Windows versions, and architectures are not yet validated.
 
 ## Downloads and installation
 
-**[Download Preview 3 for Linux or Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.3)**. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
+**[Download Preview 4 for Linux](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.4)**. The Windows overlap fix is **source-only, binary build/testing pending**. [Previous Windows Preview 3 downloads](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.3) remain available but **lack the overlap fix**. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
 
 | Download | Installation and requirements |
 | --- | --- |
-| **Windows x64 Setup EXE** | Run the installer. Installs for the current user, adds shortcuts and an uninstaller; application updates do not replace your profile. |
-| **Windows x64 ZIP** | Extract the **entire ZIP** to a writable folder, then run `cloudstream.exe`. Do not run it inside the ZIP or copy just the EXE. Qt, Java, media libraries and Visual C++ runtime DLLs are included. |
-| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_0.1.0.preview.3_amd64.deb` so dependencies are resolved. |
-| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.3.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
+| **Windows x64 Setup EXE (Preview 3, lacks overlap fix)** | Run the installer. Installs for the current user, adds shortcuts and an uninstaller; application updates do not replace your profile. |
+| **Windows x64 ZIP (Preview 3, lacks overlap fix)** | Extract the **entire ZIP** to a writable folder, then run `cloudstream.exe`. Do not run it inside the ZIP or copy just the EXE. Qt, Java, media libraries and Visual C++ runtime DLLs are included. |
+| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_0.1.0.preview.4_amd64.deb` so dependencies are resolved. |
+| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.4.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
 | **Linux x86_64 system-runtime AppImage** | Make executable, then run. **Not self-contained:** requires system Qt, mpv, SDL2, Java and FFmpeg. See the [exact dependencies and FUSE-less launch option](packaging/linux/README.md). |
 
 Linux packages require **glibc 2.39 or newer and Qt 6.4.2 or newer**. They are not universal Linux binaries. Windows packages target Windows 10 x64 or later; testing uses a Windows 10 VM with software rendering, not a physical GPU/controller certification.
@@ -45,7 +45,13 @@ First launch: add an extension repository you trust in **Extensions**, install p
 
 ## Features
 
-### Preview 3: provider Home fix
+### Preview 4: single-window navigation overlap fix
+
+Navigating between pages now dismisses embedded details/player dialogs instead of allowing them to overlap Search or other pages. Closing details disconnects UI completion delivery before cancelling its provider process; an older dialog cannot clear the newer dialog’s resize pointer. Separate dialog windows remain open as intended.
+
+Linux regression coverage exercises loading/loaded opacity, page navigation, cancellation while loading, newer-dialog resizing, and embedded-player versus separate-window behavior. This change is in the shared Windows source, but no Preview 4 Windows executable or installer is published: there is no configured Windows CI workflow or supported local native Windows toolchain available for this release. No emulator was started. Preview 3 Windows downloads do not contain this fix.
+
+### Preview 3: provider Home fix (retained)
 
 The provider host now writes its JSON protocol explicitly as UTF-8. This fixes empty AniWorld Home on Windows caused by Java's legacy system code page rejecting non-ASCII titles in Qt's JSON parser. The 20-second request deadline is unchanged.
 
