@@ -1,0 +1,13 @@
+# qmake/generated artifacts
+.qmake.stash
+Makefile
+*.o
+*.moc
+moc_*.cpp
+cloudstream-linux
+tests/test_repository_url_resolver
+tests/Makefile
+tests/moc_predefs.h
+tests/test_repository_url_resolver.moc
+build/
+build-tests/

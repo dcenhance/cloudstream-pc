@@ -1,0 +1,57 @@
+<RCC>
+  <qresource prefix="/assets">
+    <file alias="cloudstream.svg">assets/cloudstream.svg</file>
+    <file alias="cloudstream-launcher.png">assets/cloudstream-launcher.png</file>
+  </qresource>
+  <qresource prefix="/icons">
+    <file alias="home-outline.svg">assets/icons/home-outline.svg</file>
+    <file alias="home-filled.svg">assets/icons/home-filled.svg</file>
+    <file alias="search.svg">assets/icons/search.svg</file>
+    <file alias="search-active.svg">assets/icons/search-active.svg</file>
+    <file alias="library-outline.svg">assets/icons/library-outline.svg</file>
+    <file alias="library-filled.svg">assets/icons/library-filled.svg</file>
+    <file alias="download.svg">assets/icons/download.svg</file>
+    <file alias="download-active.svg">assets/icons/download-active.svg</file>
+    <file alias="download-error.svg">assets/icons/download-error.svg</file>
+    <file alias="pause.svg">assets/icons/pause.svg</file>
+    <file alias="pause-dark.svg">assets/icons/pause-dark.svg</file>
+    <file alias="check.svg">assets/icons/check.svg</file>
+    <file alias="provider-check.svg">assets/icons/provider-check.svg</file>
+    <file alias="warning.svg">assets/icons/warning.svg</file>
+    <file alias="speed.svg">assets/icons/speed.svg</file>
+    <file alias="volume-up.svg">assets/icons/volume-up.svg</file>
+    <file alias="hd.svg">assets/icons/hd.svg</file>
+    <file alias="subtitles.svg">assets/icons/subtitles.svg</file>
+    <file alias="folder-open.svg">assets/icons/folder-open.svg</file>
+    <file alias="more-vert.svg">assets/icons/more-vert.svg</file>
+    <file alias="settings-outline.svg">assets/icons/settings-outline.svg</file>
+    <file alias="settings-filled.svg">assets/icons/settings-filled.svg</file>
+    <file alias="play.svg">assets/icons/play.svg</file>
+    <file alias="play-dark.svg">assets/icons/play-dark.svg</file>
+    <file alias="download-dark.svg">assets/icons/download-dark.svg</file>
+    <file alias="extension-dark.svg">assets/icons/extension-dark.svg</file>
+    <file alias="info.svg">assets/icons/info.svg</file>
+    <file alias="tune.svg">assets/icons/tune.svg</file>
+    <file alias="delete.svg">assets/icons/delete.svg</file>
+    <file alias="account.svg">assets/icons/account.svg</file>
+    <file alias="extension.svg">assets/icons/extension.svg</file>
+    <file alias="chevron-right.svg">assets/icons/chevron-right.svg</file>
+    <file alias="refresh.svg">assets/icons/refresh.svg</file>
+    <file alias="network-stream.svg">assets/icons/network-stream.svg</file>
+    <file alias="chevron-down.svg">assets/icons/chevron-down.svg</file>
+    <file alias="github.svg">assets/icons/github.svg</file>
+    <file alias="bookmark-outline.svg">assets/icons/bookmark-outline.svg</file>
+    <file alias="bookmark-filled.svg">assets/icons/bookmark-filled.svg</file>
+    <file alias="open-in-new.svg">assets/icons/open-in-new.svg</file>
+    <file alias="source-selector.svg">assets/icons/source-selector.svg</file>
+    <file alias="player-forward.svg">assets/icons/player-forward.svg</file>
+    <file alias="player-rewind.svg">assets/icons/player-rewind.svg</file>
+    <file alias="player-lock.svg">assets/icons/player-lock.svg</file>
+    <file alias="player-aspect.svg">assets/icons/player-aspect.svg</file>
+    <file alias="player-tracks.svg">assets/icons/player-tracks.svg</file>
+    <file alias="player-fullscreen.svg">assets/icons/player-fullscreen.svg</file>
+    <file alias="player-fullscreen-exit.svg">assets/icons/player-fullscreen-exit.svg</file>
+    <file alias="player-back.svg">assets/icons/player-back.svg</file>
+    <file alias="player-muted.svg">assets/icons/player-muted.svg</file>
+  </qresource>
+</RCC>

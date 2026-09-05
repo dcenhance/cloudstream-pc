@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CloudStream Linux
+Comment=CloudStream media center for Linux
+Exec=cloudstream-linux
+Icon=video-x-generic
+Terminal=false
+Type=Application
+Categories=AudioVideo;Video;Player;

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.recloudstream.cloudstream</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  <name>CloudStream</name>
+  <summary>Play media from user-selected extensions</summary>
+  <description>
+    <p>CloudStream is an extension-based media center. Browse, search, and play content supplied by compatible providers selected by the user.</p>
+    <p>The Linux client runs compatible provider extensions in a separate JVM process and uses a native Qt interface.</p>
+  </description>
+  <launchable type="desktop-id">io.github.recloudstream.cloudstream.desktop</launchable>
+  <developer id="io.github.recloudstream">
+    <name>CloudStream contributors</name>
+  </developer>
+  <url type="homepage">https://github.com/recloudstream/cloudstream</url>
+  <url type="bugtracker">https://github.com/recloudstream/cloudstream/issues</url>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0" date="2026-09-03">
+      <description>
+        <p>Initial Linux preview with provider-backed Home, Search, details, and playback.</p>
+      </description>
+    </release>
+  </releases>
+</component>

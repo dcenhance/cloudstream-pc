@@ -1,0 +1,6 @@
+<!-- Converted from app/src/main/res/drawable/download_icon_error.xml -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path fill="#ff7b72" d="M17 1.01 7 1a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-1.99ZM17 19H7V5h10v14Z"/>
+  <path fill="#ff7b72" d="m15.801 14.763-1.644 1.644-6.284-6.283 1.645-1.645 6.283 6.284Z"/>
+  <path fill="#ff7b72" d="m14.157 8.479 1.644 1.645-6.283 6.283-1.645-1.644 6.284-6.284Z"/>
+</svg>

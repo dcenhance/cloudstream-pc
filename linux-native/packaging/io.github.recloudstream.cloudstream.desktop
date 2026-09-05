@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CloudStream
+GenericName=Media Center
+Comment=Play media from user-selected extensions
+Exec=cloudstream-linux
+Icon=io.github.recloudstream.cloudstream
+Terminal=false
+Categories=AudioVideo;Video;Player;
+Keywords=streaming;video;media;player;
+StartupNotify=true
