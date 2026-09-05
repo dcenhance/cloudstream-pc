@@ -51,6 +51,8 @@ Navigating between pages now dismisses embedded details/player dialogs instead o
 
 Linux regression coverage exercises loading/loaded opacity, page navigation, cancellation while loading, newer-dialog resizing, and embedded-player versus separate-window behavior. This change is in the shared Windows source, but no Preview 4 Windows executable or installer is published: there is no configured Windows CI workflow or supported local native Windows toolchain available for this release. No emulator was started. Preview 3 Windows downloads do not contain this fix.
 
+The Ubuntu software-rendered container full test run has one unresolved framebuffer-readback failure (228 passes / 1 failure); the overlap suite and separate isolated-Wayland full run pass. See [Linux verification limits](packaging/linux/README.md). Package startup checks do not certify playback.
+
 ### Preview 3: provider Home fix (retained)
 
 The provider host now writes its JSON protocol explicitly as UTF-8. This fixes empty AniWorld Home on Windows caused by Java's legacy system code page rejecting non-ASCII titles in Qt's JSON parser. The 20-second request deadline is unchanged.

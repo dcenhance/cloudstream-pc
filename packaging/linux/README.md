@@ -38,6 +38,9 @@ Graceful shutdown of the FUSE-mounted AppImage remains unverified; the prior
 Wayland startup check required forced cleanup. Extract-and-run startup is a
 separate bounded smoke check, not shutdown or playback certification.
 
+
+Preview 4 verification limitation: the Ubuntu 24.04 software-rendered container full suite completed 31 suites with 228 passes and one failure in `MpvPlayerWidgetTest::rendersAndAdvancesGeneratedVideo` framebuffer-color readback. An isolated PulseAudio null sink resolves the initial missing-audio-device condition, but framebuffer readback remained intermittent/unresolved. The focused overlap suite passed (7 passes); the separate host isolated-Wayland run passed all 229 cases. No test assertion was weakened or renderer fix claimed. Packaged startup checks are not playback certification.
+
 ## Build
 
 `container-build.sh` runs inside Ubuntu 24.04 with `/src` read-only repository
