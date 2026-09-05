@@ -29,7 +29,8 @@ def sha(path):
 
 def run(args, cwd=ROOT, log=None, check=True, timeout=1200, env=None):
     print('RUN', args, flush=True)
-    p = subprocess.run([str(a) for a in args], cwd=cwd, stdout=subprocess.PIPE,
+    command = args if isinstance(args, str) else [str(a) for a in args]
+    p = subprocess.run(command, cwd=cwd, stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT, text=True, errors='replace', timeout=timeout, env=env)
     if log:
         (EVIDENCE / log).write_text(p.stdout, encoding='utf-8')
@@ -154,7 +155,9 @@ if not shutil.which('makensis'):
 installer = OUTPUT / 'CloudStream-PC-0.1.0-preview.4-Windows-x64-Setup.exe'
 run([sys.executable, ROOT / 'tooling/packaging/build-windows-installer.py', runtime, installer, '--version', '0.1.0-preview.4'], log='installer-package.txt')
 installed = ROOT / 'installed test'
-run([installer, '/S', '/D=' + str(installed)], log='install.txt', timeout=180)
+# NSIS parses /D= as the unquoted remainder, even when it contains spaces.
+# Pass the raw CreateProcess command line, not Python's quoted argv conversion.
+run(f'"{installer}" /S /D={installed}', log='install.txt', timeout=180)
 for relative, digest in after.items():
     assert sha(installed / relative) == digest, relative
 assert sha(installed / 'cloudstream.exe') == after['cloudstream.exe']
@@ -165,7 +168,7 @@ key.Close()
 run([installed / 'cloudstream.exe', '--smoke-test'], installed, 'installed-smoke.txt', timeout=45, env=clean_env)
 sentinel = installed / 'user-added-sentinel.txt'
 sentinel.write_text('preserve me')
-run([installed / 'Uninstall.exe', '/S', '_?=' + str(installed)], log='uninstall.txt', timeout=180)
+run(f'"{installed / "Uninstall.exe"}" /S _?={installed}', log='uninstall.txt', timeout=180)
 assert not (installed / 'cloudstream.exe').exists()
 assert sentinel.read_text() == 'preserve me'
 try:

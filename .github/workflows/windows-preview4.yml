@@ -38,6 +38,7 @@ jobs:
           path: evidence/
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: windows-preview4-packages
           path: output/
