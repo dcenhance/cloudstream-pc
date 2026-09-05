@@ -1,6 +1,6 @@
 """Unit checks for installer source escaping; VM validates install/uninstall."""
 import importlib.util
-from pathlib import Path
+from pathlib import Path, PureWindowsPath, PurePosixPath
 import unittest
 
 spec = importlib.util.spec_from_file_location('installer', Path(__file__).with_name('build-windows-installer.py'))
@@ -10,6 +10,10 @@ spec.loader.exec_module(installer)
 
 
 class InstallerQuotingTests(unittest.TestCase):
+    def test_native_file_wildcard_uses_host_path_separator(self):
+        self.assertEqual(installer.nsis_file_pattern(PureWindowsPath('D:/runtime/CloudStream PC')), r'D:\runtime\CloudStream PC\*')
+        self.assertEqual(installer.nsis_file_pattern(PurePosixPath('/runtime/CloudStream PC')), '/runtime/CloudStream PC/*')
+
     def test_spaces_and_unicode_are_preserved(self):
         self.assertEqual(installer.nsis_quote('A folder/日本語'), 'A folder/日本語')
 

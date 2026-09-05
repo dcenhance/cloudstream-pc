@@ -13,6 +13,11 @@ def nsis_quote(value):
     return value.replace('$', '$$').replace('"', '$\\"')
 
 
+def nsis_file_pattern(runtime):
+    """File directives need host-native separators, including the wildcard."""
+    return nsis_quote(runtime / '*')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('runtime', type=pathlib.Path)
@@ -65,7 +70,7 @@ FunctionEnd
 Section "CloudStream PC"
   SetShellVarContext current
   SetOutPath "$INSTDIR"
-  File /r "@RUNTIME@/*"
+  File /r "@FILE_PATTERN@"
   WriteUninstaller "$INSTDIR\\Uninstall.exe"
   CreateDirectory "$SMPROGRAMS\\CloudStream PC"
   CreateShortcut "$SMPROGRAMS\\CloudStream PC\\CloudStream PC.lnk" "$INSTDIR\\cloudstream.exe"
@@ -89,7 +94,7 @@ Section "Uninstall"
   DeleteRegKey HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\CloudStreamPC"
 SectionEnd
 '''
-    for key, value in {'OUTPUT': nsis_quote(output), 'RUNTIME': nsis_quote(runtime), 'ICON': nsis_quote(pathlib.Path(__file__).with_name('cloudstream.ico').resolve()), 'VERSION': nsis_quote(args.version), 'DELETES': deletes, 'REMOVES': removes}.items():
+    for key, value in {'OUTPUT': nsis_quote(output), 'FILE_PATTERN': nsis_file_pattern(runtime), 'ICON': nsis_quote(pathlib.Path(__file__).with_name('cloudstream.ico').resolve()), 'VERSION': nsis_quote(args.version), 'DELETES': deletes, 'REMOVES': removes}.items():
         script = script.replace('@' + key + '@', value)
     with tempfile.TemporaryDirectory(prefix='cloudstream-nsis-') as tmp:
         path = pathlib.Path(tmp) / 'installer.nsi'

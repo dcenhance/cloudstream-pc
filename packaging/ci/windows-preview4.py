@@ -139,13 +139,24 @@ assert [p for p in before if before[p] != after[p]] == ['cloudstream.exe']
     'tests': results, 'physical_gpu_tested': False, 'test_fixture': 'native C++ instead of /bin/sh; assertions unchanged'}, indent=2))
 portable = OUTPUT / 'CloudStream-PC-0.1.0-preview.4-Windows-x64.zip'
 run([sys.executable, SOURCE / 'packaging/build-windows-portable.py', runtime, portable], log='portable-package.txt')
+with zipfile.ZipFile(portable) as z:
+    assert z.testzip() is None
+    z.extractall(ROOT / 'fresh extraction')
+extracted = ROOT / 'fresh extraction/CloudStream-PC'
+for relative, digest in after.items():
+    assert sha(extracted / relative) == digest, relative
+extracted_env = clean_env.copy()
+extracted_env['PATH'] = str(extracted) + os.pathsep + str(Path(os.environ['SystemRoot']) / 'System32')
+run([extracted / 'cloudstream.exe', '--smoke-test'], extracted, 'extracted-portable-smoke.txt', timeout=45, env=extracted_env)
 if not shutil.which('makensis'):
     run(['choco', 'install', 'nsis', '-y', '--no-progress'])
     os.environ['PATH'] += os.pathsep + 'C:/Program Files (x86)/NSIS'
 installer = OUTPUT / 'CloudStream-PC-0.1.0-preview.4-Windows-x64-Setup.exe'
-run([sys.executable, SOURCE / 'packaging/build-windows-installer.py', runtime, installer, '--version', '0.1.0-preview.4'], log='installer-package.txt')
+run([sys.executable, ROOT / 'tooling/packaging/build-windows-installer.py', runtime, installer, '--version', '0.1.0-preview.4'], log='installer-package.txt')
 installed = ROOT / 'installed test'
 run([installer, '/S', '/D=' + str(installed)], log='install.txt', timeout=180)
+for relative, digest in after.items():
+    assert sha(installed / relative) == digest, relative
 assert sha(installed / 'cloudstream.exe') == after['cloudstream.exe']
 import winreg
 key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'Software\Microsoft\Windows\CurrentVersion\Uninstall\CloudStreamPC')
