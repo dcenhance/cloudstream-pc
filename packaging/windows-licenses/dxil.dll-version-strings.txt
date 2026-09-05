@@ -1,0 +1,22 @@
+VS_VERSION_INFO
+StringFileInfo
+040904B0
+CompanyName
+Microsoft(r) Corporation
+FileDescription
+DirectX Compiler - Out Of Band
+FileVersion
+1.8.2502.11
+InternalName
+OriginalFilename
+ProductName
+Microsoft(r) DirectX for Windows(r) - Out Of Band
+ProductVersion
+1.8.2502.11 (239921522)
+LegalCopyright
+(c) Microsoft Corporation. All rights reserved.
+VarFileInfo
+Translation
+SubC
+"Microsoft Window
+SubC

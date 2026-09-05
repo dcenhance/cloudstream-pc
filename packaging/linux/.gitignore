@@ -1,0 +1,9 @@
+# Generated binaries, source archives, caches and staging trees are not git inputs.
+work/
+cache/
+*.AppImage
+*.deb
+*.rpm
+*.tar.*
+*.squashfs
+__pycache__/

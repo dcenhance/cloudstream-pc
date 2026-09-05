@@ -1,0 +1,42 @@
+[
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/mpv-dev-x86_64-20260903-git-69e63f425a.7z",
+    "url": "https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/20260903/mpv-dev-x86_64-20260903-git-69e63f425a.7z",
+    "resolved_url": "https://release-assets.githubusercontent.com/github-production-release-asset/141023757/e938596f-4478-4bb2-bd1e-935dc1ca286c",
+    "size": 31363218,
+    "sha256": "fac135c68a35b7639e39d72c0c365104edbaebdea39a0dfdd8c36e8c8e80faef",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/mesa3d-26.2.0-release-msvc.7z",
+    "url": "https://github.com/pal1000/mesa-dist-win/releases/download/26.2.0/mesa3d-26.2.0-release-msvc.7z",
+    "resolved_url": "https://release-assets.githubusercontent.com/github-production-release-asset/81497624/32d7fecc-ce40-4a93-a843-58734c5c071c",
+    "size": 70069566,
+    "sha256": "dcb2719ef346dab5b609fcb193a5f13cfc4b0502e3f4de1ad43d349477402f47",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/mpv-build-run.json",
+    "url": "https://api.github.com/repos/shinchiro/mpv-winbuild-cmake/actions/runs/33697571182",
+    "resolved_url": "https://api.github.com/repos/shinchiro/mpv-winbuild-cmake/actions/runs/33697571182",
+    "size": 13470,
+    "sha256": "096b2b947e5d08049ede56faea28155354978da0f1e0f94b9ebef42b0c223527",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/mesa-build-26.2.0.tar.gz",
+    "url": "https://codeload.github.com/pal1000/mesa-dist-win/tar.gz/refs/tags/26.2.0",
+    "resolved_url": "https://codeload.github.com/pal1000/mesa-dist-win/tar.gz/refs/tags/26.2.0",
+    "size": 153699,
+    "sha256": "7733847bdd6fd9abf5d9417716d1eb5ad3e3f69a71027d9586bd3cbab9888002",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/gyan-ffmpeg-9.0.1-essentials.zip",
+    "url": "https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.1-essentials_build.zip",
+    "resolved_url": "https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.1-essentials_build.zip",
+    "size": 111253802,
+    "sha256": "fec81ae03971d9dd4be3ebe02e263bd2ec1d789483f931bdba5f5715e65da2e9",
+    "status": "downloaded"
+  }
+]

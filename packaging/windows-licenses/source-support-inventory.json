@@ -1,0 +1,377 @@
+[
+  {
+    "path": "sources/NewPipeExtractor-v0.26.3.tar.gz",
+    "size": 33986470,
+    "sha256": "4b8dfaf7073248eab1fd137b5f2469688984ef0c10d675e8a551b104b1ec34b3"
+  },
+  {
+    "path": "sources/NiceHttp-0.4.18.tar.gz",
+    "size": 111723,
+    "sha256": "ee6eef081959e87be3141fd01a2023db4bc142de64a78405b41ef1f5f1fa0e33"
+  },
+  {
+    "path": "sources/SDL2-2.32.10.tar.gz",
+    "size": 7630262,
+    "sha256": "5f5993c530f084535c65a6879e9b26ad441169b3e25d789d83287040a9ca5165"
+  },
+  {
+    "path": "sources/ffmpeg-9.0.1.tar.xz",
+    "size": 12036420,
+    "sha256": "cf38e0e28c7e5605942c4a77755349b0145804a397af37eb1fb4c77cb237f635"
+  },
+  {
+    "path": "sources/ffmpeg-mpv-9fc8c785e.tar.gz",
+    "size": 17596335,
+    "sha256": "e98f09f382837c93d1891d68351e27b69af0a220bc817cfba10d9afa686ebc97"
+  },
+  {
+    "path": "sources/jvm/NewPipeExtractor-v0.26.3-sources.jar",
+    "size": 511759,
+    "sha256": "da73a3b74c232139a72728e8273eee38953eaea783171c6e00e972c8bb2048f7"
+  },
+  {
+    "path": "sources/jvm/NiceHttp-0.4.18-sources.jar",
+    "size": 9326,
+    "sha256": "feba4e5c9e0ee53966127cdc326062500fd6b34ba34841cfdc93917131c89d88"
+  },
+  {
+    "path": "sources/jvm/annotation-jvm-1.10.0-sources.jar",
+    "size": 73321,
+    "sha256": "4f093265c2f99d314a5e161d748100588c49663b098a8a031aa173315c530ef7"
+  },
+  {
+    "path": "sources/jvm/annotations-23.0.0-sources.jar",
+    "size": 37462,
+    "sha256": "ff2309b42f7584520497bb48bc609aca04c9886cf48708f14be83f00423ec144"
+  },
+  {
+    "path": "sources/jvm/asm-analysis-9.10.1-sources.jar",
+    "size": 42453,
+    "sha256": "a85db3987f46505bba104ab1d267692aaa1937792007dcdffad34f54c76193ef"
+  },
+  {
+    "path": "sources/jvm/asm-commons-9.10.1-sources.jar",
+    "size": 84927,
+    "sha256": "a26e55103e094a0f6df75a7b5e578bd7b4ad73abd2641b0fa2ac97db70641906"
+  },
+  {
+    "path": "sources/jvm/asm-tree-9.10.1-sources.jar",
+    "size": 76632,
+    "sha256": "93a9406bb68abff43f491891625e0d3c7edce87b70d2370ec1ea4627c9ead090"
+  },
+  {
+    "path": "sources/jvm/asm-util-9.10.1-sources.jar",
+    "size": 86624,
+    "sha256": "a7cbc3782c5384837149f84869dcc24625ed9a0bcaec9e929e69c44abf8f7125"
+  },
+  {
+    "path": "sources/jvm/atomicfu-jvm-0.33.0-sources.jar",
+    "size": 21222,
+    "sha256": "09e8719c35c3491633ea8d0dfb2a0f1769dfff5a6bbaf55ee5412a6221331215"
+  },
+  {
+    "path": "sources/jvm/charset-jvm-0.0.8-sources.jar",
+    "size": 23678,
+    "sha256": "97b2f401472625a9253a3d8993aa95d3939d92c454419d8eab170caf3249cc9e"
+  },
+  {
+    "path": "sources/jvm/cryptography-bigint-jvm-0.6.0-sources.jar",
+    "size": 3362,
+    "sha256": "bb04bee16d5b98d3580f016a23e972219a99d1f03fc36c31b3c3e5401c8bf36b"
+  },
+  {
+    "path": "sources/jvm/cryptography-core-jvm-0.6.0-sources.jar",
+    "size": 51372,
+    "sha256": "cd022955f0cd76ca09c6a22993ee4b03f3964f2ac0f6e1122725082a43c3dc12"
+  },
+  {
+    "path": "sources/jvm/cryptography-provider-base-jvm-0.6.0-sources.jar",
+    "size": 18539,
+    "sha256": "c1ba39a09ead3f0075fec9b61675e07f978529d7a31f790fca547a282a8a7e21"
+  },
+  {
+    "path": "sources/jvm/cryptography-provider-jdk-jvm-0.6.0-sources.jar",
+    "size": 41480,
+    "sha256": "d8a18172af4ed57fece03892316b012f1621033bff64fe8887abad79cda93090"
+  },
+  {
+    "path": "sources/jvm/cryptography-provider-optimal-jvm-0.6.0-sources.jar",
+    "size": 634,
+    "sha256": "ef653183a3941a7a73219c0e36455d4268f3783dd088dd3da4fa728f475c1dc4"
+  },
+  {
+    "path": "sources/jvm/cryptography-random-jvm-0.6.0-sources.jar",
+    "size": 2400,
+    "sha256": "d8db9b08f9ad80750dbb710511d42d1cc59192fe6b6aa4140e1d0272e2bbe3be"
+  },
+  {
+    "path": "sources/jvm/cryptography-serialization-asn1-jvm-0.6.0-sources.jar",
+    "size": 10281,
+    "sha256": "c6f4ef1e196ad4f1181e5403a3983f402a19755099fce9244fc4cfc218feb84f"
+  },
+  {
+    "path": "sources/jvm/cryptography-serialization-asn1-modules-jvm-0.6.0-sources.jar",
+    "size": 7796,
+    "sha256": "728674c0eff07d28d27385443a4a173c586afcd9c09456e30fb9b7de924c1062"
+  },
+  {
+    "path": "sources/jvm/cryptography-serialization-pem-jvm-0.6.0-sources.jar",
+    "size": 6985,
+    "sha256": "ecc6b34d0337adbe3c0042a706c2f9217c1e8f59e67ef8a2ab0f57464da9c7e8"
+  },
+  {
+    "path": "sources/jvm/d2j-base-cmd-2.4.38-sources.jar",
+    "size": 5902,
+    "sha256": "91fc3004ed892e37cd0daffb75e3c3786ba8619654b54ccc6cee5eb8517b15b2"
+  },
+  {
+    "path": "sources/jvm/d2j-external-2.4.38-sources.jar",
+    "size": 261,
+    "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3"
+  },
+  {
+    "path": "sources/jvm/dex-ir-2.4.38-sources.jar",
+    "size": 90272,
+    "sha256": "5a964879137c3dd8ba4ba95c9d771c75e12e623a766cf42d0221be4a15458ec3"
+  },
+  {
+    "path": "sources/jvm/dex-reader-2.4.38-sources.jar",
+    "size": 36093,
+    "sha256": "209be547c3d39b182cd9047eb04c73f0227f3cf429e688fe892ae3b6d16f9adc"
+  },
+  {
+    "path": "sources/jvm/dex-reader-api-2.4.38-sources.jar",
+    "size": 36555,
+    "sha256": "b765d4bcd73c13d51e4b5d1838704248970bc180725a7ac7c9f9b9e0ba5e9914"
+  },
+  {
+    "path": "sources/jvm/dex-translator-2.4.38-sources.jar",
+    "size": 51549,
+    "sha256": "bdc2071beeab486b75e6f44a436ba5c49129fa593a0452ac53c75ebf7975e04f"
+  },
+  {
+    "path": "sources/jvm/error_prone_annotations-2.27.0-sources.jar",
+    "size": 37565,
+    "sha256": "c5acfa6fcc68c03695ca5f1b32aa83cf7d11f1ff8ca8210e3222da0867ad55ca"
+  },
+  {
+    "path": "sources/jvm/gson-2.11.0-sources.jar",
+    "size": 203808,
+    "sha256": "49a853f71bc874ee1898a4ad5009b57d0c536e5a998b3890253ffbf4b7276ad3"
+  },
+  {
+    "path": "sources/jvm/io-core-jvm-0.0.8-sources.jar",
+    "size": 36053,
+    "sha256": "3804b8af7027cbb06f592149c9b848dd7441f3c79adb34abe65df0f25fe1e655"
+  },
+  {
+    "path": "sources/jvm/jackson-annotations-2.13.1-sources.jar",
+    "size": 79951,
+    "sha256": "f19d1c55d299e0d00ff970d0a28a24690295c8f2c20a437b81a13c602b5bad80"
+  },
+  {
+    "path": "sources/jvm/jackson-core-2.13.1-sources.jar",
+    "size": 405819,
+    "sha256": "9f709c8f7a7cb053f467833beda69f017890ba9d609b8c98372d52f27acfc688"
+  },
+  {
+    "path": "sources/jvm/jackson-databind-2.13.1-sources.jar",
+    "size": 1146944,
+    "sha256": "5da54acdabb37ffcf63b516c6a857415deb12f88574b92fcf1ac4ac366c5855f"
+  },
+  {
+    "path": "sources/jvm/jackson-module-kotlin-2.13.1-sources.jar",
+    "size": 27100,
+    "sha256": "1d2cdb74330b7be2126b6a808bbaee45ab765ef89e29d013573a3a8702ba0776"
+  },
+  {
+    "path": "sources/jvm/json-20251224-sources.jar",
+    "size": 86870,
+    "sha256": "a380c396038560c8c7993c9e6e128d499b0aebc218969d47113013f013508220"
+  },
+  {
+    "path": "sources/jvm/jsoup-1.22.2-sources.jar",
+    "size": 271783,
+    "sha256": "3aed3e38ec1e0373eb6755213b01d197802f858850bce20e63d99c93e08818bc"
+  },
+  {
+    "path": "sources/jvm/jsr305-3.0.2-sources.jar",
+    "size": 18102,
+    "sha256": "1c9e85e272d0708c6a591dc74828c71603053b48cc75ae83cce56912a2aa063b"
+  },
+  {
+    "path": "sources/jvm/kotlin-reflect-2.4.0-sources.jar",
+    "size": 815995,
+    "sha256": "ff246d790aad39f55779f44e410b477228999cd3c352585c73b56ea5df36549e"
+  },
+  {
+    "path": "sources/jvm/kotlin-stdlib-2.4.0-sources.jar",
+    "size": 757669,
+    "sha256": "bca27f834e278d08c1b85a40e636450867e8251c284fd4c24e9879bb99e301c5"
+  },
+  {
+    "path": "sources/jvm/kotlin-stdlib-jdk7-2.3.20-sources.jar",
+    "size": 580,
+    "sha256": "2534c8908432e06de73177509903d405b55f423dd4c2f747e16b92a2162611e6"
+  },
+  {
+    "path": "sources/jvm/kotlin-stdlib-jdk8-2.3.20-sources.jar",
+    "size": 556,
+    "sha256": "3cb6895054a0985bba591c165503fe4dd63a215af53263b67a071ccdc242bf6e"
+  },
+  {
+    "path": "sources/jvm/kotlinx-coroutines-core-jvm-1.11.0-sources.jar",
+    "size": 438533,
+    "sha256": "3e0847c0b463965404d5b6fe5d6868000a220b050180dec68501801e9439976a"
+  },
+  {
+    "path": "sources/jvm/kotlinx-datetime-jvm-0.8.0-sources.jar",
+    "size": 153310,
+    "sha256": "9c01c80f7c8bc94fc3ec88a08b0e6abd60ff2dfcd063bf4412948d465bd8ce68"
+  },
+  {
+    "path": "sources/jvm/kotlinx-io-bytestring-jvm-0.9.1-sources.jar",
+    "size": 13296,
+    "sha256": "483e02a686fbbba255eabfdf6b35e1d6408c8504c5f75e40f3d5e0a5d998a50c"
+  },
+  {
+    "path": "sources/jvm/kotlinx-io-core-jvm-0.9.1-sources.jar",
+    "size": 78622,
+    "sha256": "7d312485ba44ece3b874003829239fdd25c91ce8837b2956b741920dab24dbc7"
+  },
+  {
+    "path": "sources/jvm/kotlinx-serialization-core-jvm-1.11.0-sources.jar",
+    "size": 111809,
+    "sha256": "9c9b7d4aabc03e671b5297ca5d50931f7c961f3d7e36a67ce945921b08a7be40"
+  },
+  {
+    "path": "sources/jvm/kotlinx-serialization-json-jvm-1.11.0-sources.jar",
+    "size": 93490,
+    "sha256": "8a0eae6ac1a42a0fbe1b850ea4e21ad71d2a8aa896ee2257b1492b471bd5c5fe"
+  },
+  {
+    "path": "sources/jvm/ksoup-jvm-0.2.6-sources.jar",
+    "size": 220854,
+    "sha256": "1392cc8ee421655b8d9d5dded34dccac1fbcd224faddda65cd811edb05d5223d"
+  },
+  {
+    "path": "sources/jvm/ktor-http-jvm-3.5.0-sources.jar",
+    "size": 102406,
+    "sha256": "0903d2d4a11963c993bbf17e15b4f72b1539cd74794acec142bf4ee25601186a"
+  },
+  {
+    "path": "sources/jvm/ktor-io-jvm-3.5.0-sources.jar",
+    "size": 70732,
+    "sha256": "d22aa1d25c16d492b6b43b728a6b82e5dc4f0ce49a106cd9a41c7b849a6d0cca"
+  },
+  {
+    "path": "sources/jvm/ktor-utils-jvm-3.5.0-sources.jar",
+    "size": 96515,
+    "sha256": "e6bedbbf1e45b5d311ccb945e8fb5e1c1631a3fe0baafd9938bffc05b1da6db0"
+  },
+  {
+    "path": "sources/jvm/nanojson-e9d656ddb49a412a5a0a5d5ef20ca7ef09549996-sources.jar",
+    "size": 29880,
+    "sha256": "a4ac5f0d7163220039527b45cc846df44e66a3293ac10af85a2d35b204a8e82d"
+  },
+  {
+    "path": "sources/jvm/okhttp-dnsoverhttps-5.3.2-sources.jar",
+    "size": 5819,
+    "sha256": "20ba78003187811341db981f19fa5ced48fde676fb3b53ffcdc37139a5d0f4af"
+  },
+  {
+    "path": "sources/jvm/okhttp-jvm-5.3.2-sources.jar",
+    "size": 395535,
+    "sha256": "c44c549707d30d56084d0bc1bc00f36c7c326e30664b40c20c1ff8ab657afa5b"
+  },
+  {
+    "path": "sources/jvm/okio-jvm-3.16.4-sources.jar",
+    "size": 190161,
+    "sha256": "834d0ba65168b5314f447bd2403d134423c42ad1927fdcd24473b20c4fd5a7d8"
+  },
+  {
+    "path": "sources/jvm/protobuf-javalite-4.35.0-sources.jar",
+    "size": 461110,
+    "sha256": "c0860a7a38f02ec96ca37e7d4a0730a0d2734ef7e8742f2e6eeefda9f9ac0148"
+  },
+  {
+    "path": "sources/jvm/rhino-1.8.1-sources.jar",
+    "size": 912671,
+    "sha256": "2303a0e5aa222faae0b95865c25442da89ec14c0fc81ac1608f2a6095e3d2459"
+  },
+  {
+    "path": "sources/jvm/rhino-engine-1.8.1-sources.jar",
+    "size": 9007,
+    "sha256": "c3316bdfd713c92d2688ea921b5cc7568a5a879ecd395847559407862fce5089"
+  },
+  {
+    "path": "sources/jvm/slf4j-api-2.0.18-sources.jar",
+    "size": 77045,
+    "sha256": "192e007cf7f2be41d40574e44521fc0b7ce55e01f13dbe0fa8707c8ae3329075"
+  },
+  {
+    "path": "sources/jvm/stately-concurrency-jvm-2.1.0-sources.jar",
+    "size": 10485,
+    "sha256": "1981bcea839e608ecce520237561ba640948be7e46316098d4fcfb7d9d19ca99"
+  },
+  {
+    "path": "sources/jvm/stately-strict-jvm-2.1.0-sources.jar",
+    "size": 2718,
+    "sha256": "19cfdf3e5662c563c602f26e9a09abb39cb4186474143a4fa64d9b5eb30d9187"
+  },
+  {
+    "path": "sources/mesa-26.2.0.tar.xz",
+    "size": 68461648,
+    "sha256": "efd4bb08cdb7c365a812cd4e6c9202ab55b2f22cdcd13c7d6c4f9647b799a4ef"
+  },
+  {
+    "path": "sources/mesa-build-26.2.0.tar.gz",
+    "size": 153699,
+    "sha256": "7733847bdd6fd9abf5d9417716d1eb5ad3e3f69a71027d9586bd3cbab9888002"
+  },
+  {
+    "path": "sources/mpv-69e63f425a.tar.gz",
+    "size": 7451378,
+    "sha256": "8cd3219379589c55dd6a58638b0f2146a8495b47a45d8a7f6d17f09d155e3c84"
+  },
+  {
+    "path": "sources/mpv-winbuild-cd1edc11.tar.gz",
+    "size": 81655,
+    "sha256": "8b92a254771496b0dcc23017c2734bfa7545441d3e6a37958b063d6e7814a657"
+  },
+  {
+    "path": "sources/nanojson-e9d656.tar.gz",
+    "size": 305482,
+    "sha256": "20a700fb8bbab554577b2fbe3868b9eb82ac46ec9c8396d743d47fb3f9170ef6"
+  },
+  {
+    "path": "sources/qtbase-6.8.3.tar.xz",
+    "size": 48426536,
+    "sha256": "56001b905601bb9023d399f3ba780d7fa940f3e4861e496a7c490331f49e0b80"
+  },
+  {
+    "path": "sources/qtsvg-6.8.3.tar.xz",
+    "size": 2009072,
+    "sha256": "35eb516460f00f264eb504baa253432384351cf23fb9980a5857190e8deef438"
+  },
+  {
+    "path": "sources/rhino-1.8.1.tar.gz",
+    "size": 10407301,
+    "sha256": "36c0c512e020a3dc6794293b35128462e7a4925bc282969a3358d25c8e3fd69c"
+  },
+  {
+    "path": "sources/temurin-build-e6ba7dec.tar.gz",
+    "size": 584568,
+    "sha256": "b1340378b9ed62b32acfacd012dd069ec2b9d940fc39d3c73f32142d64e89713"
+  },
+  {
+    "path": "sources/temurin-sources-17.0.20.1_1.tar.gz",
+    "size": 109272338,
+    "sha256": "21e2a065d244ab048e737f21af5d1fc74daaeb6707de36477ead8db1dca71214"
+  },
+  {
+    "path": "sources/vulkan-loader-1.4.357.0.tar.gz",
+    "size": 1820868,
+    "sha256": "54f2537df22313768da0317dda2abdaaab7711b4081c48c869a79db343d0ae70"
+  }
+]

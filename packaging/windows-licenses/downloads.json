@@ -1,0 +1,122 @@
+[
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/qtbase-6.8.3.tar.xz",
+    "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtbase-everywhere-src-6.8.3.tar.xz",
+    "resolved_url": "https://ftp.fau.de/qtproject/archive/qt/6.8/6.8.3/submodules/qtbase-everywhere-src-6.8.3.tar.xz",
+    "size": 48426536,
+    "sha256": "56001b905601bb9023d399f3ba780d7fa940f3e4861e496a7c490331f49e0b80",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/qtsvg-6.8.3.tar.xz",
+    "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtsvg-everywhere-src-6.8.3.tar.xz",
+    "resolved_url": "https://ftp.fau.de/qtproject/archive/qt/6.8/6.8.3/submodules/qtsvg-everywhere-src-6.8.3.tar.xz",
+    "size": 2009072,
+    "sha256": "35eb516460f00f264eb504baa253432384351cf23fb9980a5857190e8deef438",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/SDL2-2.32.10.tar.gz",
+    "url": "https://www.libsdl.org/release/SDL2-2.32.10.tar.gz",
+    "resolved_url": "https://www.libsdl.org/release/SDL2-2.32.10.tar.gz",
+    "size": 7630262,
+    "sha256": "5f5993c530f084535c65a6879e9b26ad441169b3e25d789d83287040a9ca5165",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/mpv-69e63f425a.tar.gz",
+    "url": "https://codeload.github.com/mpv-player/mpv/tar.gz/69e63f425a",
+    "resolved_url": "https://codeload.github.com/mpv-player/mpv/tar.gz/69e63f425a",
+    "size": 7451378,
+    "sha256": "8cd3219379589c55dd6a58638b0f2146a8495b47a45d8a7f6d17f09d155e3c84",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/mpv-release.json",
+    "url": "https://api.github.com/repos/shinchiro/mpv-winbuild-cmake/releases/tags/20260903",
+    "resolved_url": "https://api.github.com/repos/shinchiro/mpv-winbuild-cmake/releases/tags/20260903",
+    "size": 22868,
+    "sha256": "8fd7724ffcb0f2a7a6fd3b3c9a8903812931f425d45d50c8630d11c3a79dac22",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/mesa-release.json",
+    "url": "https://api.github.com/repos/pal1000/mesa-dist-win/releases/tags/26.2.0",
+    "resolved_url": "https://api.github.com/repos/pal1000/mesa-dist-win/releases/tags/26.2.0",
+    "size": 17848,
+    "sha256": "84bfbc9ea746db9249beb79de7de3a15f0110da60afa8d2dd7a9abe28685cbf0",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/mesa-26.2.0.tar.xz",
+    "url": "https://archive.mesa3d.org/mesa-26.2.0.tar.xz",
+    "resolved_url": "https://archive.mesa3d.org/mesa-26.2.0.tar.xz",
+    "size": 68461648,
+    "sha256": "efd4bb08cdb7c365a812cd4e6c9202ab55b2f22cdcd13c7d6c4f9647b799a4ef",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/vulkan-loader-1.4.357.0.tar.gz",
+    "url": "https://codeload.github.com/KhronosGroup/Vulkan-Loader/tar.gz/vulkan-sdk-1.4.357.0",
+    "resolved_url": "https://codeload.github.com/KhronosGroup/Vulkan-Loader/tar.gz/vulkan-sdk-1.4.357.0",
+    "size": 1820868,
+    "sha256": "54f2537df22313768da0317dda2abdaaab7711b4081c48c869a79db343d0ae70",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/msys2-vulkan-PKGBUILD",
+    "url": "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-vulkan-loader/PKGBUILD",
+    "resolved_url": "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-vulkan-loader/PKGBUILD",
+    "size": 2673,
+    "sha256": "bbd903b1b9c75d6803aaf92ecec0f1ab284e4581f3ed855f6b334ecd0c7bce7d",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/ffmpeg-9.0.1.tar.xz",
+    "url": "https://ffmpeg.org/releases/ffmpeg-9.0.1.tar.xz",
+    "resolved_url": "https://ffmpeg.org/releases/ffmpeg-9.0.1.tar.xz",
+    "size": 12036420,
+    "sha256": "cf38e0e28c7e5605942c4a77755349b0145804a397af37eb1fb4c77cb237f635",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/gyan-build-page.html",
+    "url": "https://www.gyan.dev/ffmpeg/builds/",
+    "resolved_url": "https://www.gyan.dev/ffmpeg/builds/",
+    "size": 52159,
+    "sha256": "770745ede81fb701b2ab439315182ed0f451f7200bc122b1fd4d2e33695087ab",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/temurin-sources-17.0.20.1_1.tar.gz",
+    "url": "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1%2B1/OpenJDK17U-jdk-sources_17.0.20.1_1.tar.gz",
+    "resolved_url": "https://release-assets.githubusercontent.com/github-production-release-asset/372925194/2c69ad83-dd16-4f5b-8cb0-9a97ccd5595b",
+    "size": 109272338,
+    "sha256": "21e2a065d244ab048e737f21af5d1fc74daaeb6707de36477ead8db1dca71214",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/temurin-sources.sha256.txt",
+    "url": "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1%2B1/OpenJDK17U-jdk-sources_17.0.20.1_1.tar.gz.sha256.txt",
+    "resolved_url": "https://release-assets.githubusercontent.com/github-production-release-asset/372925194/c0073bbc-8ad7-4574-a2b6-ddb827dec670",
+    "size": 108,
+    "sha256": "4955f7b4564879befa59e2f417d6f7518fb428a8de1d0df7095cdb0e3f5ffb23",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/temurin-build-e6ba7dec.tar.gz",
+    "url": "https://codeload.github.com/adoptium/temurin-build/tar.gz/e6ba7dec3d07654074559310376a3ae89da5f4ac",
+    "resolved_url": "https://codeload.github.com/adoptium/temurin-build/tar.gz/e6ba7dec3d07654074559310376a3ae89da5f4ac",
+    "size": 584568,
+    "sha256": "b1340378b9ed62b32acfacd012dd069ec2b9d940fc39d3c73f32142d64e89713",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/temurin-binary-build.json",
+    "url": "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1%2B1/OpenJDK17U-jdk_x64_windows_hotspot_17.0.20.1_1.zip.json",
+    "resolved_url": "https://release-assets.githubusercontent.com/github-production-release-asset/372925194/1683f2be-1a81-440c-aa0e-91065336d34f",
+    "size": 29131,
+    "sha256": "ca0cb6046f2dcea45335afcff9d8e1202ffe6029ea051a2bb9ddc3883ffed7ad",
+    "status": "downloaded"
+  }
+]

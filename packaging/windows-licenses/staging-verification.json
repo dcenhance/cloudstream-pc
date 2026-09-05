@@ -1,0 +1,15 @@
+{
+  "runtime": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime",
+  "original_files_verified": 584,
+  "parent_payload_changes": [
+    "vc_redist.x64.exe"
+  ],
+  "excluded_verification_files": 8,
+  "source_files": 75,
+  "source_bytes": 329029433,
+  "source_archive": "/data/CloudStream-releases/0.1.0-preview.2/CloudStream-0.1.0-preview.2-Windows-source-support.tar",
+  "source_archive_bytes": 333537280,
+  "source_archive_sha256": "f5b0a2ab00ca03c517c70fb62d79bea169f718364d2baf4383e4fb38af22e872",
+  "status": "STAGED_NOT_REDISTRIBUTION_CLEARED",
+  "one_off_scripts": "/data/CloudStream-releases/0.1.0-preview.2/windows-source-support/audit-tools"
+}

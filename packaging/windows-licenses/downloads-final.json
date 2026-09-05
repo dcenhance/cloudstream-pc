@@ -1,0 +1,42 @@
+[
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/msys2-vulkan-package.tar.zst",
+    "url": "https://repo.msys2.org/mingw/ucrt64/mingw-w64-ucrt-x86_64-vulkan-loader-1~1.4.357.0-1-any.pkg.tar.zst",
+    "resolved_url": "https://repo.msys2.org/mingw/ucrt64/mingw-w64-ucrt-x86_64-vulkan-loader-1~1.4.357.0-1-any.pkg.tar.zst",
+    "size": 202334,
+    "sha256": "4d34983aea34116582700b285279df21cd0ee8519025330e7ac0650bb02f138f",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/msys2-vulkan-patch",
+    "url": "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-vulkan-loader/001-fix-import-library-name.patch",
+    "resolved_url": "https://raw.githubusercontent.com/msys2/MINGW-packages/master/mingw-w64-vulkan-loader/001-fix-import-library-name.patch",
+    "size": 410,
+    "sha256": "3b4a05ba0d8df9cdde475fee056e8c67891ce1b02ff4ce37216beec5ae783d24",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/dxc_2025_02_20.zip",
+    "url": "https://github.com/microsoft/DirectXShaderCompiler/releases/download/v1.8.2502/dxc_2025_02_20.zip",
+    "resolved_url": "https://release-assets.githubusercontent.com/github-production-release-asset/75787966/9c0ba4c6-33cc-41d2-92a1-cf8b89a362f0",
+    "size": 26346851,
+    "sha256": "70b1913a1bfce4a3e1a5311d16246f4ecdf3a3e613abec8aa529e57668426f85",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/SDL2-devel-2.32.10-VC.zip",
+    "url": "https://github.com/libsdl-org/SDL/releases/download/release-2.32.10/SDL2-devel-2.32.10-VC.zip",
+    "resolved_url": "https://release-assets.githubusercontent.com/github-production-release-asset/330008801/84f3ca05-093c-4eaf-bb96-58dee8486645",
+    "size": 7172966,
+    "sha256": "af347939395a58b365846aaea27391e69f9ec9d4dd650d6ac40802159b418a6e",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/ffmpeg-mpv-9fc8c785e.tar.gz",
+    "url": "https://codeload.github.com/FFmpeg/FFmpeg/tar.gz/9fc8c785e",
+    "resolved_url": "https://codeload.github.com/FFmpeg/FFmpeg/tar.gz/9fc8c785e",
+    "size": 17596335,
+    "sha256": "e98f09f382837c93d1891d68351e27b69af0a220bc817cfba10d9afa686ebc97",
+    "status": "downloaded"
+  }
+]

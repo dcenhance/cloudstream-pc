@@ -1,0 +1,32 @@
+[
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/LLVM-22.1.8-LICENSE",
+    "url": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-22.1.8/llvm/LICENSE.TXT",
+    "resolved_url": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-22.1.8/llvm/LICENSE.TXT",
+    "size": 15141,
+    "sha256": "8d85c1057d742e597985c7d4e6320b015a9139385cff4cbae06ffc0ebe89afee",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/zstd-1.5.7-LICENSE",
+    "url": "https://raw.githubusercontent.com/facebook/zstd/v1.5.7/LICENSE",
+    "resolved_url": "https://raw.githubusercontent.com/facebook/zstd/v1.5.7/LICENSE",
+    "size": 1549,
+    "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/zlib-1.3.2-LICENSE",
+    "url": "https://raw.githubusercontent.com/madler/zlib/v1.3.2/LICENSE",
+    "resolved_url": "https://raw.githubusercontent.com/madler/zlib/v1.3.2/LICENSE",
+    "size": 1002,
+    "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/SPIRV-Tools-2026.3.1-LICENSE",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/SPIRV-Tools/v2026.3.1/LICENSE",
+    "status": "FAILED",
+    "error": "HTTP Error 404: Not Found"
+  }
+]

@@ -1,0 +1,7 @@
+# Temporary upstream comparison/download caches, never release source in git.
+upstream-extracted/
+upstream/*.zip
+upstream/*.7z
+upstream/*.tar.*
+*.partial
+__pycache__/

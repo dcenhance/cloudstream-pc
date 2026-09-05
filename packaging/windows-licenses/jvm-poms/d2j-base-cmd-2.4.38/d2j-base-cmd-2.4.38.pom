@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- This module was also published with a richer model, Gradle metadata,  -->
+  <!-- which should be used instead. Do not delete the following line which  -->
+  <!-- is to indicate to Gradle or any Gradle module metadata file consumer  -->
+  <!-- that they should prefer consuming it instead. -->
+  <!-- do_not_remove: published-with-gradle-metadata -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.femtopedia.dex2jar</groupId>
+  <artifactId>d2j-base-cmd</artifactId>
+  <version>2.4.38</version>
+  <name>d2j-base-cmd</name>
+  <description>Simple cmd parser for dex2jar</description>
+  <url>https://github.com/ThexXTURBOXx/dex2jar</url>
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>pxb1988</id>
+      <name>Bob Pan</name>
+      <email>pxb1988@gmail.com</email>
+    </developer>
+    <developer>
+      <id>ThexXTURBOXx</id>
+      <name>Nico Mexis</name>
+      <email>nico.mexis@kabelmail.de</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/ThexXTURBOXx/dex2jar.git</connection>
+    <developerConnection>scm:git:git://github.com/ThexXTURBOXx/dex2jar.git</developerConnection>
+    <url>https://github.com/ThexXTURBOXx/dex2jar.git</url>
+  </scm>
+  <issueManagement>
+    <url>https://github.com/ThexXTURBOXx/dex2jar/issues</url>
+  </issueManagement>
+  <dependencies>
+    <dependency>
+      <groupId>de.femtopedia.dex2jar</groupId>
+      <artifactId>d2j-external</artifactId>
+      <version>2.4.38</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

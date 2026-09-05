@@ -1,0 +1,152 @@
+{
+  "tag": "2.4.38",
+  "commit": "ecdd1b5074e8f8ad1ade959b2a65b4babfe1b3d2",
+  "archive": "/data/CloudStream-releases/0.1.0-preview.2/windows-source-support/sources/jvm-followup/dex2jar-2.4.38-ecdd1b5074e8f8ad1ade959b2a65b4babfe1b3d2.tar.gz",
+  "archive_sha256": "10c4de49da568e784bb97aa819f3d9864fb7e172b7631b10ac603506404d7e1e",
+  "runtime_sha256": "929884e103c6897448abfe34eb9c6c0018b0443b160da87d0073976b1b3b2b67",
+  "runtime_classes": 647,
+  "vendored_comparison": [
+    {
+      "jar": "asm-9.10.1-mctle.jar",
+      "sha256": "418574b4ba0326c5a70840b2e2d8a55af5a916f2c197222abfcb4950264ae351",
+      "classes": 39,
+      "identical": 38,
+      "missing": [
+        "module-info.class"
+      ],
+      "different": []
+    },
+    {
+      "jar": "dx-30.0.3.jar",
+      "sha256": "5f37023cdab507f4f2ece1c80dabd056254e30cc9f4aef39dd84c4e0a0031615",
+      "classes": 609,
+      "identical": 609,
+      "missing": [],
+      "different": []
+    }
+  ],
+  "empty_maven_sourcejar_members": [
+    "META-INF/",
+    "META-INF/MANIFEST.MF"
+  ],
+  "fetch_results": [
+    [
+      "asm-9.10.1-sources.jar",
+      "OK"
+    ],
+    [
+      "android-dalvik-NOTICE.txt",
+      "OK"
+    ],
+    [
+      "android-dx-Main.java",
+      "OK"
+    ],
+    [
+      "SPIRV-Tools-vulkan-sdk-1.4.357.0-LICENSE.txt",
+      "OK"
+    ],
+    [
+      "SPIRV-Tools-vulkan-sdk-1.4.357.0-NOTICE.txt",
+      "HTTP Error 404: Not Found"
+    ],
+    [
+      "SPIRV-Headers-vulkan-sdk-1.4.357.0-LICENSE.txt",
+      "OK"
+    ],
+    [
+      "LLVM-22.1.8-Support-COPYRIGHT.regex.txt",
+      "OK"
+    ],
+    [
+      "LLVM-22.1.8-Support-xxhash.h",
+      "OK"
+    ]
+  ],
+  "notices": [
+    {
+      "file": "dex2jar/LICENSE.txt",
+      "origin": "dex2jar-2.4.38-ecdd1b5074e8f8ad1ade959b2a65b4babfe1b3d2.tar.gz:LICENSE.txt",
+      "sha256": "109959f7602c382a5928b3c539445c337bcd4cc2358c11ae29d6e3d9f0bd52ac",
+      "size": 11340
+    },
+    {
+      "file": "dex2jar/NOTICE.txt",
+      "origin": "dex2jar-2.4.38-ecdd1b5074e8f8ad1ade959b2a65b4babfe1b3d2.tar.gz:NOTICE.txt",
+      "sha256": "d426eb974e62fddbcaf9289f63c3d89f90f95b9a5f9654d47d875847f5abb420",
+      "size": 373
+    },
+    {
+      "file": "dex2jar/dex-tools/open-source-license.txt",
+      "origin": "dex2jar-2.4.38-ecdd1b5074e8f8ad1ade959b2a65b4babfe1b3d2.tar.gz:dex-tools/open-source-license.txt",
+      "sha256": "8d8bf0c62f009f0527017223ad175bd693268a8d6a5282c9d3737002524e9ae6",
+      "size": 3209
+    },
+    {
+      "file": "dex2jar/d2j-external/build.gradle",
+      "origin": "dex2jar-2.4.38-ecdd1b5074e8f8ad1ade959b2a65b4babfe1b3d2.tar.gz:d2j-external/build.gradle",
+      "sha256": "6b31493ab03e266ba8ac41235f3116ce740db1b4dc4cdf715c2d7b1d2fa54735",
+      "size": 388
+    },
+    {
+      "file": "vendored/asm-9.10.1-mctle.jar.manifest",
+      "origin": "dex2jar-ecdd1b5074e8f8ad1ade959b2a65b4babfe1b3d2/libs/asm-9.10.1-mctle.jar",
+      "sha256": "80576d1afbd71bcee3f109294dea558486623d2965b97216fe4a4ef155bbe192",
+      "size": 518
+    },
+    {
+      "file": "vendored/dx-30.0.3.jar.manifest",
+      "origin": "dex2jar-ecdd1b5074e8f8ad1ade959b2a65b4babfe1b3d2/libs/dx-30.0.3.jar",
+      "sha256": "2e0911992cdd66c412c510e14c47974abf9b2037265cbb417aaa1b43f2248c92",
+      "size": 85
+    },
+    {
+      "file": "ASM-9.10.1-copyright-and-BSD.txt",
+      "origin": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.10.1/asm-9.10.1-sources.jar!/org/objectweb/asm/ClassReader.java",
+      "sha256": "34b8dd2e1b4b5f822ba633602676297fa82328d9438ba4d7336ec7393d212e06",
+      "size": 1651
+    },
+    {
+      "file": "SPIRV-Tools-vulkan-sdk-1.4.357.0-LICENSE.txt",
+      "origin": "https://raw.githubusercontent.com/KhronosGroup/SPIRV-Tools/vulkan-sdk-1.4.357.0/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "file": "android-dalvik-NOTICE.txt",
+      "origin": "https://raw.githubusercontent.com/aosp-mirror/platform_dalvik/android-11.0.0_r1/NOTICE",
+      "sha256": "3d70cfeeeb3e0261da92808b014c744541215abcc6be41f8be54b4381ded28f3",
+      "size": 12241
+    },
+    {
+      "file": "android-dx-Main.java.header.txt",
+      "origin": "https://raw.githubusercontent.com/aosp-mirror/platform_dalvik/android-11.0.0_r1/dx/src/com/android/dx/command/Main.java",
+      "sha256": "3220a495d3e12782373bef3360279aef43eb994534e030b6747b2a39265d7b8c",
+      "size": 619
+    },
+    {
+      "file": "LLVM-22.1.8-Support-COPYRIGHT.regex.txt",
+      "origin": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-22.1.8/llvm/lib/Support/COPYRIGHT.regex",
+      "sha256": "0424e57d4303164dc59a8509c20dae0518b853692e5c2b0e98b11816fdbc97c7",
+      "size": 2718
+    },
+    {
+      "file": "SPIRV-Headers-vulkan-sdk-1.4.357.0-LICENSE.txt",
+      "origin": "https://raw.githubusercontent.com/KhronosGroup/SPIRV-Headers/vulkan-sdk-1.4.357.0/LICENSE",
+      "sha256": "ea43b1de38a6f90c488800d66dec1ed671e68cda530266bc96951fb5b6307613",
+      "size": 23503
+    },
+    {
+      "file": "LLVM-22.1.8-Support-xxhash.h.header.txt",
+      "origin": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-22.1.8/llvm/include/llvm/Support/xxhash.h",
+      "sha256": "4040f0c766acd6e58be54884212703c5282de483c9f9acf98c7dd415859b7687",
+      "size": 1585
+    },
+    {
+      "file": "SPIRV-Tools-vulkan-sdk-1.4.357.0-copyright.txt",
+      "origin": "https://raw.githubusercontent.com/KhronosGroup/SPIRV-Tools/vulkan-sdk-1.4.357.0/source/opt/optimizer.cpp",
+      "sha256": "3542bed78fbf49c9bef1700c1ad4b5d40eccb5b2dc9013361b4c95a289c1c14e",
+      "size": 593
+    }
+  ]
+}

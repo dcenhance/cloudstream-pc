@@ -1,5 +1,6 @@
 #include "../app/ProcessCompletion.h"
 #include "../app/ProviderHostCommand.h"
+#include "../app/PackagedRuntimeEnvironment.h"
 
 #include <QtTest>
 
@@ -11,6 +12,37 @@ class ProcessCompletionTest final : public QObject {
     Q_OBJECT
 
 private slots:
+#ifdef Q_OS_WIN
+    void runtimeEnvironmentPreservesUnicode() {
+        const QString key = "CLOUDSTREAM_TEST_RUNTIME_PATH";
+        const auto previous = qgetenv("CLOUDSTREAM_TEST_RUNTIME_PATH");
+        const QString value = QString::fromUtf8("C:/Application é 中文/ca-bundle.crt");
+        QVERIFY(CloudStream::setRuntimeEnvironmentVariable(key, value));
+        QCOMPARE(qEnvironmentVariable("CLOUDSTREAM_TEST_RUNTIME_PATH"), value);
+        if (previous.isNull()) qunsetenv("CLOUDSTREAM_TEST_RUNTIME_PATH");
+        else qputenv("CLOUDSTREAM_TEST_RUNTIME_PATH", previous);
+    }
+#endif
+
+    void packagedRuntimePathsAreAppRelativeAndPreserveOverrides() {
+        QTemporaryDir temporary;
+        QVERIFY(temporary.isValid());
+        QVERIFY(QDir().mkpath(temporary.filePath("etc/fonts")));
+        for (const auto &path : {"ca-bundle.crt", "etc/fonts/fonts.conf"}) {
+            QFile file(temporary.filePath(path));
+            QVERIFY(file.open(QIODevice::WriteOnly));
+        }
+        QProcessEnvironment original;
+        original.insert("CURL_CA_BUNDLE", "custom-trust.crt");
+        const auto result = CloudStream::packagedRuntimeEnvironment(temporary.path(), original, true);
+        QCOMPARE(result.value("SSL_CERT_FILE"), QDir::toNativeSeparators(temporary.filePath("ca-bundle.crt")));
+        QCOMPARE(result.value("CURL_CA_BUNDLE"), QString("custom-trust.crt"));
+        QCOMPARE(result.value("FONTCONFIG_FILE"), QDir::toNativeSeparators(temporary.filePath("etc/fonts/fonts.conf")));
+        QCOMPARE(result.value("FONTCONFIG_PATH"), QDir::toNativeSeparators(temporary.filePath("etc/fonts")));
+        QCOMPARE(CloudStream::packagedRuntimeEnvironment(temporary.path(), original, false), original);
+        QCOMPARE(CloudStream::packagedRuntimeEnvironment(temporary.filePath("missing"), original, true), original);
+    }
+
     void windowsProviderUsesJavaAndLiteralArguments() {
         QTemporaryDir temporary;
         QVERIFY(temporary.isValid());

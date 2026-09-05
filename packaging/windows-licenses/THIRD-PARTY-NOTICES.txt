@@ -1,0 +1,22 @@
+CloudStream Windows third-party notices and source information
+
+This package includes separately licensed third-party software. Copyrights,
+license texts, exceptions, binary provenance and unresolved redistribution
+obligations are recorded in licenses/REDISTRIBUTION-AUDIT.md and adjacent files.
+Java's original notices remain in runtime/NOTICE and runtime/legal/.
+
+Qt shared libraries may be modified/replaced under their applicable LGPL terms;
+reverse engineering for debugging such modifications is not prohibited here.
+The whole distribution is NOT blanket GPL: retain Microsoft and other component
+terms. Detailed per-JAR coordinates/licenses are in licenses/jvm-provenance.json.
+
+Collected corresponding-source support is delivered separately as:
+CloudStream-0.1.0-preview.2-Windows-source-support.tar
+This is a PARTIAL source collection: exact mpv/FFmpeg static dependency closure
+and other findings in the audit remain unresolved. Do not represent this notice
+as a valid written source offer or a declaration of complete compliance.
+
+Windows runtime: app-local Microsoft.VC143.CRT 14.44.35112 DLLs are included.
+Their hashes match the parent's BuildTools redist extraction; see
+licenses/msvc-app-local-provenance.json. No administrator-run redist installer
+is bundled. Final clean-machine validation belongs to the parent packager.

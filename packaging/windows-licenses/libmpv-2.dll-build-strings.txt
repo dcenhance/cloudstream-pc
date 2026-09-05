@@ -1,0 +1,3 @@
+--extra-cflags=-fno-asynchronous-unwind-tables --target=x86_64-win64-gcc --prefix=/__w/mpv-winbuild-cmake/mpv-winbuild-cmake/build_x86_64/x86_64-w64-mingw32 --disable-examples --disable-docs --disable-tools --disable-unit-tests --disable-decode-perf-tests --disable-encode-perf-tests --as=yasm --enable-debug --enable-vp9-highbitdepth
+Delta qindex mode (0: off, 1: deltaq objective (default), 2: deltaq placeholder, 3: key frame visual quality, 4: user rating based visual quality optimization, 5: HDR video, 6: Variance Boost); --deltaq-mode=1 requires --enable-tpl-model=1
+Rate distribution information input.It requires --enable-rate-guide-deltaq=1.

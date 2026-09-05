@@ -3,7 +3,9 @@ param(
     [string[]]$AdditionalRuntimeDlls = @(),
     [string]$JavaRuntime = $env:JAVA_HOME,
     [string]$FfmpegExecutable = '',
-    [string]$SoftwareOpenGLDirectory = ''
+    [string]$SoftwareOpenGLDirectory = '',
+    [string]$MsvcRuntimeDirectory = '',
+    [string]$ThirdPartyNoticesDirectory = ''
 )
 $ErrorActionPreference = 'Stop'
 
@@ -12,6 +14,15 @@ $Root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $Native = $PSScriptRoot
 $Build = Join-Path $Native 'build-windows'
 $Dist = Join-Path $Root 'dist-windows'
+if ([string]::IsNullOrWhiteSpace($MsvcRuntimeDirectory) -and $env:VCToolsRedistDir) {
+    $MsvcRuntimeDirectory = Join-Path $env:VCToolsRedistDir 'x64\Microsoft.VC143.CRT'
+}
+foreach ($dll in @('msvcp140.dll', 'vcruntime140.dll', 'vcruntime140_1.dll')) {
+    if ([string]::IsNullOrWhiteSpace($MsvcRuntimeDirectory) -or
+        -not (Test-Path (Join-Path $MsvcRuntimeDirectory $dll))) {
+        throw "Set MsvcRuntimeDirectory to the Visual Studio x64 Microsoft.VC143.CRT redistributable directory; missing $dll."
+    }
+}
 if ([string]::IsNullOrWhiteSpace($JavaRuntime) -or
     -not (Test-Path (Join-Path $JavaRuntime 'bin\java.exe'))) {
     throw 'JavaRuntime (or JAVA_HOME) must contain a Windows Java 17 runtime to bundle.'
@@ -63,6 +74,11 @@ foreach ($dll in $AdditionalRuntimeDlls) {
     Copy-Item $dll $Dist -ErrorAction Stop
 }
 Copy-Item -Recurse $JavaRuntime (Join-Path $Dist 'runtime') -ErrorAction Stop
+Copy-Item (Join-Path $MsvcRuntimeDirectory '*.dll') $Dist -ErrorAction Stop
+Copy-Item (Join-Path $Root 'LICENSE') $Dist -ErrorAction Stop
+if (-not [string]::IsNullOrWhiteSpace($ThirdPartyNoticesDirectory)) {
+    Copy-Item -Recurse $ThirdPartyNoticesDirectory (Join-Path $Dist 'licenses') -ErrorAction Stop
+}
 if (-not [string]::IsNullOrWhiteSpace($FfmpegExecutable)) {
     Copy-Item $FfmpegExecutable (Join-Path $Dist 'ffmpeg.exe') -ErrorAction Stop
 }

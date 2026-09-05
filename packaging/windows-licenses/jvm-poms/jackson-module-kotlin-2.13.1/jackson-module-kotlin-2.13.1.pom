@@ -1,0 +1,234 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- This module was also published with a richer model, Gradle metadata,  -->
+    <!-- which should be used instead. Do not delete the following line which  -->
+    <!-- is to indicate to Gradle or any Gradle module metadata file consumer  -->
+    <!-- that they should prefer consuming it instead. -->
+    <!-- do_not_remove: published-with-gradle-metadata -->
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-base</artifactId>
+        <version>2.13.1</version>
+    </parent>
+    <groupId>com.fasterxml.jackson.module</groupId>
+    <artifactId>jackson-module-kotlin</artifactId>
+    <name>jackson-module-kotlin</name>
+    <version>2.13.1</version>
+    <packaging>bundle</packaging>
+    <description>Add-on module for Jackson (https://github.com/FasterXML/jackson/) to support
+        Kotlin language, specifically introspection of method/constructor parameter names,
+        without having to add explicit property name annotation.
+    </description>
+    <developers>
+        <developer>
+            <id>jaysonminard</id>
+            <name>Jayson Minard</name>
+            <email>jayson.minard@gmail.com</email>
+            <roles>
+                <role>author</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>dinomite</id>
+            <name>Drew Stephens</name>
+        </developer>
+        <developer>
+            <id>viartemev</id>
+            <name>Vyacheslav Artemyev</name>
+        </developer>
+    </developers>
+    <url>https://github.com/FasterXML/jackson-module-kotlin</url>
+    <scm>
+        <connection>scm:git:git@github.com:FasterXML/jackson-module-kotlin.git</connection>
+        <developerConnection>scm:git:git@github.com:FasterXML/jackson-module-kotlin.git</developerConnection>
+        <url>https://github.com/FasterXML/jackson-module-kotlin</url>
+        <tag>jackson-module-kotlin-2.13.1</tag>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- 16-Oct-2019, tatu: No point trying to target Java 7, Java 8 needed for build anyway -->
+        <javac.src.version>1.8</javac.src.version>
+        <javac.target.version>1.8</javac.target.version>
+
+        <version.kotlin>1.5.30</version.kotlin>
+
+        <!-- Generate PackageVersion.java into this directory. -->
+        <packageVersion.dir>com/fasterxml/jackson/module/kotlin</packageVersion.dir>
+        <packageVersion.package>${project.groupId}.kotlin</packageVersion.package>
+
+        <!-- Configuration properties for the OSGi maven-bundle-plugin -->
+        <osgi.includeResource>src/main/resources/, META-INF=target/classes/META-INF</osgi.includeResource>
+        <osgi.import>
+            com.fasterxml.jackson.*
+            ,kotlin.*
+            ,kotlin.reflect.*
+        </osgi.import>
+        <osgi.export>${project.groupId}.kotlin.*;version=${project.version}
+        </osgi.export>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${version.kotlin}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${version.kotlin}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- only for testing... -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test-junit</artifactId>
+            <version>${version.kotlin}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <version>${version.kotlin}</version>
+
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>process-test-sources</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                        <configuration>
+                            <args>
+                                <arg>-Xinline-classes</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <!-- Inherited from oss-base. Generate PackageVersion.java.-->
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <executions>
+                    <execution>
+                        <id>process-packageVersion</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+
+            <!-- 02-Nov-2020, tatu: Add JDK9+ module info with Moditect -->
+            <plugin>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- 05-Jul-2020, tatu: Add generation of Gradle Module Metadata -->
+            <plugin>
+                <groupId>de.jjohannes</groupId>
+                <artifactId>gradle-module-metadata-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.siom79.japicmp</groupId>
+                <artifactId>japicmp-maven-plugin</artifactId>
+                <version>0.15.3</version>
+                <configuration>
+                    <oldVersion>
+                        <dependency>
+                            <groupId>com.fasterxml.jackson.module</groupId>
+                            <artifactId>jackson-module-kotlin</artifactId>
+                            <version>2.13.0</version>
+                            <type>jar</type>
+                        </dependency>
+                    </oldVersion>
+                    <newVersion>
+                        <file>
+                            <path>${project.build.directory}/${project.artifactId}-${project.version}.jar</path>
+                        </file>
+                    </newVersion>
+                    <parameter>
+                        <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+                        <breakBuildOnSourceIncompatibleModifications>true</breakBuildOnSourceIncompatibleModifications>
+                        <excludes>
+                        </excludes>
+                    </parameter>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>cmp</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>snapshots-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>

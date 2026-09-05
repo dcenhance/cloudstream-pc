@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- do_not_remove: published-with-gradle-metadata -->
+<modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.teamnewpipe</groupId>
+  <artifactId>NewPipeExtractor</artifactId>
+  <version>v0.26.3</version>
+  <name>NewPipe Extractor</name>
+  <description>A library for extracting data from streaming websites, used in NewPipe</description>
+  <url>https://github.com/TeamNewPipe/NewPipeExtractor</url>
+  <inceptionYear>2017</inceptionYear>
+  <licenses>
+    <license>
+      <name>GNU General Public License v3.0 or later</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>newpipe</id>
+      <name>Team NewPipe</name>
+      <email>team@newpipe.net</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git@github.com:TeamNewPipe/NewPipeExtractor.git</connection>
+    <developerConnection>scm:git:git@github.com:TeamNewPipe/NewPipeExtractor.git</developerConnection>
+    <url>https://github.com/TeamNewPipe/NewPipeExtractor</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.TeamNewPipe</groupId>
+      <artifactId>nanojson</artifactId>
+      <version>e9d656ddb49a412a5a0a5d5ef20ca7ef09549996</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.22.2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-javalite</artifactId>
+      <version>4.35.0</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mozilla</groupId>
+      <artifactId>rhino</artifactId>
+      <version>1.8.1</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mozilla</groupId>
+      <artifactId>rhino-engine</artifactId>
+      <version>1.8.1</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+</project>

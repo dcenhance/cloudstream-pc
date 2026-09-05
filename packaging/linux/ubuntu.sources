@@ -1,0 +1,5 @@
+Types: deb
+URIs: https://mirrors.edge.kernel.org/ubuntu
+Suites: noble noble-updates noble-security
+Components: main universe restricted multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg

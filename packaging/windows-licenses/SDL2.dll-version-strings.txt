@@ -1,0 +1,18 @@
+VS_VERSION_INFO
+StringFileInfo
+040904b0
+CompanyName
+FileDescription
+FileVersion
+2, 32, 10, 0
+InternalName
+LegalCopyright
+Copyright (C) 2025 Sam Lantinga
+OriginalFilename
+SDL2.dll
+ProductName
+Simple DirectMedia Layer
+ProductVersion
+2, 32, 10, 0
+VarFileInfo
+Translation

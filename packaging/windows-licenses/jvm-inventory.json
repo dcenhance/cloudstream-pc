@@ -1,0 +1,531 @@
+[
+  {
+    "jar": "NewPipeExtractor-v0.26.3.jar",
+    "sha256": "8c53b4b4fb25c8a2f5789ec00f0532fb337b91d6f0f384fd02efd1dc52e7fba9",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "NiceHttp-0.4.18.jar",
+    "sha256": "bd34e3598f3e8bb2fce8cb4c72f6407740b164a0e4a31c0b0268034847b7d816",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "annotation-jvm-1.10.0.jar",
+    "sha256": "ddd072ddbb553178e205517ce777b2f05aa9e412982d9ecb4eedc74f1212f697",
+    "embedded_legal": [
+      "META-INF/androidx/annotation/annotation/LICENSE.txt"
+    ],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "annotations-23.0.0.jar",
+    "sha256": "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "asm-analysis-9.10.1.jar",
+    "sha256": "dede75a21306b65974ecd8f87114ff6970f09fb794157a4ca09ab25c888c2bfc",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "asm-commons-9.10.1.jar",
+    "sha256": "6d0abefb7cbf972ea16edb37ec14835372505063a45f976ab7ea889ed9497895",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "asm-tree-9.10.1.jar",
+    "sha256": "3dfb0d5b6a106cd40b5b250e39935fbf2f927f4477546a5369a3ac609cf0506b",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "asm-util-9.10.1.jar",
+    "sha256": "1bb99d091fba2597dc6d51193e9bbcf0d8447e7ed96bd8f0198b18152f09655c",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "atomicfu-jvm-0.33.0.jar",
+    "sha256": "cdc94bfe4f739a0121860e61977d5c1e6a3d53c21f2471493393ba9e900d394e",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "charset-jvm-0.0.8.jar",
+    "sha256": "0e316c317627280c253372e1c2bc5f0370992f3cfaa26b766eed7572439d9e3b",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-bigint-jvm-0.6.0.jar",
+    "sha256": "a261719def5aff7e04b1b6d3970511bd21b2bccb8f3ee9c427e4f302cf46d625",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-core-jvm-0.6.0.jar",
+    "sha256": "d548cfcef63d76043cf98e33f0804cc9120fe48f31e3f83289ed5b32c165f52c",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-provider-base-jvm-0.6.0.jar",
+    "sha256": "67b2e74b2d96079887e0af15c50d54ccfd8dd2c1c37d3eb44c0a0628bd57f3ce",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-provider-jdk-jvm-0.6.0.jar",
+    "sha256": "c843acb190edac1e2c0ea24f1b0c6d9899cf52f1fada8c07be91c9d48e014f51",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-provider-optimal-jvm-0.6.0.jar",
+    "sha256": "c056e7770c0ce5bd53c43d1a988f04593e00acd4842ea72b46f79cf6f2458745",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-random-jvm-0.6.0.jar",
+    "sha256": "b8a5b8ba483d6ac9a179397e3b97ea8d9d5074abac00093d0c2246ee18731401",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-serialization-asn1-jvm-0.6.0.jar",
+    "sha256": "350127c2da523cfcec95d468252e9c5ab59aacd6513b436288509395d61f6be0",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-serialization-asn1-modules-jvm-0.6.0.jar",
+    "sha256": "28097cd87c8aba067d7ed1913704515b03a6d7b82ea653092a0c4fee46f4da9d",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "cryptography-serialization-pem-jvm-0.6.0.jar",
+    "sha256": "96b3215a19bbfe069296a06d0f1650f06468b2bf1bbe2793fe4be6e8120eba12",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "d2j-base-cmd-2.4.38.jar",
+    "sha256": "4e9ee8b7d751b6d8447313cb168c88ea14454d53d281ca7c1d9307c7f74051a4",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "d2j-external-2.4.38.jar",
+    "sha256": "929884e103c6897448abfe34eb9c6c0018b0443b160da87d0073976b1b3b2b67",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "dex-ir-2.4.38.jar",
+    "sha256": "ecac2eb44ad9393ac579d5d4e48520b485e90ab6536becdb061466fef92d9bb8",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "dex-reader-2.4.38.jar",
+    "sha256": "177a7ddc7a9b7cc1e9a86603f93599461bc64ed8d5574b80f42391390ea9ec7d",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "dex-reader-api-2.4.38.jar",
+    "sha256": "490cac37ca090db759295eae2c279536bca7c77e8cfa3be4372210a6a4ca9d2a",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "dex-translator-2.4.38.jar",
+    "sha256": "9bb5a7852cfc9698d130cc780513bb202a8b0c59bf8dd43c3f25cf32c587741d",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "error_prone_annotations-2.27.0.jar",
+    "sha256": "24c923372c58e35d0b9f16a028929bb9aedc77521867c274f2bd0735df5ba1f5",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/com.google.errorprone/error_prone_annotations/pom.xml",
+      "META-INF/maven/com.google.errorprone/error_prone_annotations/pom.properties"
+    ]
+  },
+  {
+    "jar": "gson-2.11.0.jar",
+    "sha256": "57928d6e5a6edeb2abd3770a8f95ba44dce45f3b23b7a9dc2b309c581552a78b",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/com.google.code.gson/gson/pom.xml",
+      "META-INF/maven/com.google.code.gson/gson/pom.properties"
+    ]
+  },
+  {
+    "jar": "io-core-jvm-0.0.8.jar",
+    "sha256": "c3091155ee3acd8ff3a8274e52baf0f8e200cbad2fd440a121943bfceb7dc1f0",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "jackson-annotations-2.13.1.jar",
+    "sha256": "ab607939d288e22bff4cb97acc6b25e841d82681f2bc40ce67bb35cb0ffdb06d",
+    "embedded_legal": [
+      "META-INF/LICENSE"
+    ],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.properties",
+      "META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.xml"
+    ]
+  },
+  {
+    "jar": "jackson-core-2.13.1.jar",
+    "sha256": "8be6935cd8f9673ac684a589aaa1caecd57dee7c37ed1443d17924325799003d",
+    "embedded_legal": [
+      "META-INF/LICENSE",
+      "META-INF/NOTICE"
+    ],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.properties",
+      "META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.xml"
+    ]
+  },
+  {
+    "jar": "jackson-databind-2.13.1.jar",
+    "sha256": "56cfbdc9e1736b5c56b43757f6cf546ee6d49393c79383c4e495c4f7047cb506",
+    "embedded_legal": [
+      "META-INF/LICENSE",
+      "META-INF/NOTICE"
+    ],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/com.fasterxml.jackson.core/jackson-databind/pom.properties",
+      "META-INF/maven/com.fasterxml.jackson.core/jackson-databind/pom.xml"
+    ]
+  },
+  {
+    "jar": "jackson-module-kotlin-2.13.1.jar",
+    "sha256": "816d7e1341353c2cebc2bc4b7d02f6db677cb12f60d6e61328bab67f314463fd",
+    "embedded_legal": [
+      "META-INF/LICENSE",
+      "META-INF/NOTICE"
+    ],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/com.fasterxml.jackson.module/jackson-module-kotlin/pom.properties",
+      "META-INF/maven/com.fasterxml.jackson.module/jackson-module-kotlin/pom.xml"
+    ]
+  },
+  {
+    "jar": "json-20251224.jar",
+    "sha256": "2a3438fbf9293174ea82bdfa35e83d8b965cfe6bddc034a1ac5d60107174c209",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/org.json/json/pom.properties",
+      "META-INF/maven/org.json/json/pom.xml"
+    ]
+  },
+  {
+    "jar": "jsoup-1.22.2.jar",
+    "sha256": "596785996d3c6df16f544c232d10a9a1d88783b2a4740cf5251cb616f2be704d",
+    "embedded_legal": [
+      "META-INF/jsoup/LICENSE"
+    ],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/org.jsoup/jsoup/pom.xml",
+      "META-INF/maven/org.jsoup/jsoup/pom.properties"
+    ]
+  },
+  {
+    "jar": "jsr305-3.0.2.jar",
+    "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/com.google.code.findbugs/jsr305/pom.xml",
+      "META-INF/maven/com.google.code.findbugs/jsr305/pom.properties"
+    ]
+  },
+  {
+    "jar": "kotlin-reflect-2.4.0.jar",
+    "sha256": "f0d8e8908624eb4478bb131e9f887366680d2e239741195e548fa5c906963b90",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlin-stdlib-2.4.0.jar",
+    "sha256": "ccb14ff83fabcb11458b798dbc9824748ccdffeec79c9aba789e6ed1cda86b1c",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlin-stdlib-jdk7-2.3.20.jar",
+    "sha256": "18231e75c68026d90f5487c8dc753be307c273a5eed574cee5a7118dfb04bc14",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlin-stdlib-jdk8-2.3.20.jar",
+    "sha256": "4d2f1d22a64efd04554108ba71297e10ff399fc0d61f56feb7a9266104be757d",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlinx-coroutines-core-jvm-1.11.0.jar",
+    "sha256": "d1d75aa01dffbb4d1c520e67e4c4e7f5f6174718e7cb4632412503f2f0e604fa",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlinx-datetime-jvm-0.8.0.jar",
+    "sha256": "ee44b51f8977c2f51d575299a4fc6782ab3700eba4cfc7fad548cced1543936a",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlinx-io-bytestring-jvm-0.9.1.jar",
+    "sha256": "8589de0b7c476bfdd02a24641685f609ade72f5e595cf2909c168acdba7e6ba4",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlinx-io-core-jvm-0.9.1.jar",
+    "sha256": "765d8851d8ca694706931331b92386844800867e041b720f1f193dbda874d370",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlinx-serialization-core-jvm-1.11.0.jar",
+    "sha256": "f4a801c647d4351327cd9e1ac4113e2be9ea37a64ab0abae269c25a52e28f35d",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "kotlinx-serialization-json-jvm-1.11.0.jar",
+    "sha256": "563a25b4eb5c9128ae9c2479f3d1a5c44dcd176112b91cf03682e906eba5c935",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "ksoup-jvm-0.2.6.jar",
+    "sha256": "ec9c20bc08d0cb28293a38580c6fb107521b4fdb781c1251a3fdd0a7e8ff1f92",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "ktor-http-jvm-3.5.0.jar",
+    "sha256": "2babac355de364c473b27b060d1c810fc2f83ed6e44822eabc6c3f46adf155a3",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "ktor-io-jvm-3.5.0.jar",
+    "sha256": "ca9f9443479204fe97a00bd53bc3dee5b0514c1a088e9df1e0e4d4ccfc605e51",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "ktor-utils-jvm-3.5.0.jar",
+    "sha256": "214200f074afe9d4b915d347397b5c1f768fbdd10ead7192e8adfd662dd4a72f",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "library-jvm-1.0.1.jar",
+    "sha256": "26f56ecf0612233a78938b0368cc6fbb910b8b2774eb25421c1e3e853396f5eb",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "nanojson-e9d656ddb49a412a5a0a5d5ef20ca7ef09549996.jar",
+    "sha256": "d495881a322b3c72e5d43284afd7d7021520028ca8b7c6ba861e3fd8d90614d5",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/com.grack/nanojson/pom.xml",
+      "META-INF/maven/com.grack/nanojson/pom.properties"
+    ]
+  },
+  {
+    "jar": "okhttp-dnsoverhttps-5.3.2.jar",
+    "sha256": "a669169acee7f320554266ed3a6d3280946fcbf8a32b09d334b3eb0a59cfe53b",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "okhttp-jvm-5.3.2.jar",
+    "sha256": "c771f48075b763f6c322055e21129a94b7de4c1faf3f8f58ace320b0c9517a30",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "okio-jvm-3.16.4.jar",
+    "sha256": "2196b993cd34dbbd919e7e01f57a4781b58bee80f86106163e287c20343a96a7",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "protobuf-javalite-4.35.0.jar",
+    "sha256": "1cfe1e1d7918ae62a0234dc1231406e4c41154bf29ae81e113f20fbc2507dd10",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "provider-host-4.8.0.jar",
+    "sha256": "b30263948943da82b6933319a8e32c2b0921c007fc1fc01d759ebe391d8cf332",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "rhino-1.8.1.jar",
+    "sha256": "98a06d42bdd69da15bf9c2a7812b4cfe648ca9e64fe8baaeb502a32b0ed2c8ac",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "rhino-engine-1.8.1.jar",
+    "sha256": "ff38ad60aa32a23942f60242a433a2583a5407841745510754a43e0e61dd95cf",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "slf4j-api-2.0.18.jar",
+    "sha256": "44508fd1576500688c790b190acdd16fec4f8c79a3e0b900afd70503cf055f55",
+    "embedded_legal": [
+      "META-INF/LICENSE.txt"
+    ],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/maven/org.slf4j/slf4j-api/pom.xml",
+      "META-INF/maven/org.slf4j/slf4j-api/pom.properties"
+    ]
+  },
+  {
+    "jar": "stately-concurrency-jvm-2.1.0.jar",
+    "sha256": "86739675892fb1c17d6bd36d05347e89ff313957421bb01a45a743ce774e8e29",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  },
+  {
+    "jar": "stately-strict-jvm-2.1.0.jar",
+    "sha256": "581070db2802cbad81f6e6e2d9d2494835443153b314458d53aa43c68260c9fa",
+    "embedded_legal": [],
+    "embedded_metadata": [
+      "META-INF/MANIFEST.MF"
+    ]
+  }
+]

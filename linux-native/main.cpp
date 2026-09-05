@@ -1,5 +1,6 @@
 #include "app/Logger.h"
 #include "app/ProcessCompletion.h"
+#include "app/PackagedRuntimeEnvironment.h"
 #include "app/ProviderHostCommand.h"
 #include "details/DetailsPresentation.h"
 #include "downloads/DownloadManager.h"
@@ -5528,6 +5529,14 @@ private:
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
+#ifdef Q_OS_WIN
+    const auto runtimeEnvironment = CloudStream::packagedRuntimeEnvironment(
+        QCoreApplication::applicationDirPath(), QProcessEnvironment::systemEnvironment(), true);
+    for (const auto *name : {"SSL_CERT_FILE", "CURL_CA_BUNDLE", "FONTCONFIG_FILE", "FONTCONFIG_PATH"}) {
+        if (!runtimeEnvironment.value(name).isEmpty())
+            CloudStream::setRuntimeEnvironmentVariable(QString::fromLatin1(name), runtimeEnvironment.value(name));
+    }
+#endif
     QCoreApplication::setOrganizationName("recloudstream");
     QCoreApplication::setOrganizationDomain("recloudstream.github.io");
     QCoreApplication::setApplicationName("CloudStream");

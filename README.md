@@ -6,6 +6,7 @@ An independent desktop adaptation of [recloudstream/cloudstream](https://github.
 
 ## Contents
 
+- [Downloads and installation](#downloads-and-installation)
 - [Platforms](#platforms)
 - [Features](#features)
 - [Build](#build)
@@ -22,7 +23,25 @@ An independent desktop adaptation of [recloudstream/cloudstream](https://github.
 
 Windows VM playback was tested with software rendering. Physical Windows GPU acceleration and controller input remain unverified. Other distributions, Windows versions, and architectures are not yet validated.
 
-This repository contains the source for **both versions**. Public binary releases are pending packaging and third-party redistribution review; no installer or universal Linux package is promised yet.
+## Downloads and installation
+
+**[Download Preview 2 for Linux or Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.2)**. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
+
+| Download | Installation and requirements |
+| --- | --- |
+| **Windows x64 Setup EXE** | Run the installer. Installs for the current user, adds shortcuts and an uninstaller; application updates do not replace your profile. |
+| **Windows x64 ZIP** | Extract the **entire ZIP** to a writable folder, then run `cloudstream.exe`. Do not run it inside the ZIP or copy just the EXE. Qt, Java, media libraries and Visual C++ runtime DLLs are included. |
+| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install with `sudo apt install ./cloudstream-pc_0.1.0~preview.2_amd64.deb` so dependencies are resolved. |
+| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.2.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
+| **Linux x86_64 system-runtime AppImage** | Make executable, then run. **Not self-contained:** requires system Qt, mpv, SDL2, Java and FFmpeg. See the [exact dependencies and FUSE-less launch option](packaging/linux/README.md). |
+
+Linux packages require **glibc 2.39 or newer and Qt 6.4.2 or newer**. They are not universal Linux binaries. Windows packages target Windows 10 x64 or later; testing uses a Windows 10 VM with software rendering, not a physical GPU/controller certification.
+
+The Windows installer is **unsigned**. Windows may display an unknown-publisher warning; verify the release and its SHA-256 checksums before deciding whether to run it. Do not disable antivirus or system protections to install the application.
+
+The release includes `SHA256SUMS`, application source archives, and separate third-party source/support archives. Source/support TAR files are for rebuilding and license compliance, **not extra files required to launch the app**. Keep the shipped `licenses/` and Java legal directories. LGPL shared libraries remain replaceable; debugging modifications to those libraries is permitted by their licenses.
+
+First launch: add an extension repository you trust in **Extensions**, install providers, then select one on Home. No repositories or provider accounts are bundled. Uninstalling removes application files, not your saved profile.
 
 ## Features
 

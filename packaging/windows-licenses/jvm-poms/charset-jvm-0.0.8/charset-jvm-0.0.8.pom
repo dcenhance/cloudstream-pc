@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- This module was also published with a richer model, Gradle metadata,  -->
+  <!-- which should be used instead. Do not delete the following line which  -->
+  <!-- is to indicate to Gradle or any Gradle module metadata file consumer  -->
+  <!-- that they should prefer consuming it instead. -->
+  <!-- do_not_remove: published-with-gradle-metadata -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.fleeksoft.charset</groupId>
+  <artifactId>charset-jvm</artifactId>
+  <version>0.0.8</version>
+  <name>charset</name>
+  <description>Kotlin Multiplatform Charsets</description>
+  <url>https://github.com/fleeksoft/charset</url>
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://opensource.org/licenses/Apache-2.0</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Sabeeh Ul Hussnain Anjum</name>
+      <email>fleeksoft@gmail.com</email>
+      <organization>Fleek Soft</organization>
+    </developer>
+  </developers>
+  <scm>
+    <connection>https://github.com/fleeksoft/charset.git</connection>
+    <url>https://github.com/fleeksoft/charset</url>
+  </scm>
+  <issueManagement>
+    <system>Github</system>
+    <url>https://github.com/fleeksoft/charset/issues</url>
+  </issueManagement>
+  <dependencies>
+    <dependency>
+      <groupId>co.touchlab</groupId>
+      <artifactId>stately-concurrency-jvm</artifactId>
+      <version>2.1.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fleeksoft.io</groupId>
+      <artifactId>io-core-jvm</artifactId>
+      <version>0.0.8</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib</artifactId>
+      <version>2.3.10</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

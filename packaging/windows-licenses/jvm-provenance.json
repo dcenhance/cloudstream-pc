@@ -1,0 +1,1280 @@
+[
+  {
+    "jar": "NewPipeExtractor-v0.26.3.jar",
+    "sha256": "8c53b4b4fb25c8a2f5789ec00f0532fb337b91d6f0f384fd02efd1dc52e7fba9",
+    "coordinate": "com.github.teamnewpipe:NewPipeExtractor:v0.26.3",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "GNU General Public License v3.0 or later",
+        "url": "https://www.gnu.org/licenses/gpl-3.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git@github.com:TeamNewPipe/NewPipeExtractor.git",
+        "developerConnection": "scm:git:git@github.com:TeamNewPipe/NewPipeExtractor.git",
+        "url": "https://github.com/TeamNewPipe/NewPipeExtractor"
+      }
+    ],
+    "source_url": "https://jitpack.io/com/github/teamnewpipe/NewPipeExtractor/v0.26.3/NewPipeExtractor-v0.26.3-sources.jar",
+    "source_sha256": "da73a3b74c232139a72728e8273eee38953eaea783171c6e00e972c8bb2048f7",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "NiceHttp-0.4.18.jar",
+    "sha256": "bd34e3598f3e8bb2fce8cb4c72f6407740b164a0e4a31c0b0268034847b7d816",
+    "coordinate": "com.github.Blatzar:NiceHttp:0.4.18",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "GNU General Public License v3.0",
+        "url": "https://api.github.com/licenses/gpl-3.0",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git://github.com/Blatzar/NiceHttp.git",
+        "developerConnection": "scm:git://github.com/Blatzar/NiceHttp.git",
+        "url": "git://github.com/Blatzar/NiceHttp.git"
+      }
+    ],
+    "source_url": "https://jitpack.io/com/github/Blatzar/NiceHttp/0.4.18/NiceHttp-0.4.18-sources.jar",
+    "source_sha256": "feba4e5c9e0ee53966127cdc326062500fd6b34ba34841cfdc93917131c89d88",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "annotation-jvm-1.10.0.jar",
+    "sha256": "ddd072ddbb553178e205517ce777b2f05aa9e412982d9ecb4eedc74f1212f697",
+    "coordinate": "androidx.annotation:annotation-jvm:1.10.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+        "url": "https://cs.android.com/androidx/platform/frameworks/support"
+      }
+    ],
+    "source_url": "https://dl.google.com/dl/android/maven2/androidx/annotation/annotation-jvm/1.10.0/annotation-jvm-1.10.0-sources.jar",
+    "source_sha256": "4f093265c2f99d314a5e161d748100588c49663b098a8a031aa173315c530ef7",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "annotations-23.0.0.jar",
+    "sha256": "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05",
+    "coordinate": "org.jetbrains:annotations:23.0.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/JetBrains/java-annotations",
+        "connection": "scm:git:git://github.com/JetBrains/java-annotations.git",
+        "developerConnection": "scm:git:ssh://github.com:JetBrains/java-annotations.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/23.0.0/annotations-23.0.0-sources.jar",
+    "source_sha256": "ff2309b42f7584520497bb48bc609aca04c9886cf48708f14be83f00423ec144",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "asm-analysis-9.10.1.jar",
+    "sha256": "dede75a21306b65974ecd8f87114ff6970f09fb794157a4ca09ab25c888c2bfc",
+    "coordinate": "org.ow2.asm:asm-analysis:9.10.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "BSD-3-Clause",
+        "url": "https://asm.ow2.io/license.html"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://gitlab.ow2.org/asm/asm/",
+        "developerConnection": "scm:git:https://gitlab.ow2.org/asm/asm/",
+        "url": "https://gitlab.ow2.org/asm/asm/"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm-analysis/9.10.1/asm-analysis-9.10.1-sources.jar",
+    "source_sha256": "a85db3987f46505bba104ab1d267692aaa1937792007dcdffad34f54c76193ef",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "asm-commons-9.10.1.jar",
+    "sha256": "6d0abefb7cbf972ea16edb37ec14835372505063a45f976ab7ea889ed9497895",
+    "coordinate": "org.ow2.asm:asm-commons:9.10.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "BSD-3-Clause",
+        "url": "https://asm.ow2.io/license.html"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://gitlab.ow2.org/asm/asm/",
+        "developerConnection": "scm:git:https://gitlab.ow2.org/asm/asm/",
+        "url": "https://gitlab.ow2.org/asm/asm/"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.10.1/asm-commons-9.10.1-sources.jar",
+    "source_sha256": "a26e55103e094a0f6df75a7b5e578bd7b4ad73abd2641b0fa2ac97db70641906",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "asm-tree-9.10.1.jar",
+    "sha256": "3dfb0d5b6a106cd40b5b250e39935fbf2f927f4477546a5369a3ac609cf0506b",
+    "coordinate": "org.ow2.asm:asm-tree:9.10.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "BSD-3-Clause",
+        "url": "https://asm.ow2.io/license.html"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://gitlab.ow2.org/asm/asm/",
+        "developerConnection": "scm:git:https://gitlab.ow2.org/asm/asm/",
+        "url": "https://gitlab.ow2.org/asm/asm/"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.10.1/asm-tree-9.10.1-sources.jar",
+    "source_sha256": "93a9406bb68abff43f491891625e0d3c7edce87b70d2370ec1ea4627c9ead090",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "asm-util-9.10.1.jar",
+    "sha256": "1bb99d091fba2597dc6d51193e9bbcf0d8447e7ed96bd8f0198b18152f09655c",
+    "coordinate": "org.ow2.asm:asm-util:9.10.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "BSD-3-Clause",
+        "url": "https://asm.ow2.io/license.html"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://gitlab.ow2.org/asm/asm/",
+        "developerConnection": "scm:git:https://gitlab.ow2.org/asm/asm/",
+        "url": "https://gitlab.ow2.org/asm/asm/"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm-util/9.10.1/asm-util-9.10.1-sources.jar",
+    "source_sha256": "a7cbc3782c5384837149f84869dcc24625ed9a0bcaec9e929e69c44abf8f7125",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "atomicfu-jvm-0.33.0.jar",
+    "sha256": "cdc94bfe4f739a0121860e61977d5c1e6a3d53c21f2471493393ba9e900d394e",
+    "coordinate": "org.jetbrains.kotlinx:atomicfu-jvm:0.33.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/Kotlin/kotlinx.atomicfu"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/atomicfu-jvm/0.33.0/atomicfu-jvm-0.33.0-sources.jar",
+    "source_sha256": "09e8719c35c3491633ea8d0dfb2a0f1769dfff5a6bbaf55ee5412a6221331215",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "charset-jvm-0.0.8.jar",
+    "sha256": "0e316c317627280c253372e1c2bc5f0370992f3cfaa26b766eed7572439d9e3b",
+    "coordinate": "com.fleeksoft.charset:charset-jvm:0.0.8",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://opensource.org/licenses/Apache-2.0"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/fleeksoft/charset.git",
+        "url": "https://github.com/fleeksoft/charset"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/fleeksoft/charset/charset-jvm/0.0.8/charset-jvm-0.0.8-sources.jar",
+    "source_sha256": "97b2f401472625a9253a3d8993aa95d3939d92c454419d8eab170caf3249cc9e",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-bigint-jvm-0.6.0.jar",
+    "sha256": "a261719def5aff7e04b1b6d3970511bd21b2bccb8f3ee9c427e4f302cf46d625",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-bigint-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-bigint-jvm/0.6.0/cryptography-bigint-jvm-0.6.0-sources.jar",
+    "source_sha256": "bb04bee16d5b98d3580f016a23e972219a99d1f03fc36c31b3c3e5401c8bf36b",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-core-jvm-0.6.0.jar",
+    "sha256": "d548cfcef63d76043cf98e33f0804cc9120fe48f31e3f83289ed5b32c165f52c",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-core-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-core-jvm/0.6.0/cryptography-core-jvm-0.6.0-sources.jar",
+    "source_sha256": "cd022955f0cd76ca09c6a22993ee4b03f3964f2ac0f6e1122725082a43c3dc12",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-provider-base-jvm-0.6.0.jar",
+    "sha256": "67b2e74b2d96079887e0af15c50d54ccfd8dd2c1c37d3eb44c0a0628bd57f3ce",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-provider-base-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-provider-base-jvm/0.6.0/cryptography-provider-base-jvm-0.6.0-sources.jar",
+    "source_sha256": "c1ba39a09ead3f0075fec9b61675e07f978529d7a31f790fca547a282a8a7e21",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-provider-jdk-jvm-0.6.0.jar",
+    "sha256": "c843acb190edac1e2c0ea24f1b0c6d9899cf52f1fada8c07be91c9d48e014f51",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-provider-jdk-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-provider-jdk-jvm/0.6.0/cryptography-provider-jdk-jvm-0.6.0-sources.jar",
+    "source_sha256": "d8a18172af4ed57fece03892316b012f1621033bff64fe8887abad79cda93090",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-provider-optimal-jvm-0.6.0.jar",
+    "sha256": "c056e7770c0ce5bd53c43d1a988f04593e00acd4842ea72b46f79cf6f2458745",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-provider-optimal-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-provider-optimal-jvm/0.6.0/cryptography-provider-optimal-jvm-0.6.0-sources.jar",
+    "source_sha256": "ef653183a3941a7a73219c0e36455d4268f3783dd088dd3da4fa728f475c1dc4",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-random-jvm-0.6.0.jar",
+    "sha256": "b8a5b8ba483d6ac9a179397e3b97ea8d9d5074abac00093d0c2246ee18731401",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-random-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-random-jvm/0.6.0/cryptography-random-jvm-0.6.0-sources.jar",
+    "source_sha256": "d8db9b08f9ad80750dbb710511d42d1cc59192fe6b6aa4140e1d0272e2bbe3be",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-serialization-asn1-jvm-0.6.0.jar",
+    "sha256": "350127c2da523cfcec95d468252e9c5ab59aacd6513b436288509395d61f6be0",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-serialization-asn1-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-serialization-asn1-jvm/0.6.0/cryptography-serialization-asn1-jvm-0.6.0-sources.jar",
+    "source_sha256": "c6f4ef1e196ad4f1181e5403a3983f402a19755099fce9244fc4cfc218feb84f",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-serialization-asn1-modules-jvm-0.6.0.jar",
+    "sha256": "28097cd87c8aba067d7ed1913704515b03a6d7b82ea653092a0c4fee46f4da9d",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-serialization-asn1-modules-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-serialization-asn1-modules-jvm/0.6.0/cryptography-serialization-asn1-modules-jvm-0.6.0-sources.jar",
+    "source_sha256": "728674c0eff07d28d27385443a4a173c586afcd9c09456e30fb9b7de924c1062",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "cryptography-serialization-pem-jvm-0.6.0.jar",
+    "sha256": "96b3215a19bbfe069296a06d0f1650f06468b2bf1bbe2793fe4be6e8120eba12",
+    "coordinate": "dev.whyoleg.cryptography:cryptography-serialization-pem-jvm:0.6.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "developerConnection": "https://github.com/whyoleg/cryptography-kotlin.git",
+        "url": "https://github.com/whyoleg/cryptography-kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/dev/whyoleg/cryptography/cryptography-serialization-pem-jvm/0.6.0/cryptography-serialization-pem-jvm-0.6.0-sources.jar",
+    "source_sha256": "ecc6b34d0337adbe3c0042a706c2f9217c1e8f59e67ef8a2ab0f57464da9c7e8",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "d2j-base-cmd-2.4.38.jar",
+    "sha256": "4e9ee8b7d751b6d8447313cb168c88ea14454d53d281ca7c1d9307c7f74051a4",
+    "coordinate": "de.femtopedia.dex2jar:d2j-base-cmd:2.4.38",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "developerConnection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "url": "https://github.com/ThexXTURBOXx/dex2jar.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/de/femtopedia/dex2jar/d2j-base-cmd/2.4.38/d2j-base-cmd-2.4.38-sources.jar",
+    "source_sha256": "91fc3004ed892e37cd0daffb75e3c3786ba8619654b54ccc6cee5eb8517b15b2",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "d2j-external-2.4.38.jar",
+    "sha256": "929884e103c6897448abfe34eb9c6c0018b0443b160da87d0073976b1b3b2b67",
+    "coordinate": "de.femtopedia.dex2jar:d2j-external:2.4.38",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "developerConnection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "url": "https://github.com/ThexXTURBOXx/dex2jar.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/de/femtopedia/dex2jar/d2j-external/2.4.38/d2j-external-2.4.38-sources.jar",
+    "source_sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+    "source_status": "downloaded",
+    "source_content_status": "Maven source JAR is manifest-only, not source coverage.",
+    "shaded_followup": "jvm-shaded-followup/REPORT.md and evidence.json bind all 647 Android/ASM classes to the exact tagged vendored binaries and retain Apache/BSD notices."
+  },
+  {
+    "jar": "dex-ir-2.4.38.jar",
+    "sha256": "ecac2eb44ad9393ac579d5d4e48520b485e90ab6536becdb061466fef92d9bb8",
+    "coordinate": "de.femtopedia.dex2jar:dex-ir:2.4.38",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "developerConnection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "url": "https://github.com/ThexXTURBOXx/dex2jar.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/de/femtopedia/dex2jar/dex-ir/2.4.38/dex-ir-2.4.38-sources.jar",
+    "source_sha256": "5a964879137c3dd8ba4ba95c9d771c75e12e623a766cf42d0221be4a15458ec3",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "dex-reader-2.4.38.jar",
+    "sha256": "177a7ddc7a9b7cc1e9a86603f93599461bc64ed8d5574b80f42391390ea9ec7d",
+    "coordinate": "de.femtopedia.dex2jar:dex-reader:2.4.38",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "developerConnection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "url": "https://github.com/ThexXTURBOXx/dex2jar.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/de/femtopedia/dex2jar/dex-reader/2.4.38/dex-reader-2.4.38-sources.jar",
+    "source_sha256": "209be547c3d39b182cd9047eb04c73f0227f3cf429e688fe892ae3b6d16f9adc",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "dex-reader-api-2.4.38.jar",
+    "sha256": "490cac37ca090db759295eae2c279536bca7c77e8cfa3be4372210a6a4ca9d2a",
+    "coordinate": "de.femtopedia.dex2jar:dex-reader-api:2.4.38",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "developerConnection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "url": "https://github.com/ThexXTURBOXx/dex2jar.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/de/femtopedia/dex2jar/dex-reader-api/2.4.38/dex-reader-api-2.4.38-sources.jar",
+    "source_sha256": "b765d4bcd73c13d51e4b5d1838704248970bc180725a7ac7c9f9b9e0ba5e9914",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "dex-translator-2.4.38.jar",
+    "sha256": "9bb5a7852cfc9698d130cc780513bb202a8b0c59bf8dd43c3f25cf32c587741d",
+    "coordinate": "de.femtopedia.dex2jar:dex-translator:2.4.38",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "developerConnection": "scm:git:git://github.com/ThexXTURBOXx/dex2jar.git",
+        "url": "https://github.com/ThexXTURBOXx/dex2jar.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/de/femtopedia/dex2jar/dex-translator/2.4.38/dex-translator-2.4.38-sources.jar",
+    "source_sha256": "bdc2071beeab486b75e6f44a436ba5c49129fa593a0452ac53c75ebf7975e04f",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "error_prone_annotations-2.27.0.jar",
+    "sha256": "24c923372c58e35d0b9f16a028929bb9aedc77521867c274f2bd0735df5ba1f5",
+    "coordinate": "com.google.errorprone:error_prone_annotations:2.27.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [],
+    "source_url": "https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.27.0/error_prone_annotations-2.27.0-sources.jar",
+    "source_sha256": "c5acfa6fcc68c03695ca5f1b32aa83cf7d11f1ff8ca8210e3222da0867ad55ca",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "gson-2.11.0.jar",
+    "sha256": "57928d6e5a6edeb2abd3770a8f95ba44dce45f3b23b7a9dc2b309c581552a78b",
+    "coordinate": "com.google.code.gson:gson:2.11.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [],
+    "source_url": "https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.11.0/gson-2.11.0-sources.jar",
+    "source_sha256": "49a853f71bc874ee1898a4ad5009b57d0c536e5a998b3890253ffbf4b7276ad3",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "io-core-jvm-0.0.8.jar",
+    "sha256": "c3091155ee3acd8ff3a8274e52baf0f8e200cbad2fd440a121943bfceb7dc1f0",
+    "coordinate": "com.fleeksoft.io:io-core-jvm:0.0.8",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://opensource.org/licenses/Apache-2.0"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/fleeksoft/fleeksoft-io.git",
+        "url": "https://github.com/fleeksoft/fleeksoft-io"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/fleeksoft/io/io-core-jvm/0.0.8/io-core-jvm-0.0.8-sources.jar",
+    "source_sha256": "3804b8af7027cbb06f592149c9b848dd7441f3c79adb34abe65df0f25fe1e655",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "jackson-annotations-2.13.1.jar",
+    "sha256": "ab607939d288e22bff4cb97acc6b25e841d82681f2bc40ce67bb35cb0ffdb06d",
+    "coordinate": "com.fasterxml.jackson.core:jackson-annotations:2.13.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git@github.com:FasterXML/jackson-annotations.git",
+        "developerConnection": "scm:git:git@github.com:FasterXML/jackson-annotations.git",
+        "url": "http://github.com/FasterXML/jackson-annotations",
+        "tag": "jackson-annotations-2.13.1"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.13.1/jackson-annotations-2.13.1-sources.jar",
+    "source_sha256": "f19d1c55d299e0d00ff970d0a28a24690295c8f2c20a437b81a13c602b5bad80",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "jackson-core-2.13.1.jar",
+    "sha256": "8be6935cd8f9673ac684a589aaa1caecd57dee7c37ed1443d17924325799003d",
+    "coordinate": "com.fasterxml.jackson.core:jackson-core:2.13.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git@github.com:FasterXML/jackson-core.git",
+        "developerConnection": "scm:git:git@github.com:FasterXML/jackson-core.git",
+        "url": "http://github.com/FasterXML/jackson-core",
+        "tag": "jackson-core-2.13.1"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.13.1/jackson-core-2.13.1-sources.jar",
+    "source_sha256": "9f709c8f7a7cb053f467833beda69f017890ba9d609b8c98372d52f27acfc688",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "jackson-databind-2.13.1.jar",
+    "sha256": "56cfbdc9e1736b5c56b43757f6cf546ee6d49393c79383c4e495c4f7047cb506",
+    "coordinate": "com.fasterxml.jackson.core:jackson-databind:2.13.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git@github.com:FasterXML/jackson-databind.git",
+        "developerConnection": "scm:git:git@github.com:FasterXML/jackson-databind.git",
+        "url": "http://github.com/FasterXML/jackson-databind",
+        "tag": "jackson-databind-2.13.1"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.13.1/jackson-databind-2.13.1-sources.jar",
+    "source_sha256": "5da54acdabb37ffcf63b516c6a857415deb12f88574b92fcf1ac4ac366c5855f",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "jackson-module-kotlin-2.13.1.jar",
+    "sha256": "816d7e1341353c2cebc2bc4b7d02f6db677cb12f60d6e61328bab67f314463fd",
+    "coordinate": "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1",
+    "cache_hash_match": true,
+    "pom_licenses": [],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git@github.com:FasterXML/jackson-module-kotlin.git",
+        "developerConnection": "scm:git:git@github.com:FasterXML/jackson-module-kotlin.git",
+        "url": "https://github.com/FasterXML/jackson-module-kotlin",
+        "tag": "jackson-module-kotlin-2.13.1"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/module/jackson-module-kotlin/2.13.1/jackson-module-kotlin-2.13.1-sources.jar",
+    "source_sha256": "1d2cdb74330b7be2126b6a808bbaee45ab765ef89e29d013573a3a8702ba0776",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "json-20251224.jar",
+    "sha256": "2a3438fbf9293174ea82bdfa35e83d8b965cfe6bddc034a1ac5d60107174c209",
+    "coordinate": "org.json:json:20251224",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Public Domain",
+        "url": "https://github.com/stleary/JSON-java/blob/master/LICENSE",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/douglascrockford/JSON-java.git",
+        "connection": "scm:git:git://github.com/douglascrockford/JSON-java.git",
+        "developerConnection": "scm:git:git@github.com:douglascrockford/JSON-java.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/json/json/20251224/json-20251224-sources.jar",
+    "source_sha256": "a380c396038560c8c7993c9e6e128d499b0aebc218969d47113013f013508220",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "jsoup-1.22.2.jar",
+    "sha256": "596785996d3c6df16f544c232d10a9a1d88783b2a4740cf5251cb616f2be704d",
+    "coordinate": "org.jsoup:jsoup:1.22.2",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The MIT License",
+        "url": "https://jsoup.org/license",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/jhy/jsoup",
+        "connection": "scm:git:https://github.com/jhy/jsoup.git",
+        "tag": "jsoup-1.22.2"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jsoup/jsoup/1.22.2/jsoup-1.22.2-sources.jar",
+    "source_sha256": "3aed3e38ec1e0373eb6755213b01d197802f858850bce20e63d99c93e08818bc",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "jsr305-3.0.2.jar",
+    "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+    "coordinate": "com.google.code.findbugs:jsr305:3.0.2",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://code.google.com/p/jsr-305/",
+        "developerConnection": "scm:git:https://code.google.com/p/jsr-305/",
+        "url": "https://code.google.com/p/jsr-305/"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2-sources.jar",
+    "source_sha256": "1c9e85e272d0708c6a591dc74828c71603053b48cc75ae83cce56912a2aa063b",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlin-reflect-2.4.0.jar",
+    "sha256": "f0d8e8908624eb4478bb131e9f887366680d2e239741195e548fa5c906963b90",
+    "coordinate": "org.jetbrains.kotlin:kotlin-reflect:2.4.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
+        "developerConnection": "scm:git:https://github.com/JetBrains/kotlin.git",
+        "url": "https://github.com/JetBrains/kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-reflect/2.4.0/kotlin-reflect-2.4.0-sources.jar",
+    "source_sha256": "ff246d790aad39f55779f44e410b477228999cd3c352585c73b56ea5df36549e",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlin-stdlib-2.4.0.jar",
+    "sha256": "ccb14ff83fabcb11458b798dbc9824748ccdffeec79c9aba789e6ed1cda86b1c",
+    "coordinate": "org.jetbrains.kotlin:kotlin-stdlib:2.4.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
+        "developerConnection": "scm:git:https://github.com/JetBrains/kotlin.git",
+        "url": "https://github.com/JetBrains/kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.4.0/kotlin-stdlib-2.4.0-sources.jar",
+    "source_sha256": "bca27f834e278d08c1b85a40e636450867e8251c284fd4c24e9879bb99e301c5",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlin-stdlib-jdk7-2.3.20.jar",
+    "sha256": "18231e75c68026d90f5487c8dc753be307c273a5eed574cee5a7118dfb04bc14",
+    "coordinate": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.3.20",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
+        "developerConnection": "scm:git:https://github.com/JetBrains/kotlin.git",
+        "url": "https://github.com/JetBrains/kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.3.20/kotlin-stdlib-jdk7-2.3.20-sources.jar",
+    "source_sha256": "2534c8908432e06de73177509903d405b55f423dd4c2f747e16b92a2162611e6",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlin-stdlib-jdk8-2.3.20.jar",
+    "sha256": "4d2f1d22a64efd04554108ba71297e10ff399fc0d61f56feb7a9266104be757d",
+    "coordinate": "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.20",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
+        "developerConnection": "scm:git:https://github.com/JetBrains/kotlin.git",
+        "url": "https://github.com/JetBrains/kotlin"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.3.20/kotlin-stdlib-jdk8-2.3.20-sources.jar",
+    "source_sha256": "3cb6895054a0985bba591c165503fe4dd63a215af53263b67a071ccdc242bf6e",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlinx-coroutines-core-jvm-1.11.0.jar",
+    "sha256": "d1d75aa01dffbb4d1c520e67e4c4e7f5f6174718e7cb4632412503f2f0e604fa",
+    "coordinate": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.11.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/Kotlin/kotlinx.coroutines"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.11.0/kotlinx-coroutines-core-jvm-1.11.0-sources.jar",
+    "source_sha256": "3e0847c0b463965404d5b6fe5d6868000a220b050180dec68501801e9439976a",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlinx-datetime-jvm-0.8.0.jar",
+    "sha256": "ee44b51f8977c2f51d575299a4fc6782ab3700eba4cfc7fad548cced1543936a",
+    "coordinate": "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.8.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/Kotlin/kotlinx-datetime"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-datetime-jvm/0.8.0/kotlinx-datetime-jvm-0.8.0-sources.jar",
+    "source_sha256": "9c01c80f7c8bc94fc3ec88a08b0e6abd60ff2dfcd063bf4412948d465bd8ce68",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlinx-io-bytestring-jvm-0.9.1.jar",
+    "sha256": "8589de0b7c476bfdd02a24641685f609ade72f5e595cf2909c168acdba7e6ba4",
+    "coordinate": "org.jetbrains.kotlinx:kotlinx-io-bytestring-jvm:0.9.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/Kotlin/kotlinx-io"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-io-bytestring-jvm/0.9.1/kotlinx-io-bytestring-jvm-0.9.1-sources.jar",
+    "source_sha256": "483e02a686fbbba255eabfdf6b35e1d6408c8504c5f75e40f3d5e0a5d998a50c",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlinx-io-core-jvm-0.9.1.jar",
+    "sha256": "765d8851d8ca694706931331b92386844800867e041b720f1f193dbda874d370",
+    "coordinate": "org.jetbrains.kotlinx:kotlinx-io-core-jvm:0.9.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/Kotlin/kotlinx-io"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-io-core-jvm/0.9.1/kotlinx-io-core-jvm-0.9.1-sources.jar",
+    "source_sha256": "7d312485ba44ece3b874003829239fdd25c91ce8837b2956b741920dab24dbc7",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlinx-serialization-core-jvm-1.11.0.jar",
+    "sha256": "f4a801c647d4351327cd9e1ac4113e2be9ea37a64ab0abae269c25a52e28f35d",
+    "coordinate": "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.11.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/Kotlin/kotlinx.serialization"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.11.0/kotlinx-serialization-core-jvm-1.11.0-sources.jar",
+    "source_sha256": "9c9b7d4aabc03e671b5297ca5d50931f7c961f3d7e36a67ce945921b08a7be40",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "kotlinx-serialization-json-jvm-1.11.0.jar",
+    "sha256": "563a25b4eb5c9128ae9c2479f3d1a5c44dcd176112b91cf03682e906eba5c935",
+    "coordinate": "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.11.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Apache-2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/Kotlin/kotlinx.serialization"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.11.0/kotlinx-serialization-json-jvm-1.11.0-sources.jar",
+    "source_sha256": "8a0eae6ac1a42a0fbe1b850ea4e21ad71d2a8aa896ee2257b1492b471bd5c5fe",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "ksoup-jvm-0.2.6.jar",
+    "sha256": "ec9c20bc08d0cb28293a38580c6fb107521b4fdb781c1251a3fdd0a7e8ff1f92",
+    "coordinate": "com.fleeksoft.ksoup:ksoup-jvm:0.2.6",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "MIT License",
+        "url": "https://opensource.org/license/MIT"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "https://github.com/fleeksoft/ksoup.git",
+        "url": "https://github.com/fleeksoft/ksoup"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/fleeksoft/ksoup/ksoup-jvm/0.2.6/ksoup-jvm-0.2.6-sources.jar",
+    "source_sha256": "1392cc8ee421655b8d9d5dded34dccac1fbcd224faddda65cd811edb05d5223d",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "ktor-http-jvm-3.5.0.jar",
+    "sha256": "2babac355de364c473b27b060d1c810fc2f83ed6e44822eabc6c3f46adf155a3",
+    "coordinate": "io.ktor:ktor-http-jvm:3.5.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/ktorio/ktor.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-http-jvm/3.5.0/ktor-http-jvm-3.5.0-sources.jar",
+    "source_sha256": "0903d2d4a11963c993bbf17e15b4f72b1539cd74794acec142bf4ee25601186a",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "ktor-io-jvm-3.5.0.jar",
+    "sha256": "ca9f9443479204fe97a00bd53bc3dee5b0514c1a088e9df1e0e4d4ccfc605e51",
+    "coordinate": "io.ktor:ktor-io-jvm:3.5.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/ktorio/ktor.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-io-jvm/3.5.0/ktor-io-jvm-3.5.0-sources.jar",
+    "source_sha256": "d22aa1d25c16d492b6b43b728a6b82e5dc4f0ce49a106cd9a41c7b849a6d0cca",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "ktor-utils-jvm-3.5.0.jar",
+    "sha256": "214200f074afe9d4b915d347397b5c1f768fbdd10ead7192e8adfd662dd4a72f",
+    "coordinate": "io.ktor:ktor-utils-jvm:3.5.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "url": "https://github.com/ktorio/ktor.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-utils-jvm/3.5.0/ktor-utils-jvm-3.5.0-sources.jar",
+    "source_sha256": "e6bedbbf1e45b5d311ccb945e8fb5e1c1631a3fe0baafd9938bffc05b1da6db0",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "library-jvm-1.0.1.jar",
+    "sha256": "26f56ecf0612233a78938b0368cc6fbb910b8b2774eb25421c1e3e853396f5eb",
+    "status": "LOCAL_OR_UNKNOWN_NO_CACHE_HASH_MATCH"
+  },
+  {
+    "jar": "nanojson-e9d656ddb49a412a5a0a5d5ef20ca7ef09549996.jar",
+    "sha256": "d495881a322b3c72e5d43284afd7d7021520028ca8b7c6ba861e3fd8d90614d5",
+    "coordinate": "com.github.TeamNewPipe:nanojson:e9d656ddb49a412a5a0a5d5ef20ca7ef09549996",
+    "cache_hash_match": true,
+    "pom_licenses": [],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git@github.com:mmastrac/nanojson.git",
+        "developerConnection": "scm:git:git@github.com:mmastrac/nanojson.git",
+        "url": "scm:git:git@github.com:mmastrac/nanojson.git"
+      }
+    ],
+    "source_url": "https://jitpack.io/com/github/TeamNewPipe/nanojson/e9d656ddb49a412a5a0a5d5ef20ca7ef09549996/nanojson-e9d656ddb49a412a5a0a5d5ef20ca7ef09549996-sources.jar",
+    "source_sha256": "a4ac5f0d7163220039527b45cc846df44e66a3293ac10af85a2d35b204a8e82d",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "okhttp-dnsoverhttps-5.3.2.jar",
+    "sha256": "a669169acee7f320554266ed3a6d3280946fcbf8a32b09d334b3eb0a59cfe53b",
+    "coordinate": "com.squareup.okhttp3:okhttp-dnsoverhttps:5.3.2",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://github.com/square/okhttp.git",
+        "developerConnection": "scm:git:ssh://git@github.com/square/okhttp.git",
+        "url": "https://github.com/square/okhttp"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/squareup/okhttp3/okhttp-dnsoverhttps/5.3.2/okhttp-dnsoverhttps-5.3.2-sources.jar",
+    "source_sha256": "20ba78003187811341db981f19fa5ced48fde676fb3b53ffcdc37139a5d0f4af",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "okhttp-jvm-5.3.2.jar",
+    "sha256": "c771f48075b763f6c322055e21129a94b7de4c1faf3f8f58ace320b0c9517a30",
+    "coordinate": "com.squareup.okhttp3:okhttp-jvm:5.3.2",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:https://github.com/square/okhttp.git",
+        "developerConnection": "scm:git:ssh://git@github.com/square/okhttp.git",
+        "url": "https://github.com/square/okhttp"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/squareup/okhttp3/okhttp-jvm/5.3.2/okhttp-jvm-5.3.2-sources.jar",
+    "source_sha256": "c44c549707d30d56084d0bc1bc00f36c7c326e30664b40c20c1ff8ab657afa5b",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "okio-jvm-3.16.4.jar",
+    "sha256": "2196b993cd34dbbd919e7e01f57a4781b58bee80f86106163e287c20343a96a7",
+    "coordinate": "com.squareup.okio:okio-jvm:3.16.4",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/square/okio.git",
+        "developerConnection": "scm:git:ssh://git@github.com/square/okio.git",
+        "url": "https://github.com/square/okio/"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/com/squareup/okio/okio-jvm/3.16.4/okio-jvm-3.16.4-sources.jar",
+    "source_sha256": "834d0ba65168b5314f447bd2403d134423c42ad1927fdcd24473b20c4fd5a7d8",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "protobuf-javalite-4.35.0.jar",
+    "sha256": "1cfe1e1d7918ae62a0234dc1231406e4c41154bf29ae81e113f20fbc2507dd10",
+    "coordinate": "com.google.protobuf:protobuf-javalite:4.35.0",
+    "cache_hash_match": true,
+    "pom_licenses": [],
+    "pom_scm": [],
+    "source_url": "https://repo.maven.apache.org/maven2/com/google/protobuf/protobuf-javalite/4.35.0/protobuf-javalite-4.35.0-sources.jar",
+    "source_sha256": "c0860a7a38f02ec96ca37e7d4a0730a0d2734ef7e8742f2e6eeefda9f9ac0148",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "provider-host-4.8.0.jar",
+    "sha256": "b30263948943da82b6933319a8e32c2b0921c007fc1fc01d759ebe391d8cf332",
+    "status": "LOCAL_OR_UNKNOWN_NO_CACHE_HASH_MATCH"
+  },
+  {
+    "jar": "rhino-1.8.1.jar",
+    "sha256": "98a06d42bdd69da15bf9c2a7812b4cfe648ca9e64fe8baaeb502a32b0ed2c8ac",
+    "coordinate": "org.mozilla:rhino:1.8.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Mozilla Public License, Version 2.0",
+        "url": "http://www.mozilla.org/MPL/2.0/index.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git@github.com:mozilla/rhino.git",
+        "developerConnection": "scm:git:git@github.com:mozilla/rhino.git",
+        "url": "git@github.com:mozilla/rhino.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/mozilla/rhino/1.8.1/rhino-1.8.1-sources.jar",
+    "source_sha256": "2303a0e5aa222faae0b95865c25442da89ec14c0fc81ac1608f2a6095e3d2459",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "rhino-engine-1.8.1.jar",
+    "sha256": "ff38ad60aa32a23942f60242a433a2583a5407841745510754a43e0e61dd95cf",
+    "coordinate": "org.mozilla:rhino-engine:1.8.1",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "Mozilla Public License, Version 2.0",
+        "url": "http://www.mozilla.org/MPL/2.0/index.txt"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git@github.com:mozilla/rhino.git",
+        "developerConnection": "scm:git:git@github.com:mozilla/rhino.git",
+        "url": "git@github.com:mozilla/rhino.git"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/org/mozilla/rhino-engine/1.8.1/rhino-engine-1.8.1-sources.jar",
+    "source_sha256": "c3316bdfd713c92d2688ea921b5cc7568a5a879ecd395847559407862fce5089",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "slf4j-api-2.0.18.jar",
+    "sha256": "44508fd1576500688c790b190acdd16fec4f8c79a3e0b900afd70503cf055f55",
+    "coordinate": "org.slf4j:slf4j-api:2.0.18",
+    "cache_hash_match": true,
+    "pom_licenses": [],
+    "pom_scm": [],
+    "source_url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/2.0.18/slf4j-api-2.0.18-sources.jar",
+    "source_sha256": "192e007cf7f2be41d40574e44521fc0b7ce55e01f13dbe0fa8707c8ae3329075",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "stately-concurrency-jvm-2.1.0.jar",
+    "sha256": "86739675892fb1c17d6bd36d05347e89ff313957421bb01a45a743ce774e8e29",
+    "coordinate": "co.touchlab:stately-concurrency-jvm:2.1.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/touchlab/Stately.git",
+        "developerConnection": "scm:git:git://github.com/touchlab/Stately.git",
+        "url": "https://github.com/touchlab/Stately"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/co/touchlab/stately-concurrency-jvm/2.1.0/stately-concurrency-jvm-2.1.0-sources.jar",
+    "source_sha256": "1981bcea839e608ecce520237561ba640948be7e46316098d4fcfb7d9d19ca99",
+    "source_status": "downloaded"
+  },
+  {
+    "jar": "stately-strict-jvm-2.1.0.jar",
+    "sha256": "581070db2802cbad81f6e6e2d9d2494835443153b314458d53aa43c68260c9fa",
+    "coordinate": "co.touchlab:stately-strict-jvm:2.1.0",
+    "cache_hash_match": true,
+    "pom_licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ],
+    "pom_scm": [
+      {
+        "connection": "scm:git:git://github.com/touchlab/Stately.git",
+        "developerConnection": "scm:git:git://github.com/touchlab/Stately.git",
+        "url": "https://github.com/touchlab/Stately"
+      }
+    ],
+    "source_url": "https://repo.maven.apache.org/maven2/co/touchlab/stately-strict-jvm/2.1.0/stately-strict-jvm-2.1.0-sources.jar",
+    "source_sha256": "19cfdf3e5662c563c602f26e9a09abb39cb4186474143a4fa64d9b5eb30d9187",
+    "source_status": "downloaded"
+  }
+]

@@ -1,0 +1,96 @@
+[
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/mpv-winbuild-cd1edc11.tar.gz",
+    "url": "https://codeload.github.com/shinchiro/mpv-winbuild-cmake/tar.gz/cd1edc11dc6887a50f705717619d879f5a93a488",
+    "resolved_url": "https://codeload.github.com/shinchiro/mpv-winbuild-cmake/tar.gz/cd1edc11dc6887a50f705717619d879f5a93a488",
+    "size": 81655,
+    "sha256": "8b92a254771496b0dcc23017c2734bfa7545441d3e6a37958b063d6e7814a657",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/NewPipeExtractor-v0.26.3.tar.gz",
+    "url": "https://codeload.github.com/TeamNewPipe/NewPipeExtractor/tar.gz/refs/tags/v0.26.3",
+    "resolved_url": "https://codeload.github.com/TeamNewPipe/NewPipeExtractor/tar.gz/refs/tags/v0.26.3",
+    "size": 33986470,
+    "sha256": "4b8dfaf7073248eab1fd137b5f2469688984ef0c10d675e8a551b104b1ec34b3",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/NiceHttp-0.4.18.tar.gz",
+    "url": "https://codeload.github.com/Blatzar/NiceHttp/tar.gz/refs/tags/0.4.18",
+    "resolved_url": "https://codeload.github.com/Blatzar/NiceHttp/tar.gz/refs/tags/0.4.18",
+    "size": 111723,
+    "sha256": "ee6eef081959e87be3141fd01a2023db4bc142de64a78405b41ef1f5f1fa0e33",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/nanojson-e9d656.tar.gz",
+    "url": "https://codeload.github.com/TeamNewPipe/nanojson/tar.gz/e9d656ddb49a412a5a0a5d5ef20ca7ef09549996",
+    "resolved_url": "https://codeload.github.com/TeamNewPipe/nanojson/tar.gz/e9d656ddb49a412a5a0a5d5ef20ca7ef09549996",
+    "size": 305482,
+    "sha256": "20a700fb8bbab554577b2fbe3868b9eb82ac46ec9c8396d743d47fb3f9170ef6",
+    "status": "downloaded"
+  },
+  {
+    "file": "/data/CloudStream-releases/0.1.0-preview.2/windows-runtime/third-party-sources/rhino-1.8.1.tar.gz",
+    "url": "https://codeload.github.com/mozilla/rhino/tar.gz/refs/tags/Rhino1_8_1_Release",
+    "resolved_url": "https://codeload.github.com/mozilla/rhino/tar.gz/refs/tags/Rhino1_8_1_Release",
+    "size": 10407301,
+    "sha256": "36c0c512e020a3dc6794293b35128462e7a4925bc282969a3358d25c8e3fd69c",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/Apache-2.0.txt",
+    "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+    "resolved_url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+    "size": 11358,
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/MPL-2.0.txt",
+    "url": "https://www.mozilla.org/media/MPL/2.0/index.txt",
+    "resolved_url": "https://www.mozilla.org/media/MPL/2.0/index.txt",
+    "size": 16726,
+    "sha256": "3f3d9e0024b1921b067d6f7f88deb4a60cbe7a78e76c64e3f1d7fc3b779b9d04",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/asm-license.html",
+    "url": "https://asm.ow2.io/license.html",
+    "resolved_url": "https://asm.ow2.io/license.html",
+    "size": 3117,
+    "sha256": "5feb76d8adda38acdeeba4e4301d0d8633bb0f40e1e802948b13cee21e68610e",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/protobuf-LICENSE",
+    "url": "https://raw.githubusercontent.com/protocolbuffers/protobuf/v35.0/LICENSE",
+    "resolved_url": "https://raw.githubusercontent.com/protocolbuffers/protobuf/v35.0/LICENSE",
+    "size": 1732,
+    "sha256": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/ksoup-LICENSE",
+    "url": "https://raw.githubusercontent.com/fleeksoft/ksoup/0.2.6/LICENSE",
+    "resolved_url": "https://raw.githubusercontent.com/fleeksoft/ksoup/0.2.6/LICENSE",
+    "size": 1156,
+    "sha256": "65b41631022bc7d4bdc4f2542400a7b5c7c159c8bcb250d7f0513664452fbc60",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/dxcompiler-release.json",
+    "url": "https://api.github.com/repos/microsoft/DirectXShaderCompiler/releases/tags/v1.8.2502",
+    "resolved_url": "https://api.github.com/repos/microsoft/DirectXShaderCompiler/releases/tags/v1.8.2502",
+    "size": 7937,
+    "sha256": "e7f7463e212a15ff87ecf858d4b7cbe11c475a5e7c29c43396c4860973062e05",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/msys2-vulkan-package.tar.zst",
+    "url": "https://repo.msys2.org/mingw/ucrt64/mingw-w64-ucrt-x86_64-vulkan-loader-1.4.357.0-1-any.pkg.tar.zst",
+    "status": "FAILED",
+    "error": "HTTP Error 404: Not Found"
+  }
+]

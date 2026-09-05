@@ -1,0 +1,26 @@
+[
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/Microsoft-VS2022-REDIST.html",
+    "url": "https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution",
+    "resolved_url": "https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution",
+    "size": 62589,
+    "sha256": "385ada0f549beb3c98f85b475e5cdf289194f323009b4b9f342db08101e45432",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/Microsoft-BuildTools2022-license.html",
+    "url": "https://visualstudio.microsoft.com/license-terms/vs2022-ga-diagnosticbuildtools/",
+    "resolved_url": "https://visualstudio.microsoft.com/license-terms/vs2022-ga-diagnosticbuildtools/",
+    "size": 242673,
+    "sha256": "347e2f7b7b8e9fc21ab0b57c9dd24105064c66208508a121c2fd76465d0887dd",
+    "status": "downloaded"
+  },
+  {
+    "file": "/home/dc/cloudstream-pc/packaging/windows-licenses/upstream/Microsoft-BuildTools2022-License.docx",
+    "url": "https://visualstudio.microsoft.com/wp-content/uploads/2024/03/Visual-Studio-2022-Diagnostic-Build-Tools-Agent-License_Update-March-2024_EN.docx",
+    "resolved_url": "https://visualstudio.microsoft.com/wp-content/uploads/2024/03/Visual-Studio-2022-Diagnostic-Build-Tools-Agent-License_Update-March-2024_EN.docx",
+    "size": 34395,
+    "sha256": "2f66b86a00e8d9833789897ce23d05a4a2dbea370cf39c8c1098dbc17d0e7bdc",
+    "status": "downloaded"
+  }
+]

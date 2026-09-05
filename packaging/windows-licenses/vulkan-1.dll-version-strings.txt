@@ -1,0 +1,15 @@
+VS_VERSION_INFO
+StringFileInfo
+04090000
+FileDescription
+1.4.357.Dev Build
+FileVersion
+Vulkan Loader - Dev Build
+LegalCopyright
+Copyright (C) 2015-2026
+ProductName
+Vulkan Runtime
+ProductVersion
+Vulkan Loader - Dev Build
+VarFileInfo
+Translation

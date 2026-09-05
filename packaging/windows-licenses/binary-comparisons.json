@@ -1,0 +1,51 @@
+[
+  {
+    "runtime": "libmpv-2.dll",
+    "upstream_member": "upstream-extracted/mpv-dev-x86_64-20260903-git-69e63f425a/libmpv-2.dll",
+    "sha256_match": true
+  },
+  {
+    "runtime": "libgallium_wgl.dll",
+    "upstream_member": "upstream-extracted/mesa3d-26.2.0-release-msvc/x64/libgallium_wgl.dll",
+    "sha256_match": true
+  },
+  {
+    "runtime": "opengl32sw.dll",
+    "upstream_member": "upstream-extracted/mesa3d-26.2.0-release-msvc/x64/opengl32.dll",
+    "sha256_match": true
+  },
+  {
+    "runtime": "dxil.dll",
+    "upstream_member": "upstream-extracted/mesa3d-26.2.0-release-msvc/x64/dxil.dll",
+    "sha256_match": false
+  },
+  {
+    "runtime": "dxcompiler.dll",
+    "upstream_archive": "dxc_2025_02_20.zip",
+    "upstream_member": "bin/x64/dxcompiler.dll",
+    "sha256_match": false
+  },
+  {
+    "runtime": "dxil.dll",
+    "upstream_archive": "dxc_2025_02_20.zip",
+    "upstream_member": "bin/x64/dxil.dll",
+    "sha256_match": false
+  },
+  {
+    "runtime": "SDL2.dll",
+    "upstream_archive": "SDL2-devel-2.32.10-VC.zip",
+    "upstream_member": "SDL2-2.32.10/lib/x64/SDL2.dll",
+    "sha256_match": true
+  },
+  {
+    "runtime": "ffmpeg.exe",
+    "upstream_archive": "gyan-ffmpeg-9.0.1-essentials.zip",
+    "upstream_member": "ffmpeg-9.0.1-essentials_build/bin/ffmpeg.exe",
+    "sha256_match": true
+  },
+  {
+    "runtime": "vulkan-1.dll",
+    "upstream_archive": "msys2-vulkan-package.tar.zst",
+    "sha256_match": true
+  }
+]

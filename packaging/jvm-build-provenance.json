@@ -1,0 +1,888 @@
+{
+  "application_source_base_commit": "467f99cfc17088870b7a943c65f73039d618e5c5",
+  "verification": "Published JVM source/build files match the original build workspace; packaged application JARs match its installDist artifacts. Not a claim of reproducible byte-for-byte JVM recompilation.",
+  "jars": [
+    {
+      "name": "provider-host-4.8.0.jar",
+      "sha256": "b30263948943da82b6933319a8e32c2b0921c007fc1fc01d759ebe391d8cf332"
+    },
+    {
+      "name": "library-jvm-1.0.1.jar",
+      "sha256": "26f56ecf0612233a78938b0368cc6fbb910b8b2774eb25421c1e3e853396f5eb"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "build.gradle.kts",
+      "sha256": "56b3856426f4f63a764879769cc1fc312cd35e26382e51683894e8016ceff61b"
+    },
+    {
+      "path": "gradle.properties",
+      "sha256": "f69e727d94c26053e370b8fce4cf3d6ae3e20b21c7d6dee9483186758fd1a9f8"
+    },
+    {
+      "path": "gradle/libs.versions.toml",
+      "sha256": "4a46167b1bc78168df580710899f733d752b2e7d4f48803f9fe9757c46c6592c"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.jar",
+      "sha256": "55243ef57851f12b070ad14f7f5bb8302daceeebc5bce5ece5fa6edb23e1145c"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "ce7065aa5449c28c11df0cfa29616e4956aabd1b79c27a892da8ecddd49c3fbf"
+    },
+    {
+      "path": "library/.gitignore",
+      "sha256": "5c3174b74edc6f2b9e0743594b8bd3c7f31e4f4405758cc9872b3fe1de1d28b4"
+    },
+    {
+      "path": "library/README.md",
+      "sha256": "6a1fe8e592cd8741f78bbf33869d835c4c91f166c3163fa19c83ba7cf0d8da0e"
+    },
+    {
+      "path": "library/api/jvm/library.api",
+      "sha256": "e111eba127e12db1e4a0d8bdf3f8ecd0d8ae5ffcee3acac9461fb78f123feade"
+    },
+    {
+      "path": "library/build.gradle.kts",
+      "sha256": "86714c83f7e15963e6f8bbd504c0c9daac3228302c81bcfa8d59f9cc1cdabaa9"
+    },
+    {
+      "path": "library/lint.xml",
+      "sha256": "0cb497a266d865cb4ff8ac1e4cb3a5ddece54d58b314940f5a946d462cbeff0f"
+    },
+    {
+      "path": "library/src/androidMain/AndroidManifest.xml",
+      "sha256": "7c2bf986773298efe1557909b60aaff378a2e64b4ad504cf9a52c71819a28168"
+    },
+    {
+      "path": "library/src/androidMain/kotlin/com/lagradost/api/ContextHelper.android.kt",
+      "sha256": "b6690a99c392d165eee3a8ec009e549c60a054a939e461726f3d7cb5980aef2f"
+    },
+    {
+      "path": "library/src/androidMain/kotlin/com/lagradost/api/Log.kt",
+      "sha256": "3fc3f01d1b764a5784a23705608f48a2c0a7a9b801b4361088f3d67a6afbb406"
+    },
+    {
+      "path": "library/src/androidMain/kotlin/com/lagradost/cloudstream3/network/WebViewResolver.android.kt",
+      "sha256": "4fec1bd15e149b99b8d80e224a91c5c8cf545b21e1d1d679a33889a902dd41f8"
+    },
+    {
+      "path": "library/src/androidMain/kotlin/com/lagradost/cloudstream3/utils/Coroutines.android.kt",
+      "sha256": "81377cf50826a602c49f296fece4363909f9b531523b5961ac1d2ee63d6cda35"
+    },
+    {
+      "path": "library/src/androidMain/kotlin/com/lagradost/cloudstream3/utils/SubtitleHelperPlatform.android.kt",
+      "sha256": "9ed887ea8cd3b3314092432a9ae84cface44b5049bab0a36b516974cd654c15d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/api/ContextHelper.kt",
+      "sha256": "8cb7dff7dcc57182ed94234b3f8c5b0513d235859da0bc3205f33fbfc01b53ad"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/api/Log.kt",
+      "sha256": "543ca4dd06c63dc921da850ec1e4658bc59c80da6443350881846ddcd0059e4d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/MainAPI.kt",
+      "sha256": "767431c1cd8a40eba575e84c157ddb2453c8a93112fb35bdc07fa0b5f79c562f"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/MainActivity.kt",
+      "sha256": "2d4c7aa5e2f2bff5cec288a7f0ca0e698ecdb84ce211baae7926e42a7280684d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/ParCollections.kt",
+      "sha256": "ad5d149e3ba1bdb7c46218ee6de85c470d9cc05af5a0ac974b8f2119e2089c94"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Acefile.kt",
+      "sha256": "65d839905d5c56aadfc69b3baf1230ebe94121c4c6ab087388c91c1ece8a1b73"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Blogger.kt",
+      "sha256": "9f71d8655baa90224d311ef21bcceb0ac8e0cc0111084c535f46d452ca8fb4b2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/ByseSX.kt",
+      "sha256": "50c8846938c07831ef5f50356c015b0b9849a2563f2cd8c9f9bfd9bb320aa834"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Cda.kt",
+      "sha256": "daee4db5b9b698f156bea75882aaeb19f8ee4b571dcde0ad934478f692b1a165"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/CineMMRedirect.kt",
+      "sha256": "561bba72ca79307463db3805a8d68694f4554df4aef9c7c932dbcf6d91fbb08b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/CloudMailRuExtractor.kt",
+      "sha256": "dc7ff4311a3f73a398ddafe0a7e20922da20fd846b240ca8049e2a358c742044"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/ContentXExtractor.kt",
+      "sha256": "ac0be43691681a144ea41576497b87d468f10b9408e6819fe744068cedff88d2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Dailymotion.kt",
+      "sha256": "b5f253ff0571d5aabda1cedd716cf46174cac47b68ad303b7a2edfea8e6a1ac7"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/DoodExtractor.kt",
+      "sha256": "8853d67aa02e7bb225b2a3504dab5b075969e3dcc77e0fc9eb7abc8e68bc4763"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Embedgram.kt",
+      "sha256": "5855a011ad347d50ce5ef0b39714a4a9ebdd6fcbc716b2ce1cfe0c42172cf95b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/EmturbovidExtractor.kt",
+      "sha256": "1471be2da68405e7eddbe49ea86e1284ef0c55343f155a430687db26ccc6e696"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Evolaod.kt",
+      "sha256": "7c24669aa7012d837b0a3866bd12a056863e744f1bd51330f2feb347126dad0d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Fastream.kt",
+      "sha256": "43390ab0ea24449b8cfd9f4d1ccbd4b6478189af1ad24686e51e7984b588c736"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Filegram.kt",
+      "sha256": "0d2b30ffbfe85b85b2c74eab7702465a557b9acb7cf2a1edb2935d5fa7037bfc"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Filemoon.kt",
+      "sha256": "c7b96391add0416445a30e84dccac81c372328ca0b58bd032285f6059b9a3504"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Filesim.kt",
+      "sha256": "881e063fdbf962436ef0d02705d1ebfe7fb8c98ce1ad0abcf1e6fcdb638e11f2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Firestream.kt",
+      "sha256": "18e21492a56b08976e4a2fe9eee86efefe9ee44156a31295181864e84b3f32df"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Flyfile.kt",
+      "sha256": "13340768b3dd82d06f1fff799f48b28ed08b16d6d0e8b0e82d83d996d8160557"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/GDMirrorbot.kt",
+      "sha256": "d90423543e98308d5a582c50ce6786876ca1a7dbfda80a4b7c286079ea1294e2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/GUpload.kt",
+      "sha256": "9b8166f4686813b5213b113b0fbcc94adeead1b196fa528151f34dc520276e20"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/GamoVideo.kt",
+      "sha256": "c3abed96fcfdae54a49eae7640deef63ee4494b5dabb982b0ccbcafc26003228"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Gdriveplayer.kt",
+      "sha256": "243febfd9d111ad47d825e6e8d159b15dcc7c0db8b6ceb777f24a94bf9909498"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/GenericM3U8.kt",
+      "sha256": "617150efff3a31abfeac0550040673b8b8d25e5f003f1a495fa8ef035a6a284e"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Gofile.kt",
+      "sha256": "920126f8ce5d081b9403489f655bf33bfa6fbf570caaf1719c53cfe61ed3d957"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/GoodstreamExtractor.kt",
+      "sha256": "b48fcc23be8c80f369fc4b990d8a5ee54dbacf0833efaceab40c3d231b6cd02b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/HDMomPlayerExtractor.kt",
+      "sha256": "fe7193a5e51f4f0f5f4b5c90a61c378b4481f40e84c6420f107464eeb1d5b713"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/HDPlayerSystemExtractor.kt",
+      "sha256": "daa9be1a8950ea82a7493983dcb87f286951b14f18ac950bbca152b1de2ae39b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/HDStreamAbleExtractor.kt",
+      "sha256": "0321d4cb1443ee11091c5a6c59830dc72fb66fb7a9cc7b0752f05b77c1f33cbc"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/HotlingerExtractor.kt",
+      "sha256": "e169ffae53f315e0111e118ee606f9b2801d480bcb46ba5e8f4e6d91a4871e46"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/HubCloud.kt",
+      "sha256": "3c748fbbb46475818cd0da6a7c3363d8c88359eb8b7c64e883557d3ce0c19e9c"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/HubuCloud.kt",
+      "sha256": "07d8fc42b12794374a745d9bc4cf587dab8a84d24e1d59ef81d35744a01fbc5d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Hxfile.kt",
+      "sha256": "c371e53165f2ffbc782e85106d56bae3472067564c21523df79b33908760f501"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/InternetArchive.kt",
+      "sha256": "f98d60808ad0afc7d76ca47e98b8adc3773e6bfc15d3ffa978a90168983a9506"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/JWPlayer.kt",
+      "sha256": "278438565ef1ba4070665af3c77896372e3d4394d2e2157d46bdc19256176fec"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Jeniusplay.kt",
+      "sha256": "5012c2d94d1757081b8482e03fb3f6b178f810cdb4eb59643df36502858b277b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Krakenfiles.kt",
+      "sha256": "a15c8cd1798c52723e8b687427831576954a3922bc84ba03341afdad60136bc9"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Linkbox.kt",
+      "sha256": "9720301b6210651f415d573c81debafaac89638bd42faab9f5c5984a5e0d6d6e"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/LuluStream.kt",
+      "sha256": "9bfac5824a5af14d78017ab094482ad40242c883ecfaaa7e66667cf1c0a4df17"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/M3u8Manifest.kt",
+      "sha256": "c2c7fde799922abd2d61c18a6f746db987b341a29e3905c5f5348518aa310f61"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/MailRuExtractor.kt",
+      "sha256": "4ef3a9c9e3a1245847428d0753cd4aebb199aa8c2d47ace4956be260067556ef"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Maxstream.kt",
+      "sha256": "8b3c2bf131e8264d378d703745f948be7c6e283059c4fec7fee6bec71abd84db"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Mediafire.kt",
+      "sha256": "4d9fbb39577d5add879f95de2efbf1e6393353424beb1766f45710f439fc24df"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/MixDrop.kt",
+      "sha256": "18ae9bd9818d98434ff2aae41210ad88178f75fbcd6b2a2f3f57e903fd35292f"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Moviehab.kt",
+      "sha256": "1c669f0040a2047bdb0a62233aed431569ec1aced72d93dc1ab9766a99706930"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Mp4Upload.kt",
+      "sha256": "a1fc24f7d830bb7124d0f1e4dc60c9ef460bcfa6e2f679f8948f89dd5dfbb394"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Mvidoo.kt",
+      "sha256": "c955e9805557df5138940ff4ebbdd8121232757e31d66cf98e4026ea9ed30c54"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/OdnoklassnikiExtractor.kt",
+      "sha256": "b5498ce79f977158c6bf6cd3562e7eb74273e86cb24129c6a704b3094407ef23"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/OkRuExtractor.kt",
+      "sha256": "c40edeade631717600ae88e050655305d6a0a238704e3c8a4fcca81908c0d2f5"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/PeaceMakerstExtractor.kt",
+      "sha256": "ec884375ccca989c513b1fd36df0a1a7495d7ed3317771205a37e530e343c11d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/PixelDrainExtractor.kt",
+      "sha256": "5ea222112fd7344801ebf8d781610a2e49de67f5655b3503d323a5f4d427e24d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/PlayLtXyz.kt",
+      "sha256": "6041c03f24a05605ef66acd3589f0d12278877ab4b2dbe3f85285520497cee58"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/PlayerVoxzer.kt",
+      "sha256": "f5b5a6d18acb830c11b85952d6bf5a00784b66edd369d2c872ffba0467ba9081"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Playmate.kt",
+      "sha256": "b8e0358407a4597fbbe1a137a40b7d59c4d76d917b7ff3075d7524637e3e9231"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Rabbitstream.kt",
+      "sha256": "2d6e990d5b1dd54a33c798c9913a1818a5d60e4757e01bed95076919b16dbea4"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/RapidVidExtractor.kt",
+      "sha256": "85c9ffb13f8aaf2796773dafbbb4187997cb4e6ac702efad667e72b515bd9567"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/SBPlay.kt",
+      "sha256": "c6aafb97ff0c3d41d0c53b0556d6bc848b74d745959e7bc7d09cd4fdd72fd5de"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/SecvideoOnline.kt",
+      "sha256": "a3b715d61673acce71e38bb1cadb7e271726f1f2c0fd3c748c5271514db0a273"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Sendvid.kt",
+      "sha256": "b963b905e84869d1b44ed447e0f92613663043d75331bf9aec7017f2127566c3"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/SibNetExtractor.kt",
+      "sha256": "f5341fabc1868facaab80f745d68b07f2055099c960536061efc0c438e79ae88"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/SobreatsesuypExtractor.kt",
+      "sha256": "b73e9e2621b0f32ef27c7f1cb31a3017cbc9110cf1415dc07611bba3b7922b44"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/StreamEmbed.kt",
+      "sha256": "028d21bb3111111517799514b5663462c250c0d50782922e5a9220df0eef355b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/StreamSB.kt",
+      "sha256": "6f3c0b40f66d09c61c9337235fbce78c313a242af6c1de63d6424fd2b1ed2574"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/StreamSilk.kt",
+      "sha256": "fb7362c3c7bc09a1fc1f4de556f0c156b95a60f1734f5ede8c313b582dd9c809"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/StreamTape.kt",
+      "sha256": "a98d90f4ae4705d9521a70da9765b952d696cfa67ea66e860fe8a460bff8b3f2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/StreamWishExtractor.kt",
+      "sha256": "681f7c56695dde56f861de5f03cbcac6015b071f29ba25d6b821333e0825f0e2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Streamcash.kt",
+      "sha256": "24efda32f654b53de387a58ccd3276c82d70241a39440849c9afccdcf096a22b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Streamhub.kt",
+      "sha256": "9a658dd783da0f545fb70276d5b180c16aa1044e98d24c08d9c83c9a8e446101"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Streamlare.kt",
+      "sha256": "6e585b6c9b57dfd2f1c2221ac31f77cce97abbb98aa69d51848ac1e061c4c273"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/StreamoUpload.kt",
+      "sha256": "d42d9efaf8289da453d2927a35e014a463640b91094f7d722084f1b61e543026"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Streamplay.kt",
+      "sha256": "056ee6aced98574bcdce42b4b23489be18bca009035a7584f78c5528fe5bc538"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Supervideo.kt",
+      "sha256": "8c7fb679aba2f1b7610ff143536a9cb98032110b9d08d86c4e0db57539237b42"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/TRsTXExtractor.kt",
+      "sha256": "c2959425f0ca567bfc4df90646ac33705ad70e34544bde08f4f82c69cfd9a61e"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Tantifilm.kt",
+      "sha256": "ab43ca758bf000809070e163727d4c07654a2c440347a9a135deaf67c323e447"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/TauVideoExtractor.kt",
+      "sha256": "9e9a3553869f099c62f2c8454bfb80f6f55fcca1e3ccbcb53d6f3a31a118caf0"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Up4Stream.kt",
+      "sha256": "a66cc1b08b4d56b4eda144234a70a91be10a647705a94d155eae9e6c09a398f2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/UpstreamExtractor.kt",
+      "sha256": "bce2d3c975a25b12ef5e5d9c60ff5eeb5093c8be5aa4f13e92ad6fe3943dc884"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Uqload.kt",
+      "sha256": "87ec30ab9ece5be6e3e9abd67d3358a815541a79938389a1ddc1305a02eb0c21"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Userload.kt",
+      "sha256": "1b4c58096769f446dcc3f6f492034a1088b177687b27b8a76d22765962128ea8"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Userscloud.kt",
+      "sha256": "edbb26384f057f994490c2480cc5c48166c9aeae2a5602b1cbfcac7d506f7640"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Uservideo.kt",
+      "sha256": "060ab52b65e6681efe643a1819ee5036ae20016e73d7c6dd83f4c1f8e50c7ca5"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vicloud.kt",
+      "sha256": "7b41d2879ef107b1404ca7c6bc6c2d0f71d2a474410d09204f6080acdc61019a"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/VidHidePro.kt",
+      "sha256": "e0f1197862f87127af6d35823125a50b58d0c2155fef13a20334e21b9d802716"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/VidMoxyExtractor.kt",
+      "sha256": "7f6a1090fab5294b79109cb40482842d975a56cff80c2157b9da8dac8562a2e2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/VidStack.kt",
+      "sha256": "876e400d897e69f26f64a8720df1518a4ad95a6805d4241c03f1054b576f10ac"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vidara.kt",
+      "sha256": "4d3fc3587cf650de3ccb26c5fb3ecab74ee5b96e00a1214a6df8604a70500af4"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Videa.kt",
+      "sha256": "b9e753b3263d957da707906297f18c0e8e3bd49c4e988acedbf2b5014e055501"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/VideoSeyredExtractor.kt",
+      "sha256": "f4f287941e66103ff183720fa58b8b24696c592094faf34c58892d369a52086f"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/VidhideExtractor.kt",
+      "sha256": "99321e1b5ecf649753ed9d6433e5b37cd1d5e10a2874a1b5c5a23f14df24cad6"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vidmoly.kt",
+      "sha256": "104436e94f30d1c73b5bda8c64e4ee9402125a71e833d97700957e6328d382a9"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vido.kt",
+      "sha256": "9c786ceb6eb61ca058642925c8c3d6d41c4694fca670ac1ee937985beadf13df"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vidoza.kt",
+      "sha256": "69bb88fda089e048ca9fa90f9ed21fc855d1f2e364d30831aa76421b7ffdd643"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vids.kt",
+      "sha256": "d6ff685d562c3248d4553261269252860797a426fed10265768b1c87664050b0"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vidsonic.kt",
+      "sha256": "f27372f8a3b52e525780ecd0979d27ce8b5d324f9877bd5332c0db318536672f"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vinovo.kt",
+      "sha256": "cbe03c2bdbd661b433b83370ff212c0eb6a2522ed126bceec22c0514f8bda68a"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/VkExtractor.kt",
+      "sha256": "8063dc6112e8fc028c30c32fe3bed7fc133d0a2eff47971cc3eb4d47efd0a911"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Voe.kt",
+      "sha256": "658c545ec7832d8a39ba0b0a6aec53a474c2707af72e3ec0e4f07b9470976069"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Vtbe.kt",
+      "sha256": "19f8ba3da40b90314dd1ba1ae87d6e58a4151a9e28f37afd45e4d2ea32c148ed"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/WatchSB.kt",
+      "sha256": "e2e033d442d18f1f29a98be9c58d2f44c59736b33e513fb3960d266d709f505b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Wibufile.kt",
+      "sha256": "61894f988139e31f8add7fe0f2c7b447e8e803cd4c96db84dce42d3c10f76416"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/XStreamCdn.kt",
+      "sha256": "17dbeba5905a93b1a8536a6d904f87bbf06839d6d79bc1e26ae67e72576a0d1b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/YourUpload.kt",
+      "sha256": "b632c926c8eb40fffa6fefde04eb97d746f12b6a63292a8f8f0f3f24325f8868"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/YoutubeExtractor.kt",
+      "sha256": "05c851002482d638cf7357e399399fd1532f74e12e08fa6a7277ad908ba52db2"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/Zplayer.kt",
+      "sha256": "d1c106227fc04120a106da6bf8b97569d595ce4b50e942c9aaed2aeef7c3342d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/helper/AesHelper.kt",
+      "sha256": "10cbe054a85e50846e3fd08b52d52dda57d242ae3b9092f904e5270d7b78d8af"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/helper/AsianEmbedHelper.kt",
+      "sha256": "5b7c3954d9072200d2a070e47f544c7a36c7b51e18a7fd175149cabd8fbcdf3a"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/helper/CryptoJSHelper.kt",
+      "sha256": "d87c185f27f647c3dc745e4309b4543298a29c15c4d41d0d8a262a210caf14b8"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/helper/GogoHelper.kt",
+      "sha256": "ccf0963d1ad97398f467902d6a6d12aefa3809f3204466cecfdb8e05e1bf7f3b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/helper/JWPlayerHelper.kt",
+      "sha256": "342afc51323ce4af1b94d4adefd0590b4224d5aee7875f3a31f6c7ca93a0f22f"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/helper/NineAnimeHelper.kt",
+      "sha256": "9a94f2f1a2980d29fd9e00e2d93ea686104318df8b007c242760072ca8d05c93"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/helper/VstreamhubHelper.kt",
+      "sha256": "a983e33e7281d319e5bd11720c776924d9e1f8f894045248f8fde03cca68ef1a"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/extractors/helper/WcoHelper.kt",
+      "sha256": "13ec01bee5bfdec86eefe63b5953cd3dc7d29d2b00af397f9e0f6f14e5d721e8"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/metaproviders/CrossTmdbProvider.kt",
+      "sha256": "a06a883a59938eb0d82a26328180b1541bb8857f8f88bb9dde695cc5d89348f3"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/metaproviders/MyDramaList.kt",
+      "sha256": "b9b78cc910ec74f74f6995fbff8948eb78b8dda02f8d7f65425cdce2f94a7a58"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/metaproviders/SyncRedirector.kt",
+      "sha256": "7487a14be881169989889e904f2b34a4abebe50124fc71a2d44f3b9b51478f4d"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/metaproviders/TmdbProvider.kt",
+      "sha256": "b10a00dda2f14df6c36081f0431e940e0edf2a70f2103af378a9869316771a71"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/metaproviders/TraktProvider.kt",
+      "sha256": "50a76034dbe10c6303ed6a6d37d8af9a0fd214251131d43c059776a71dc8e628"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/mvvm/ArchComponentExt.kt",
+      "sha256": "f9d4430be49540ce736e801af9de161e7a6bafc83480c23087f814c05102f702"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/network/WebViewResolver.kt",
+      "sha256": "c914b66a956507f6ae20e84ea4620d330d5fe2bcf772fb37f9a8a8be9804143b"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/plugins/BasePlugin.kt",
+      "sha256": "58a10ccb577b9e4bda3b9938ec4ee956fcaa66030802704d22eb60cdea57aaab"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/plugins/CloudstreamPlugin.kt",
+      "sha256": "18b9957e907a3dd3e16277824c332c5fb7fbe5cc2b1f0983bca0e38dbecb38d6"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/syncproviders/SyncAPI.kt",
+      "sha256": "2e1c1acdb35650e42b9e571d8b1e1b4b8c6fc05168af96f11723c8aa1f501f77"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/AppDebug.kt",
+      "sha256": "bf01390a3d82378a8c0f240106ffbbb250578abf88367cf2717b5e73086d0df4"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/AppUtils.kt",
+      "sha256": "20cb1c92d725568967a51f534f483d26d02d1ef2ec5bea4b183b56cf3a4c0dec"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/AtomicList.kt",
+      "sha256": "438f1516365582fb16b20cc476b7d5a75f7b51a0973922a53782b9a0214d09ca"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/Coroutines.kt",
+      "sha256": "291739b7713d69eeeabe19187fe65184e3bb44e65a9f9674c8069c29697cd18e"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/ExtractorApi.kt",
+      "sha256": "952d3207d7bc117114645ead0744b9b7f161168c4becc68e10190e7b6bb2ebef"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/HlsPlaylistParser.kt",
+      "sha256": "0f9ab5aef3935ffb1326b60b262fd5c057bdb30f675cb527f317598ae52ea768"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/JsHunter.kt",
+      "sha256": "463dc56052f729e2998feaac0a0524cf1865b17fe2b5a6347f7e58e8d25e87c1"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/JsInterpreter.kt",
+      "sha256": "5d2f0117f368a9b7cb733a42478776ba4b510cb5941976d2fb55ef027f009064"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/JsUnpacker.kt",
+      "sha256": "2cc3311f2cefeb45357a6e69456c275abb95fddfc2be611987b1f328b5f29edf"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/Levenshtein.kt",
+      "sha256": "405f4348ef6aea40358e2b3c2034141731156fbc6e83c656fb44db64534fe6a8"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/M3u8Helper.kt",
+      "sha256": "fa543f6ce814470054b9936608c693c860009fc97e6de7e250ead4ed12771646"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/StringUtils.kt",
+      "sha256": "5e9b0572ee238711a2b4106aaccae93734e16964efd515621e02be8260936272"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/SubtitleHelper.kt",
+      "sha256": "073ddead950db400d983db9878962459ea972ba20ee31384a80088d24d2bf96a"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/SubtitleHelperPlatform.kt",
+      "sha256": "60ece95839b7d06561e7f70ebcd38fe5194cbe9b0323085757911c5ecbd3ddeb"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/UnshortenUrl.kt",
+      "sha256": "bf5c187656ca86e35c684abbe18cac15c38182e3862555a1273a37546d852806"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/serializers/FloatAsIntSerializer.kt",
+      "sha256": "e1180009bf921acf876101a26ceb29bf8a600f9cdd2ed0ff3c8779daa3c1e315"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/serializers/FloatAsLongSerializer.kt",
+      "sha256": "64b4c94a57e7d2b79d35d7e97019249e6ec156440add92bfdc1497b71eb00c98"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/serializers/JsonTransformSerializer.kt",
+      "sha256": "90900e7cd381f35844b53bcd43cfc7978481fce1cbf529962c2f7d4c7b885d1e"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/serializers/NonEmptySerializer.kt",
+      "sha256": "6ad3b10ab9055fe7308b11e9ea3c095610d4364a8ac2a2d1030bb0c6f3af4e46"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/serializers/NullableStringSerializer.kt",
+      "sha256": "25fa511d3a08d4a92b133d5a807bdbd78b27234c67b486dc609bd5e7acb07caa"
+    },
+    {
+      "path": "library/src/commonMain/kotlin/com/lagradost/cloudstream3/utils/serializers/WriteOnlySerializer.kt",
+      "sha256": "ea9766c92b1a5dfb4d837c4a56a679dba05a5e49ad884808e6a22aa6ebde2e47"
+    },
+    {
+      "path": "library/src/commonTest/kotlin/com/lagradost/cloudstream3/EpisodeDateTest.kt",
+      "sha256": "3e57fbf08fd9fbc9ee14654f71871e249efd1b46efff160e9756e37798f501ee"
+    },
+    {
+      "path": "library/src/commonTest/kotlin/com/lagradost/cloudstream3/SplitUrlParametersTest.kt",
+      "sha256": "23eac43739fc88dc9c63f655f1b06696fd81aeb9823362ea40283c47a773182b"
+    },
+    {
+      "path": "library/src/commonTest/kotlin/com/lagradost/cloudstream3/mvvm/ArchComponentExtTest.kt",
+      "sha256": "d87ed5fec1a1a04bebdde308e11998f125daba8f0c2ab183c8993702626b19f6"
+    },
+    {
+      "path": "library/src/commonTest/kotlin/com/lagradost/cloudstream3/utils/Ignore.kt",
+      "sha256": "a9d38d4bb9866b94d4e427bfe7f2082d6a5a06b96973a769e24fb917b6c1433c"
+    },
+    {
+      "path": "library/src/commonTest/kotlin/com/lagradost/cloudstream3/utils/JsInterpreterTest.kt",
+      "sha256": "af21528af06bc139401cd3cb4cd43ebb3219a94980045736247b16681f66e322"
+    },
+    {
+      "path": "library/src/commonTest/kotlin/com/lagradost/cloudstream3/utils/StringUtilsTest.kt",
+      "sha256": "c047c2f4f6515c1d76e56b276edc84e16dfc45ea76685949c328d1741eb734ef"
+    },
+    {
+      "path": "library/src/commonTest/kotlin/com/lagradost/cloudstream3/utils/serializers/SerializersTest.kt",
+      "sha256": "e3aa287dab3b5df3b130ff624cf08455145d11443928bdff5e87eb72e3e4cc1f"
+    },
+    {
+      "path": "library/src/jvmCommonMain/kotlin/com/lagradost/cloudstream3/extractors/YoutubeExtractor.jvmCommon.kt",
+      "sha256": "e24b658c440758171081f17406881160bfc2e100f908de519e7cfb2dc112442e"
+    },
+    {
+      "path": "library/src/jvmCommonMain/kotlin/com/lagradost/cloudstream3/mvvm/ArchComponentExt.jvmCommon.kt",
+      "sha256": "ccbcec8db7995102159aac36e3c7409ce7b710f26f237657f4dd84bbaf8edf50"
+    },
+    {
+      "path": "library/src/jvmCommonMain/kotlin/com/lagradost/cloudstream3/utils/Coroutines.jvmCommon.kt",
+      "sha256": "1841a042b4a07d6d4d27d1cec6ed325211b952614ce90136df30637e99de673e"
+    },
+    {
+      "path": "library/src/jvmMain/kotlin/com/lagradost/api/ContextHelper.jvm.kt",
+      "sha256": "a85da4bbc36bc774b2837012e703ac044fa03f7b14608866516d1044caad9529"
+    },
+    {
+      "path": "library/src/jvmMain/kotlin/com/lagradost/api/Log.kt",
+      "sha256": "139c0f5e703a125928cc4f16145d2336108eb8c7b688b45fc253db2dc42bee2f"
+    },
+    {
+      "path": "library/src/jvmMain/kotlin/com/lagradost/cloudstream3/network/WebViewResolver.jvm.kt",
+      "sha256": "922142009998959f4d7581f274886007cb3f3bbf7133de8338ff69bb40a3b287"
+    },
+    {
+      "path": "library/src/jvmMain/kotlin/com/lagradost/cloudstream3/utils/Coroutines.jvm.kt",
+      "sha256": "02180f1f1e57192ce811c38d3f0675b319d644c3393d2029995a1cf7fb8ade86"
+    },
+    {
+      "path": "library/src/jvmMain/kotlin/com/lagradost/cloudstream3/utils/SubtitleHelperPlatform.jvm.kt",
+      "sha256": "d1a9ad18d27d74955bab54c08cfef224f1b8c6947fc8cceefe28825aefc88d92"
+    },
+    {
+      "path": "library/src/webMain/kotlin/com/lagradost/api/ContextHelper.web.kt",
+      "sha256": "a85da4bbc36bc774b2837012e703ac044fa03f7b14608866516d1044caad9529"
+    },
+    {
+      "path": "library/src/webMain/kotlin/com/lagradost/api/Log.kt",
+      "sha256": "c6ee663946ebc592c3044f8328cb7bf0805b7b1ed951c24f869383e1535aeb5f"
+    },
+    {
+      "path": "library/src/webMain/kotlin/com/lagradost/cloudstream3/extractors/YoutubeExtractor.web.kt",
+      "sha256": "4b00ac4c581ac34fcfc68b68e8e4a19a2d1fdfd3a7fc050b74325144024856f6"
+    },
+    {
+      "path": "library/src/webMain/kotlin/com/lagradost/cloudstream3/mvvm/ArchComponentExt.web.kt",
+      "sha256": "3096333511e2aae300830cfa066d9be3f53425d3883360031202f805839d7fd1"
+    },
+    {
+      "path": "library/src/webMain/kotlin/com/lagradost/cloudstream3/utils/Coroutines.web.kt",
+      "sha256": "f58b0c329b8bff79561e0a91db1628d52a163a22dd83e857f488d086817e934a"
+    },
+    {
+      "path": "library/src/webMain/kotlin/com/lagradost/cloudstream3/utils/SubtitleHelperPlatform.web.kt",
+      "sha256": "6dc68220ced69088741e83f91fb473b2a176e36de6f7cf8f9c69a432e6c1e0b6"
+    },
+    {
+      "path": "library/src/webTest/kotlin/com/lagradost/cloudstream3/utils/Ignore.web.kt",
+      "sha256": "9e4622e8229776c24a369454a51e2fa5a3faeef679db250233c777dc9d459ca3"
+    },
+    {
+      "path": "provider-host/build.gradle.kts",
+      "sha256": "f6b5b3cc5a6af21c683a2e7b0568b31004e441b6f9b6fa3d28d74609c89094e1"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/app/Activity.kt",
+      "sha256": "167a2e865cb9cc29b57e25b011b5e0c47533682a8bb486495b5048033501680e"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/content/Context.kt",
+      "sha256": "8d839c576bb9f9d68306852cb36355e0413296943e93152b7392999aa55d927b"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/content/Intent.kt",
+      "sha256": "95711fbb00cd2422459a689c5c653d0b1ec41efac44eec8f70eeab301dbbe5dd"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/content/SharedPreferences.kt",
+      "sha256": "a53748824aecc3f4b40085d65d251f080b178542a493823f44499fa707e33d2c"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/content/pm/PackageManager.kt",
+      "sha256": "a09fff5e0edcdb4f57065b1091045a09a5a49f9ad51df04249df87209d4b5499"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/content/res/Resources.kt",
+      "sha256": "c4b947d046352d99e90b042468a671d520014ac67624077b06c5fa90e9dd4560"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/net/Uri.kt",
+      "sha256": "a9a9ea90661039c010bf2093402d042009aa8ebeea9e3b5e61de1a405bf86c96"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/os/Handler.kt",
+      "sha256": "c17bcdfc09685bdc8d420ab70fa98c724215d6d34358c452f844f1ba5d36a96e"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/util/Base64.kt",
+      "sha256": "b272cc1c4bb469e36175b154cc4773d0687135b80f6d067c24f5181f8307db27"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/android/util/Log.kt",
+      "sha256": "f5f3c4400ac0e8d579550e372d4b5a3f423ea5c3b35bb8071af4204c9251f511"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/androidx/appcompat/app/AppCompatActivity.kt",
+      "sha256": "db709962da25a8e09b5fb37b19d9938cb03ca08ae852f8056c6327b23d0329cd"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/androidx/fragment/app/Fragment.kt",
+      "sha256": "b8c6b47f3e69c7023a28329b0061f927ad4bec47b3f82e93524dadd1d807cda1"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/androidx/fragment/app/FragmentActivity.kt",
+      "sha256": "f03abeb12556c1e771a5243fc4b807f652a9d98a188ef07c5090c713ff25c74c"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/androidx/preference/PreferenceManager.kt",
+      "sha256": "37459ef237e856f3ec637b3fb4c22503a72010b05889330a19c6b74d8dcd70d1"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/google/android/material/bottomsheet/BottomSheetDialogFragment.kt",
+      "sha256": "840610df4604d959f89471852e500387f47fdd9f60125e24debf2abfd166c80c"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/ApplicationCompatibility.kt",
+      "sha256": "a594867ca3c77f7aecf5b6555cb874a9164c23a59e07650e80eac9604378e561"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/MainActivity.kt",
+      "sha256": "e1ee9c346babe2abcb5dc65c73b152c51024d50ca4beb650465b8c7389dd04c3"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/linux/host/FallbackSourceDiscovery.kt",
+      "sha256": "184324bd1554727cbb2b34d4b2d14ef161af57d3f448d496d50f9daff90d064d"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/linux/host/Main.kt",
+      "sha256": "15b143def6d5d9d63380f1a311e5cc4f2b820558c32f83bb5c77750f6589fce1"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/network/CloudflareKiller.kt",
+      "sha256": "c5d2062c519d6d360f4f394d308c54c82ee85e8fe11e2e9ecf72dcf0d846e86a"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/plugins/Plugin.kt",
+      "sha256": "81fd1a7c2248babef4d2a3acebdca0291152b85e9117a207f12af6b75aa2e36c"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/plugins/PluginManager.kt",
+      "sha256": "2f6767bacb6a2b1595b1982e7c4ba492db81a1e1cd8b9e7085cdda540267da20"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/utils/DataStore.kt",
+      "sha256": "ceea75de98cab65cc807d0c42ce901e542c58301969ec91733cfeb7575956477"
+    },
+    {
+      "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/utils/Event.kt",
+      "sha256": "40ca1f9968b1672f9b61852b27aa856f96f52ee42de0b5d20062d8e8f0325189"
+    },
+    {
+      "path": "provider-host/src/test/kotlin/com/lagradost/cloudstream3/linux/host/AndroidBase64CompatibilityTest.kt",
+      "sha256": "cc47e8446e726f8db4e08815d9dbf70583af3ea1751934030d0f4bdf3fb6ea1e"
+    },
+    {
+      "path": "provider-host/src/test/kotlin/com/lagradost/cloudstream3/linux/host/Cs3ConverterTest.kt",
+      "sha256": "9b09dace351be949bee160ad6e93950dfdb6196e84adc9b7d4d85a312daa1c30"
+    },
+    {
+      "path": "provider-host/src/test/kotlin/com/lagradost/cloudstream3/linux/host/DirectProviderDiscoveryTest.kt",
+      "sha256": "ad013cc8d9f9ef2415dbcc60f6c7de8e7723158dfd6f89fdf53c45d0b8888820"
+    },
+    {
+      "path": "provider-host/src/test/kotlin/com/lagradost/cloudstream3/linux/host/FallbackSourceDiscoveryTest.kt",
+      "sha256": "a495ac58d828e05000034be4b960d5cd6c86d8c320376ec8b5db5439446877c6"
+    },
+    {
+      "path": "provider-host/src/test/kotlin/com/lagradost/cloudstream3/linux/host/RepositoryCandidateTest.kt",
+      "sha256": "4b4e0029df4a80a68f620706758cc79aa1f05d171d3d836c54040b9fc593f38e"
+    },
+    {
+      "path": "provider-host/src/test/kotlin/com/lagradost/cloudstream3/linux/host/RuntimeCompatibilityDependenciesTest.kt",
+      "sha256": "3070695b396afe6d764f7321e189fcf98c8f48dabb38d1471a4878d87f31b6f2"
+    },
+    {
+      "path": "provider-host/src/test/kotlin/com/lagradost/cloudstream3/linux/host/SourceProtocolTest.kt",
+      "sha256": "7ca515857af2b2644327f5d169376ff08cd135c93434d62564cac54944214c0c"
+    },
+    {
+      "path": "settings.gradle.kts",
+      "sha256": "3d39122123db6dae94cf95722b16ee4c717256a936d9a40a9193a61377893407"
+    }
+  ]
+}

@@ -30,6 +30,24 @@ cd linux-native
 
 The package is written to `dist-windows`. It contains Qt, the CloudStream executable, provider-host distribution, Java runtime, libmpv, and SDL2. `-JavaRuntime` can select a separate Windows Java runtime instead of copying `JAVA_HOME`.
 
+The build also requires app-local Visual C++ runtime DLLs. It uses `VCToolsRedistDir\x64\Microsoft.VC143.CRT` from the developer shell, or an explicit `-MsvcRuntimeDirectory`. Merely shipping `vc_redist.x64.exe` does not make a portable ZIP self-contained. The script rejects missing CRT dependencies before building.
+
+Use `-ThirdPartyNoticesDirectory` to include collected dependency notices. The project's GPL license is copied automatically; this is not a substitute for the licenses and corresponding source required by each bundled dependency.
+
+## Portable ZIP and installer
+
+With a complete deployed runtime, Python 3.11+ and NSIS available:
+
+```sh
+python3 packaging/build-windows-portable.py dist-windows CloudStream-PC-Windows-x64.zip
+python3 packaging/build-windows-installer.py dist-windows CloudStream-PC-Windows-x64-Setup.exe
+python3 packaging/test_windows_installer.py
+```
+
+Run these commands from the repository root. The installer is per-user, requires no administrator elevation, creates Start Menu and desktop shortcuts, and registers an uninstaller. Uninstall deletes only packaged files; application profiles and user-added files are retained. Close CloudStream before installing an update or uninstalling.
+
+The packages are not Authenticode-signed. Windows may show an unknown-publisher/SmartScreen warning. Verify the release URL and SHA-256 checksums; do not disable antivirus or system-wide security checks.
+
 The Java provider host is platform-independent. To reuse an already-built Gradle `installDist` distribution, pass `-ProviderHostInstall C:\path\to\cloudstream-provider-host`; this avoids configuring the Android Gradle project inside the Windows VM. Without this argument, the script invokes the root Gradle build, which also configures Android modules and requires their prerequisites.
 
 Pass additional DLL dependencies with `-AdditionalRuntimeDlls`; current shinchiro libmpv builds require `vulkan-1.dll`. Pass `-FfmpegExecutable C:\path\to\ffmpeg.exe` to bundle adaptive-download support. Keep third-party licenses and corresponding source obligations when redistributing these components.

@@ -226,3 +226,14 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,java,android,androidstudio,visualstudiocode
+
+# Desktop release outputs and packaging caches
+/dist-windows/
+/dist-linux/
+__pycache__/
+*.pyc
+*.AppImage
+*.deb
+*.rpm
+*.exe
+*.dll

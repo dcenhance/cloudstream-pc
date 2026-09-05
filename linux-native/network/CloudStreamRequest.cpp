@@ -1,7 +1,5 @@
 #include "CloudStreamRequest.h"
 
-#include <chrono>
-
 namespace CloudStream {
 
 QNetworkRequest CloudStreamRequest::metadata(const QUrl &url) {
@@ -16,7 +14,8 @@ QNetworkRequest CloudStreamRequest::metadata(const QUrl &url) {
     // GitHub/CDN endpoints refuse concurrent HTTP/2 streams, so metadata uses
     // Qt's bounded HTTP/1.1 connection pool instead.
     request.setAttribute(QNetworkRequest::Http2AllowedAttribute, false);
-    request.setTransferTimeout(std::chrono::seconds(20));
+    // Millisecond overload also supports the Qt 6.4 Ubuntu LTS baseline.
+    request.setTransferTimeout(20000);
     return request;
 }
 
