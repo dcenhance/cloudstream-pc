@@ -59,7 +59,7 @@ old_exe = before['cloudstream.exe']
 deps = ROOT / 'deps'
 (deps / 'mpv').mkdir(parents=True)
 for header in ['client.h', 'render.h', 'render_gl.h']:
-    download('https://raw.githubusercontent.com/mpv-player/mpv/v0.41.0/libmpv/' + header, deps / 'mpv' / header)
+    download('https://raw.githubusercontent.com/mpv-player/mpv/41f6a645068483470267271e1d09966ca3b9f413/include/mpv/' + header, deps / 'mpv' / header)
 sdl = deps / 'sdl.zip'
 download('https://github.com/libsdl-org/SDL/releases/download/release-2.32.10/SDL2-devel-2.32.10-VC.zip', sdl)
 with zipfile.ZipFile(sdl) as z:
