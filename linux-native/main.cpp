@@ -15,6 +15,7 @@
 #include "media/ArtworkLoader.h"
 #include "media/ArtworkSizing.h"
 #include "providers/HomeContentLimiter.h"
+#include "providers/HomeProcessResult.h"
 #include "providers/HomeHeroSelection.h"
 #include "providers/ProviderConfiguration.h"
 #include "providers/ProviderDiscoveryGeneration.h"
@@ -1778,6 +1779,7 @@ private:
         clearHomeSections();
         homeContentRendered = false;
         auto *label = new QLabel(message);
+        label->setTextFormat(Qt::PlainText);
         label->setWordWrap(true);
         label->setAlignment(Qt::AlignCenter);
         label->setMinimumHeight(130);
@@ -2009,22 +2011,29 @@ private:
         helper.configure(homeProcess, {"home", jar, "auto", providerName});
         CloudStream::ProcessCompletion::watch(homeProcess, this,
                 [this, homeProcess, providerName, cachePath, requestKey, cachedSections, homeGeneration]
-                (int homeExit, QProcess::ExitStatus, bool startFailure) {
+                (int homeExit, QProcess::ExitStatus exitStatus, bool startFailure) {
             if (activeHomeProcess == homeProcess) activeHomeProcess = nullptr;
             if (!homeRequestGeneration.isCurrent(homeGeneration) ||
                 requestKey != currentHomeProviderKey) {
                 homeProcess->deleteLater();
                 return;
             }
-            const auto sections = QJsonDocument::fromJson(homeProcess->readAllStandardOutput()).array();
-            if (homeExit != 0 || sections.isEmpty()) {
+            const auto result = CloudStream::HomeProcessResult::parse(
+                homeProcess->readAllStandardOutput(), homeProcess->readAllStandardError(),
+                homeExit, exitStatus, startFailure, homeProcess->property("homeTimedOut").toBool(),
+                homeProcess->errorString());
+            const auto sections = result.sections;
+            if (!result.error.isEmpty() || sections.isEmpty()) {
                 if (!homeContentRendered) {
-                    setHomeHeroEmpty(providerName, "No Home sections available");
-                    showHomeMessage(startFailure
-                        ? "Could not start the provider host: " + homeProcess->errorString()
+                    setHomeHeroEmpty(providerName, result.error.isEmpty()
+                        ? "No Home sections available" : "Could not load Home");
+                    showHomeMessage(!result.error.isEmpty()
+                        ? result.error
                         : providerName + " returned no Home sections. Use Search or choose another provider.");
                 }
-                else status->setText("Provider refresh returned no sections; showing cached Home");
+                else status->setText(result.error.isEmpty()
+                    ? "Provider refresh returned no sections; showing cached Home"
+                    : "Showing cached Home. " + result.error);
                 homeProcess->deleteLater();
                 return;
             }
@@ -2044,7 +2053,10 @@ private:
         });
         homeProcess->start();
         QTimer::singleShot(20000, homeProcess, [homeProcess] {
-            if (homeProcess->state() != QProcess::NotRunning) homeProcess->kill();
+            if (homeProcess->state() != QProcess::NotRunning) {
+                homeProcess->setProperty("homeTimedOut", true);
+                homeProcess->kill();
+            }
         });
     }
 

@@ -492,7 +492,10 @@ private fun usage(): Nothing {
 }
 
 fun main(args: Array<String>) {
-    val protocolOut: PrintStream = System.out
+    // QJsonDocument consumes UTF-8, but Java 17 on Windows defaults stdout to
+    // the system code page. Wrap the original stream with an explicit encoding
+    // before redirecting provider println/logging to stderr.
+    val protocolOut = PrintStream(System.out, true, Charsets.UTF_8)
     System.setOut(System.err)
     try {
         if (args.size < 2) usage()
@@ -517,12 +520,23 @@ fun main(args: Array<String>) {
                     if (args.size < 4) usage()
                     val provider = loaded.providers.firstOrNull { it.name == args[3] }
                         ?: error("Provider not found: ${args[3]}")
+                    var homeFailure: Throwable? = null
                     val sections = runBlocking {
                         provider.mainPage.flatMap { page ->
                             val request = MainPageRequest(page.name, page.data, page.horizontalImages)
-                            runCatching { provider.getMainPage(1, request) }.getOrNull()?.items.orEmpty()
+                            try {
+                                provider.getMainPage(1, request)?.items.orEmpty()
+                            } catch (error: Throwable) {
+                                if (error is CancellationException) throw error
+                                homeFailure = error
+                                System.err.println("WARN Home: ${provider.name} / ${page.name}: ${error.message}")
+                                emptyList()
+                            }
                         }
                     }
+                    // Keep partial Home results, but do not turn total provider
+                    // failure into the successful empty-array protocol response.
+                    if (sections.isEmpty()) homeFailure?.let { throw it }
                     protocolOut.println(JsonArray(sections.map { homeSectionJson(it.name, it.isHorizontalImages, it.list) }))
                 }
                 "load" -> {

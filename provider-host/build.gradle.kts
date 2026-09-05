@@ -28,4 +28,5 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("host.test.classpath", sourceSets["test"].runtimeClasspath.asPath)
 }

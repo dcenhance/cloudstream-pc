@@ -14,7 +14,7 @@ OUT = Path(os.environ.get('CLOUDSTREAM_RELEASE_OUT', str(REPO / 'dist-linux')))
 CONTAINER = os.environ.get('CLOUDSTREAM_CONTAINER', 'cloudstream-linux-packager')
 WORK = OUT / 'build-support'
 ROOT = WORK / 'root'
-VERSION = '0.1.0-preview.2'
+VERSION = '0.1.0-preview.3'
 
 def run(*args):
     subprocess.run(args, check=True)
@@ -97,15 +97,15 @@ if debroot.exists():
     shutil.rmtree(debroot)
 shutil.copytree(ROOT, debroot)
 (debroot / 'DEBIAN').mkdir()
-(debroot / 'DEBIAN/control').write_text('Package: cloudstream-pc\nVersion: 0.1.0~preview.2\nArchitecture: amd64\nMaintainer: dcenhance <252102103+dcenhance@users.noreply.github.com>\nSection: video\nPriority: optional\nDepends: libc6 (>= 2.39), libstdc++6 (>= 13.2), libgcc-s1, libqt6core6t64 (>= 6.4.2), libqt6widgets6 (>= 6.4.2), libqt6gui6 (>= 6.4.2), libqt6network6 (>= 6.4.2), libqt6opengl6 (>= 6.4.2), libqt6openglwidgets6 (>= 6.4.2), libqt6concurrent6 (>= 6.4.2), libqt6svg6 (>= 6.4.2), libmpv2 (>= 0.37), libsdl2-2.0-0 (>= 2.30), qt6-qpa-plugins, qt6-wayland, qt6-image-formats-plugins, openjdk-17-jre-headless | java17-runtime-headless, ffmpeg (>= 6), ca-certificates\nDescription: CloudStream PC native desktop preview (system runtime)\n Ubuntu 24.04 amd64 baseline; Qt, mpv, Java and FFmpeg are not bundled.\n')
-inside('dpkg-deb --root-owner-group --build /out/build-support/debroot /out/cloudstream-pc_0.1.0~preview.2_amd64.deb')
+(debroot / 'DEBIAN/control').write_text('Package: cloudstream-pc\nVersion: 0.1.0~preview.3\nArchitecture: amd64\nMaintainer: dcenhance <252102103+dcenhance@users.noreply.github.com>\nSection: video\nPriority: optional\nDepends: libc6 (>= 2.39), libstdc++6 (>= 13.2), libgcc-s1, libqt6core6t64 (>= 6.4.2), libqt6widgets6 (>= 6.4.2), libqt6gui6 (>= 6.4.2), libqt6network6 (>= 6.4.2), libqt6opengl6 (>= 6.4.2), libqt6openglwidgets6 (>= 6.4.2), libqt6concurrent6 (>= 6.4.2), libqt6svg6 (>= 6.4.2), libmpv2 (>= 0.37), libsdl2-2.0-0 (>= 2.30), qt6-qpa-plugins, qt6-wayland, qt6-image-formats-plugins, openjdk-17-jre-headless | java17-runtime-headless, ffmpeg (>= 6), ca-certificates\nDescription: CloudStream PC native desktop preview (system runtime)\n Ubuntu 24.04 amd64 baseline; Qt, mpv, Java and FFmpeg are not bundled.\n')
+inside('dpkg-deb --root-owner-group --build /out/build-support/debroot /out/cloudstream-pc_0.1.0.preview.3_amd64.deb')
 # RPM auto-generated ELF requirements are preserved, plus helper/dlopen dependencies.
 spec = WORK / 'cloudstream-pc.spec'
 spec.write_text('''%global __os_install_post %{nil}
 %global _build_id_links none
 Name: cloudstream-pc
 Version: 0.1.0
-Release: 0.preview.2
+Release: 0.preview.3
 Summary: CloudStream PC native desktop preview (system runtime)
 Packager: dcenhance
 License: GPL-3.0-only AND Apache-2.0 AND MIT AND MPL-2.0 AND BSD-3-Clause

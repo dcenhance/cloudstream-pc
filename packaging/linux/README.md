@@ -1,6 +1,6 @@
 # Linux preview packages
 
-Version: 0.1.0-preview.2, x86-64 only. Native GUI compiled inside Ubuntu 24.04
+Version: 0.1.0-preview.3, x86-64 only. Native GUI compiled inside Ubuntu 24.04
 with its Qt 6.4.2 toolchain, not the host's Nobara Qt 6.11 toolchain.
 The shared source uses Qt 6.4's `setTransferTimeout(20000)` milliseconds API,
 equivalent to the newer chrono overload's 20 seconds. No private application
@@ -23,10 +23,10 @@ Ubuntu 24.04 runtime installation for the AppImage:
 
 ```sh
 sudo apt install libqt6widgets6 libqt6network6 libqt6openglwidgets6 libqt6concurrent6 libqt6svg6 libmpv2 libsdl2-2.0-0 qt6-qpa-plugins qt6-wayland qt6-image-formats-plugins openjdk-17-jre-headless ffmpeg ca-certificates
-chmod +x CloudStream-PC-0.1.0-preview.2-x86_64-system-runtime.AppImage
-./CloudStream-PC-0.1.0-preview.2-x86_64-system-runtime.AppImage
+chmod +x CloudStream-PC-0.1.0-preview.3-x86_64-system-runtime.AppImage
+./CloudStream-PC-0.1.0-preview.3-x86_64-system-runtime.AppImage
 # FUSE-less alternative supported by the upstream type-2 runtime:
-./CloudStream-PC-0.1.0-preview.2-x86_64-system-runtime.AppImage --appimage-extract-and-run
+./CloudStream-PC-0.1.0-preview.3-x86_64-system-runtime.AppImage --appimage-extract-and-run
 ```
 
 The DEB/RPM install `cloudstream-pc`, desktop integration and provider-host
@@ -34,13 +34,17 @@ under `/usr/libexec/cloudstream/provider-host`. The AppImage launcher sets an
 app-relative provider-host override, never a developer-home path. Runtime
 state uses the application's existing XDG paths; no user state is packaged.
 
+Graceful shutdown of the FUSE-mounted AppImage remains unverified; the prior
+Wayland startup check required forced cleanup. Extract-and-run startup is a
+separate bounded smoke check, not shutdown or playback certification.
+
 ## Build
 
 `container-build.sh` runs inside Ubuntu 24.04 with `/src` read-only repository
 and `/out` writable release directory. `ubuntu.sources` is a signed Ubuntu
 mirror configuration; use an HTTPS mirror and valid CA store if the default
 HTTP mirror stalls. The actual build used rootless Podman with host networking.
-`package.py` stages the built ELF, the tested original JVM distribution,
+`package.py` stages the built ELF, the freshly rebuilt Java 17 JVM distribution,
 licenses, corresponding project source and the shared JVM license audit. It
 then invokes dpkg-deb, rpmbuild and mksquashfs in the build container.
 

@@ -1,10 +1,10 @@
 {
-  "application_source_base_commit": "467f99cfc17088870b7a943c65f73039d618e5c5",
-  "verification": "Published JVM source/build files match the original build workspace; packaged application JARs match its installDist artifacts. Not a claim of reproducible byte-for-byte JVM recompilation.",
+  "application_source_base_commit": "9cdf1b677b6fbbab17f0251806d5933c2a04c322",
+  "verification": "Preview 3: Java 17 Gradle --rerun-tasks test and installDist from the release working tree. Source hashes identify exact build inputs; Windows fixture JAR entries match the fresh rebuild. Not a claim of reproducible third-party builds.",
   "jars": [
     {
       "name": "provider-host-4.8.0.jar",
-      "sha256": "b30263948943da82b6933319a8e32c2b0921c007fc1fc01d759ebe391d8cf332"
+      "sha256": "eadcc03988f94248e2285f68f5482567aeb099ca071152e2b433599eb205f5fd"
     },
     {
       "name": "library-jvm-1.0.1.jar",
@@ -754,7 +754,7 @@
     },
     {
       "path": "provider-host/build.gradle.kts",
-      "sha256": "f6b5b3cc5a6af21c683a2e7b0568b31004e441b6f9b6fa3d28d74609c89094e1"
+      "sha256": "2c12d81642783b132852c01e33e6d58850b429c66c5a4f2695b83bac62a708ad"
     },
     {
       "path": "provider-host/src/main/kotlin/android/app/Activity.kt",
@@ -830,7 +830,7 @@
     },
     {
       "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/linux/host/Main.kt",
-      "sha256": "15b143def6d5d9d63380f1a311e5cc4f2b820558c32f83bb5c77750f6589fce1"
+      "sha256": "c3acb2fb2db2f2e6824012ff8b1f13a7eee162ab474231e2b2c1b957ccac05a1"
     },
     {
       "path": "provider-host/src/main/kotlin/com/lagradost/cloudstream3/network/CloudflareKiller.kt",

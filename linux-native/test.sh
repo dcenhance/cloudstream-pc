@@ -26,6 +26,7 @@ run_test provider-discovery-generation "$ROOT/tests/provider-discovery-generatio
 run_test provider-selection-model "$ROOT/tests/provider-selection-model.pro" test_provider_selection_model
 run_test provider-picker-dialog "$ROOT/tests/provider-picker-dialog.pro" test_provider_picker_dialog
 run_test provider-validation "$ROOT/tests/provider-validation.pro" test_provider_validation
+run_test home-process-result "$ROOT/tests/home-process-result.pro" test_home_process_result
 run_test home-content-limiter "$ROOT/tests/home-content-limiter.pro" test_home_content_limiter
 run_test home-hero-selection "$ROOT/tests/home-hero-selection.pro" test_home_hero_selection
 run_test provider-configuration "$ROOT/tests/provider-configuration.pro" test_provider_configuration

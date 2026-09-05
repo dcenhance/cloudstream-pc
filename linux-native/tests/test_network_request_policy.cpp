@@ -15,7 +15,7 @@ private slots:
         QCOMPARE(request.attribute(QNetworkRequest::RedirectPolicyAttribute).toInt(),
                  static_cast<int>(QNetworkRequest::NoLessSafeRedirectPolicy));
         QCOMPARE(request.attribute(QNetworkRequest::Http2AllowedAttribute).toBool(), false);
-        QVERIFY(request.transferTimeoutAsDuration().count() > 0);
+        QCOMPARE(request.transferTimeout(), 20000);
     }
 
     void artworkRequestsUseHttp2AndThePersistentCache() {

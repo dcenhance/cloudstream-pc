@@ -62,6 +62,7 @@ HEADERS += app/Logger.h \
     media/ArtworkLoader.h \
     media/ArtworkSizing.h \
     providers/HomeContentLimiter.h \
+    providers/HomeProcessResult.h \
     providers/HomeHeroSelection.h \
     providers/ProviderConfiguration.h \
     providers/ProviderPickerDialog.h \

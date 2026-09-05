@@ -25,14 +25,14 @@ Windows VM playback was tested with software rendering. Physical Windows GPU acc
 
 ## Downloads and installation
 
-**[Download Preview 2 for Linux or Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.2)**. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
+**[Download Preview 3 for Linux or Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.3)**. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
 
 | Download | Installation and requirements |
 | --- | --- |
 | **Windows x64 Setup EXE** | Run the installer. Installs for the current user, adds shortcuts and an uninstaller; application updates do not replace your profile. |
 | **Windows x64 ZIP** | Extract the **entire ZIP** to a writable folder, then run `cloudstream.exe`. Do not run it inside the ZIP or copy just the EXE. Qt, Java, media libraries and Visual C++ runtime DLLs are included. |
-| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_0.1.0.preview.2_amd64.deb` so dependencies are resolved. |
-| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.2.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
+| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_0.1.0.preview.3_amd64.deb` so dependencies are resolved. |
+| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.3.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
 | **Linux x86_64 system-runtime AppImage** | Make executable, then run. **Not self-contained:** requires system Qt, mpv, SDL2, Java and FFmpeg. See the [exact dependencies and FUSE-less launch option](packaging/linux/README.md). |
 
 Linux packages require **glibc 2.39 or newer and Qt 6.4.2 or newer**. They are not universal Linux binaries. Windows packages target Windows 10 x64 or later; testing uses a Windows 10 VM with software rendering, not a physical GPU/controller certification.
@@ -44,6 +44,14 @@ The release includes `SHA256SUMS`, application source archives, and separate thi
 First launch: add an extension repository you trust in **Extensions**, install providers, then select one on Home. No repositories or provider accounts are bundled. Uninstalling removes application files, not your saved profile.
 
 ## Features
+
+### Preview 3: provider Home fix
+
+The provider host now writes its JSON protocol explicitly as UTF-8. This fixes empty AniWorld Home on Windows caused by Java's legacy system code page rejecting non-ASCII titles in Qt's JSON parser. The 20-second request deadline is unchanged.
+
+Home now distinguishes genuinely empty results from invalid JSON, failed requests, crashes, startup failures and timeouts. Failed refreshes preserve cached Home; partial provider results remain usable. Regression checks include a real JVM subprocess using Windows-1252 and a Windows 10 GUI comparison: the old runtime rendered no sections, while the corrected runtime completed 62/62 sections at capture time. Live provider content can change.
+
+These are focused Home fixes, not a new certification of playback or hardware support. Graceful shutdown of the FUSE-mounted AppImage remains unverified; prior Wayland startup checks required forced cleanup. SHA-256 checksums establish file integrity, not trusted publisher authentication.
 
 - Rounded dark desktop UI with Home, Search, Library, Downloads, Settings, and Extensions.
 - Provider-scoped Home search, global search filters, and an in-app provider picker.
