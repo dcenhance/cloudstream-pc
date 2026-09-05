@@ -19,23 +19,23 @@ An independent desktop adaptation of [recloudstream/cloudstream](https://github.
 | Platform | Status |
 | --- | --- |
 | Linux x86-64 | Built and tested on Nobara/KDE Wayland |
-| Windows x86-64 | Preview 3 built with MSVC 2022 / Qt 6.8.3 and previously tested in Windows 10; Preview 4 changes are source-only, not built or tested on Windows |
+| Windows x86-64 | Preview 4 built with MSVC 2022 / Qt 6.8.3 on hosted Windows Server 2022; overlap regressions and EXE/ZIP lifecycle checks passed; media-suite limitation below |
 
-Windows VM playback was tested with software rendering. Physical Windows GPU acceleration and controller input remain unverified. Other distributions, Windows versions, and architectures are not yet validated.
+Earlier Windows 10 VM playback was tested with software rendering on the previous release. Preview 4 uses hosted native Windows verification without reopening a local emulator. Physical Windows GPU acceleration and controller input remain unverified. Other distributions, Windows versions, and architectures are not yet validated.
 
 ## Downloads and installation
 
-**[Download Preview 4 for Linux](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.4)**. The Windows overlap fix is **source-only, binary build/testing pending**. [Previous Windows Preview 3 downloads](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.3) remain available but **lack the overlap fix**. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
+**[Download Preview 4 for Linux and Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.4)**. All five runnable formats are available: Windows Setup EXE/portable ZIP and Linux AppImage/DEB/RPM, with application and dependency source/support archives and regenerated `SHA256SUMS` (13 uploaded assets). [Previous Preview 3 downloads](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.3) remain unchanged. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
 
 | Download | Installation and requirements |
 | --- | --- |
-| **Windows x64 Setup EXE (Preview 3, lacks overlap fix)** | Run the installer. Installs for the current user, adds shortcuts and an uninstaller; application updates do not replace your profile. |
-| **Windows x64 ZIP (Preview 3, lacks overlap fix)** | Extract the **entire ZIP** to a writable folder, then run `cloudstream.exe`. Do not run it inside the ZIP or copy just the EXE. Qt, Java, media libraries and Visual C++ runtime DLLs are included. |
+| **Windows x64 Setup EXE** | Run the installer. Installs for the current user, adds shortcuts and an uninstaller; application updates do not replace your profile. |
+| **Windows x64 ZIP** | Extract the **entire ZIP** to a writable folder, then run `cloudstream.exe`. Do not run it inside the ZIP or copy just the EXE. Qt, Java, media libraries and Visual C++ runtime DLLs are included. |
 | **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_0.1.0.preview.4_amd64.deb` so dependencies are resolved. |
 | **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.4.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
 | **Linux x86_64 system-runtime AppImage** | Make executable, then run. **Not self-contained:** requires system Qt, mpv, SDL2, Java and FFmpeg. See the [exact dependencies and FUSE-less launch option](packaging/linux/README.md). |
 
-Linux packages require **glibc 2.39 or newer and Qt 6.4.2 or newer**. They are not universal Linux binaries. Windows packages target Windows 10 x64 or later; testing uses a Windows 10 VM with software rendering, not a physical GPU/controller certification.
+Linux packages require **glibc 2.39 or newer and Qt 6.4.2 or newer**. They are not universal Linux binaries. Windows packages target Windows 10 x64 or later; Preview 4 testing uses a hosted Windows Server 2022 runner, not a physical GPU/controller certification.
 
 The Windows installer is **unsigned**. Windows may display an unknown-publisher warning; verify the release and its SHA-256 checksums before deciding whether to run it. Do not disable antivirus or system protections to install the application.
 
@@ -49,7 +49,9 @@ First launch: add an extension repository you trust in **Extensions**, install p
 
 Navigating between pages now dismisses embedded details/player dialogs instead of allowing them to overlap Search or other pages. Closing details disconnects UI completion delivery before cancelling its provider process; an older dialog cannot clear the newer dialog’s resize pointer. Separate dialog windows remain open as intended.
 
-Linux regression coverage exercises loading/loaded opacity, page navigation, cancellation while loading, newer-dialog resizing, and embedded-player versus separate-window behavior. This change is in the shared Windows source, but no Preview 4 Windows executable or installer is published: there is no configured Windows CI workflow or supported local native Windows toolchain available for this release. No emulator was started. Preview 3 Windows downloads do not contain this fix.
+Linux and native Windows regression coverage exercise loading/loaded opacity, page navigation, cancellation while loading, newer-dialog resizing, and embedded-player versus separate-window behavior. [Windows recovery run 33995672025](https://github.com/dcenhance/cloudstream-pc/actions/runs/33995672025) built the exact tagged Preview 4 application commit `b2d1f9709d289980af2566108334c11e20b268f1`: the executable is newly compiled, not renamed from Preview 3. Audited dependencies and provider-host JARs remain byte-identical; their Common/MSYS2 source-support archives are reused unchanged. Later workflow/NSIS tooling fixes do not move the release tag or change application source.
+
+Required Windows suites passed: single-window surfaces (7), Home process results (10), details presentation (4), and player commands (7). ZIP CRC/member hashes, extracted clean-path launch, packaged Java/provider-host and FFmpeg startup, silent installation, installed payload hashes/launch, version registration and safe uninstall preserving a user-added file passed. The native test fixture replaces only the POSIX shell helper; assertions are unchanged. **The Windows media suite has 10 passes and 1 failure** at audio-track selection on the audio-device-less hosted runner, with hardware/OpenGL warnings; no full media-suite pass or audio/GPU fix is claimed. No local VirtualBox, QEMU or Wine was started.
 
 The Ubuntu software-rendered container full test run has one unresolved framebuffer-readback failure (228 passes / 1 failure); the overlap suite and separate isolated-Wayland full run pass. See [Linux verification limits](packaging/linux/README.md). Package startup checks do not certify playback.
 
