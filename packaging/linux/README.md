@@ -1,6 +1,6 @@
 # Linux preview packages
 
-Version: 0.1.0-preview.4, x86-64 only. Native GUI compiled inside Ubuntu 24.04
+Version: 0.1.0-preview.5, x86-64 only. Native GUI compiled inside Ubuntu 24.04
 with its Qt 6.4.2 toolchain, not the host's Nobara Qt 6.11 toolchain.
 The shared source uses Qt 6.4's `setTransferTimeout(20000)` milliseconds API,
 equivalent to the newer chrono overload's 20 seconds. No private application
@@ -23,10 +23,10 @@ Ubuntu 24.04 runtime installation for the AppImage:
 
 ```sh
 sudo apt install libqt6widgets6 libqt6network6 libqt6openglwidgets6 libqt6concurrent6 libqt6svg6 libmpv2 libsdl2-2.0-0 qt6-qpa-plugins qt6-wayland qt6-image-formats-plugins openjdk-17-jre-headless ffmpeg ca-certificates
-chmod +x CloudStream-PC-0.1.0-preview.4-x86_64-system-runtime.AppImage
-./CloudStream-PC-0.1.0-preview.4-x86_64-system-runtime.AppImage
+chmod +x CloudStream-PC-0.1.0-preview.5-x86_64-system-runtime.AppImage
+./CloudStream-PC-0.1.0-preview.5-x86_64-system-runtime.AppImage
 # FUSE-less alternative supported by the upstream type-2 runtime:
-./CloudStream-PC-0.1.0-preview.4-x86_64-system-runtime.AppImage --appimage-extract-and-run
+./CloudStream-PC-0.1.0-preview.5-x86_64-system-runtime.AppImage --appimage-extract-and-run
 ```
 
 The DEB/RPM install `cloudstream-pc`, desktop integration and provider-host
@@ -41,13 +41,15 @@ separate bounded smoke check, not shutdown or playback certification.
 
 Preview 4 verification limitation: the Ubuntu 24.04 software-rendered container full suite completed 31 suites with 228 passes and one failure in `MpvPlayerWidgetTest::rendersAndAdvancesGeneratedVideo` framebuffer-color readback. An isolated PulseAudio null sink resolves the initial missing-audio-device condition, but framebuffer readback remained intermittent/unresolved. The focused overlap suite passed (7 passes); the separate host isolated-Wayland run passed all 229 cases. No test assertion was weakened or renderer fix claimed. Packaged startup checks are not playback certification.
 
+Preview 5 verification: the initial Ubuntu software-rendered run had 242 passes and one audio-track-selection failure with no audio device. With a private PulseAudio null sink, the unchanged media suite passed all 11 cases. This is virtual audio/software rendering, not hardware certification. The final full run completed all 32 suites with 242 passes and one framebuffer-color failure (`colors.size() >= 8`) despite null audio. Updater (12), Settings (10), and single-window surfaces (8) passed. A fresh Ubuntu userspace DEB install, dependency resolution, SVG plugin, GUI startup and helper startup passed. The prior Preview 4 framebuffer intermittency is not claimed fixed.
+
 ## Build
 
 `container-build.sh` runs inside Ubuntu 24.04 with `/src` read-only repository
 and `/out` writable release directory. `ubuntu.sources` is a signed Ubuntu
 mirror configuration; use an HTTPS mirror and valid CA store if the default
 HTTP mirror stalls. The actual build used rootless Podman with host networking.
-`package.py` stages the built ELF, the unchanged, audit-matched Preview 3 Java 17 JVM distribution,
+`package.py` stages the built ELF, the current-source rebuilt, audit-matched Java 17 JVM distribution,
 licenses, corresponding project source and the shared JVM license audit. It
 then invokes dpkg-deb, rpmbuild and mksquashfs in the build container.
 
