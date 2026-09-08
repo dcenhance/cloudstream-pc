@@ -18,9 +18,30 @@ QByteArray fixture(Package p, QString version="0.1.0-preview.10", QByteArray pay
 #include <QPushButton>
 #include <QMessageBox>
 #include <QSettings>
+#include <QProcess>
 class UpdaterTest : public QObject {
  Q_OBJECT
 private slots:
+#ifdef Q_OS_WIN
+ void nativeWindowsExecutableHandoff() {
+  QTemporaryDir dir;
+  QVERIFY(dir.isValid());
+  const QString subdir=dir.filePath(QString::fromUtf8("installer spaces & percent % ü"));
+  QVERIFY(QDir().mkpath(subdir));
+  const QString source=subdir+"/CloudStream-PC-0.1.0-preview.5-Windows-x64-Setup.exe";
+  QVERIFY(QFile::copy(QCoreApplication::applicationFilePath(),source));
+  const QString sentinel=dir.filePath("handoff.json");
+  qputenv("CLOUDSTREAM_HANDOFF_TEST_SENTINEL",sentinel.toUtf8());
+  // Exact direct, argument-free QProcess handoff used by UpdatePane; harmless native test executable, never NSIS or package fixtures.
+  QVERIFY(QProcess::startDetached(source,QStringList{},QFileInfo(source).absolutePath()));
+  qunsetenv("CLOUDSTREAM_HANDOFF_TEST_SENTINEL");
+  QTRY_VERIFY_WITH_TIMEOUT(QFileInfo::exists(sentinel),10000);
+  QFile result(sentinel); QVERIFY(result.open(QIODevice::ReadOnly));
+  const auto record=QJsonDocument::fromJson(result.readAll()).object();
+  QCOMPARE(record["argumentCount"].toInt(),1);
+  QCOMPARE(record["workingDirectory"].toString(),QDir(subdir).absolutePath());
+ }
+#endif
  void asynchronousCheckAndVerifiedDownload() {
   MockNetwork net; net.responses={{fixture(Package::AppImage)},{"fixture package"}};
   ReleaseUpdater u("0.1.0-preview.4",Package::AppImage,nullptr,&net);
@@ -129,5 +150,18 @@ private slots:
    QVERIFY2(!compareVersions(bad, "0.1.0"), bad);
  }
 };
-QTEST_MAIN(UpdaterTest)
+int main(int argc,char **argv) {
+#ifdef Q_OS_WIN
+ if(qEnvironmentVariableIsSet("CLOUDSTREAM_HANDOFF_TEST_SENTINEL")) {
+  QCoreApplication app(argc,argv);
+  QSaveFile file(qEnvironmentVariable("CLOUDSTREAM_HANDOFF_TEST_SENTINEL"));
+  if(!file.open(QIODevice::WriteOnly)) return 2;
+  file.write(QJsonDocument(QJsonObject{{"argumentCount",argc},{"workingDirectory",QDir::currentPath()}}).toJson());
+  return file.commit()?0:3;
+ }
+#endif
+ QApplication app(argc,argv);
+ UpdaterTest test;
+ return QTest::qExec(&test,argc,argv);
+}
 #include "test_updater.moc"

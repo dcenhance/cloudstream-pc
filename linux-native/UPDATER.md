@@ -30,7 +30,7 @@ Every package must have GitHub's `sha256:` asset digest. **Missing/invalid diges
 
 ## Building and publishing compatible releases
 
-`linux-native/VERSION` is the single hand-edited semantic release version. Change it **before compiling**, not just before renaming archives. Qmake embeds it into the application, sets the native numeric version and writes `cloudstream-version.txt` into the build output. The application reports it with `--version` and in Settings.
+`linux-native/VERSION.txt` is the single hand-edited semantic release version. Change it **before compiling**, not just before renaming archives. Qmake embeds it into the application, sets the native numeric version and writes `cloudstream-version.txt` into the build output. The application reports it with `--version` and in Settings.
 
 The Windows build script copies the version stamp into the runtime. Linux's container build exports the paired stamp. Packaging scripts reject a different stamp/version rather than relabel a previous executable. They put `cloudstream-build.json` beside the executable with the exact version and one package kind (`windows-setup`, `windows-zip`, `appimage`, `deb`, `rpm`). The installer writes its installed identity without changing the portable runtime identity. A missing, mismatched or cross-platform marker is treated as a development build.
 

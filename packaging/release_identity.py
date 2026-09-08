@@ -3,7 +3,7 @@ import json
 import re
 from pathlib import Path
 
-VERSION_FILE = Path(__file__).resolve().parents[1] / 'linux-native' / 'VERSION'
+VERSION_FILE = Path(__file__).resolve().parents[1] / 'linux-native' / 'VERSION.txt'
 
 
 def release_version():
@@ -18,7 +18,7 @@ def identity(package, version=None):
         raise ValueError('Unknown package identity')
     current = release_version()
     if version is not None and version != current:
-        raise ValueError('Package version must match linux-native/VERSION; rebuild first')
+        raise ValueError('Package version must match linux-native/VERSION.txt; rebuild first')
     return json.dumps({'version': current, 'package': package}, separators=(',', ':')) + '\n'
 
 

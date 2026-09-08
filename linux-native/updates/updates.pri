@@ -1,5 +1,5 @@
 QT += network concurrent
-CS_VERSION = $$cat($$PWD/../VERSION, lines)
+CS_VERSION = $$cat($$PWD/../VERSION.txt, lines)
 isEmpty(CS_VERSION): error(Missing CloudStream VERSION)
 write_file($$OUT_PWD/cloudstream-version.txt, CS_VERSION)
 DEFINES += CLOUDSTREAM_VERSION=\\\"$$CS_VERSION\\\"

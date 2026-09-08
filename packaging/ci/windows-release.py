@@ -19,7 +19,7 @@ OUTPUT = ROOT / 'output'
 EVIDENCE.mkdir(exist_ok=True)
 OUTPUT.mkdir(exist_ok=True)
 PIN = os.environ['GITHUB_SHA']
-VERSION = (SOURCE / 'linux-native/VERSION').read_text().strip()
+VERSION = (SOURCE / 'linux-native/VERSION.txt').read_text().strip()
 BASE_HASH = '116b5847c93ea7fc9ba31f2c2882bf26f958fecb5f4e2ed47d1310a3f985de28'
 
 
