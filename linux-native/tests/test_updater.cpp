@@ -65,6 +65,7 @@ private slots:
   u.check(); QTRY_VERIFY(!u.busy()); QVERIFY(u.available());
   MockNetwork rate; rate.responses={{"",403}}; ReleaseUpdater r("0.1.0",Package::Deb,nullptr,&rate); r.check(); QTRY_VERIFY(!r.busy()); QVERIFY(r.status().contains("rate limit"));
  }
+#ifdef Q_OS_LINUX
  void atomicAppImageReplacement() {
   QTemporaryDir d; const auto target=d.filePath("CloudStream.AppImage"), source=d.filePath("new.AppImage");
   QByteArray old="old fixture", payload=QByteArray::fromHex("7f454c460201010041490200")+"new fixture";
@@ -79,7 +80,13 @@ private slots:
   QVERIFY(!replaceAppImage(source,target,hash,payload.size()).isEmpty()); // Preserve prior rollback, never clobber it.
   const auto link=d.filePath("link.AppImage"); QVERIFY(QFile::link(target,link)); QVERIFY(!replaceAppImage(source,link,hash,payload.size()).isEmpty());
  }
+#endif
  void buildIdentity() {
+#ifdef Q_OS_WIN
+  QCOMPARE(readPackageIdentity(buildVersion(),"windows-setup","x86_64"),Package::WindowsSetup);
+  QCOMPARE(readPackageIdentity(buildVersion(),"windows-zip","x86_64"),Package::WindowsZip);
+  QCOMPARE(readPackageIdentity(buildVersion(),"appimage","x86_64"),Package::Source);
+#endif
 #ifdef Q_OS_LINUX
   QCOMPARE(readPackageIdentity(buildVersion(),"deb","x86_64"),Package::Deb);
   QCOMPARE(readPackageIdentity(buildVersion(),"windows-setup","x86_64"),Package::Source);
