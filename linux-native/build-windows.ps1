@@ -64,6 +64,7 @@ try {
 if (Test-Path $Dist) { Remove-Item -Recurse -Force $Dist }
 New-Item -ItemType Directory -Force $Dist | Out-Null
 Copy-Item (Join-Path $Build 'release\cloudstream.exe') $Dist
+Copy-Item (Join-Path $Build 'cloudstream-version.txt') $Dist
 & windeployqt --release --no-translations (Join-Path $Dist 'cloudstream.exe')
 if ($LASTEXITCODE -ne 0) { throw 'windeployqt failed.' }
 

@@ -4,6 +4,7 @@ import argparse
 import hashlib
 from pathlib import Path
 import zipfile
+from release_identity import identity, require_build_version
 
 
 def main():
@@ -12,6 +13,8 @@ def main():
     parser.add_argument('output', type=Path)
     args = parser.parse_args()
     root = args.runtime.resolve()
+    require_build_version(root / "cloudstream-version.txt")
+    (root / "cloudstream-build.json").write_text(identity("windows-zip"), encoding="utf-8")
     required = ('cloudstream.exe', 'runtime/bin/java.exe', 'libmpv-2.dll',
                 'SDL2.dll', 'platforms/qwindows.dll', 'vulkan-1.dll',
                 'vcruntime140.dll', 'vcruntime140_1.dll', 'msvcp140.dll', 'LICENSE')

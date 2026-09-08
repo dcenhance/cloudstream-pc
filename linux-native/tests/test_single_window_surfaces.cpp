@@ -1,4 +1,5 @@
 #include <QtTest>
+#include "../updates/ReleaseUpdater.h"
 #define main cloudstreamApplicationMain
 #include "../main.cpp"
 #undef main
@@ -44,6 +45,28 @@ private slots:
         qputenv("CLOUDSTREAM_PROVIDER_HOST", helper.fileName().toUtf8());
     }
 
+    void updaterSettingsRenderAndLiveCheck() {
+        CloudStreamWindow window(false);
+        window.resize(1280, 960);
+        window.show();
+        window.openSettingsSectionForPreview("Updates and backup");
+        auto *button = window.findChild<QPushButton *>("checkAppUpdates");
+        QVERIFY(button);
+        auto *updater = window.findChild<CloudStream::Updates::ReleaseUpdater *>();
+        QVERIFY(updater);
+        if (qEnvironmentVariableIsSet("CLOUDSTREAM_UPDATER_LIVE")) {
+            button->click();
+            QTRY_VERIFY_WITH_TIMEOUT(!updater->busy(), 65000);
+            QVERIFY2(!updater->release().version.isEmpty(), qPrintable(updater->status()));
+            qInfo().noquote() << "LIVE GitHub updater:" << updater->currentVersion() << updater->release().version << updater->status();
+        }
+        QApplication::processEvents();
+        const auto evidence = qEnvironmentVariable("CLOUDSTREAM_TEST_EVIDENCE");
+        if (!evidence.isEmpty()) {
+            QDir().mkpath(evidence);
+            QVERIFY(window.grab().save(evidence + "/updates-settings.png"));
+        }
+    }
     void navigationDismissesDetailsBeforeRaisingSearch() {
         CloudStreamWindow window(false);
         window.show();

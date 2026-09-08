@@ -4,6 +4,7 @@ import argparse
 import pathlib
 import subprocess
 import tempfile
+from release_identity import identity, release_version, require_build_version
 
 
 def nsis_quote(value):
@@ -22,10 +23,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('runtime', type=pathlib.Path)
     parser.add_argument('output', type=pathlib.Path)
-    parser.add_argument('--version', default='0.1.0-preview.2')
+    parser.add_argument('--version', default=release_version())
     args = parser.parse_args()
     runtime = args.runtime.resolve()
     output = args.output.resolve()
+    marker = identity("windows-setup", args.version).strip()
+    require_build_version(runtime / "cloudstream-version.txt")
     for required in ('cloudstream.exe', 'runtime/bin/java.exe', 'platforms/qwindows.dll'):
         if not (runtime / required).is_file():
             parser.error(f'Missing runtime file: {required}')
@@ -42,7 +45,7 @@ def main():
 !include "MUI2.nsh"
 !include "x64.nsh"
 Name "CloudStream PC"
-VIProductVersion "0.1.0.0"
+VIProductVersion "@NUMERIC_VERSION@.0"
 VIAddVersionKey /LANG=1033 "ProductName" "CloudStream PC"
 VIAddVersionKey /LANG=1033 "CompanyName" "dcenhance"
 VIAddVersionKey /LANG=1033 "FileDescription" "CloudStream PC per-user installer"
@@ -71,6 +74,9 @@ Section "CloudStream PC"
   SetShellVarContext current
   SetOutPath "$INSTDIR"
   File /r "@FILE_PATTERN@"
+  FileOpen $0 "$INSTDIR\\cloudstream-build.json" w
+  FileWrite $0 "@IDENTITY@"
+  FileClose $0
   WriteUninstaller "$INSTDIR\\Uninstall.exe"
   CreateDirectory "$SMPROGRAMS\\CloudStream PC"
   CreateShortcut "$SMPROGRAMS\\CloudStream PC\\CloudStream PC.lnk" "$INSTDIR\\cloudstream.exe"
@@ -94,7 +100,7 @@ Section "Uninstall"
   DeleteRegKey HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\CloudStreamPC"
 SectionEnd
 '''
-    for key, value in {'OUTPUT': nsis_quote(output), 'FILE_PATTERN': nsis_file_pattern(runtime), 'ICON': nsis_quote(pathlib.Path(__file__).with_name('cloudstream.ico').resolve()), 'VERSION': nsis_quote(args.version), 'DELETES': deletes, 'REMOVES': removes}.items():
+    for key, value in {'NUMERIC_VERSION': args.version.partition('-')[0], 'IDENTITY': nsis_quote(marker), 'OUTPUT': nsis_quote(output), 'FILE_PATTERN': nsis_file_pattern(runtime), 'ICON': nsis_quote(pathlib.Path(__file__).with_name('cloudstream.ico').resolve()), 'VERSION': nsis_quote(args.version), 'DELETES': deletes, 'REMOVES': removes}.items():
         script = script.replace('@' + key + '@', value)
     with tempfile.TemporaryDirectory(prefix='cloudstream-nsis-') as tmp:
         path = pathlib.Path(tmp) / 'installer.nsi'

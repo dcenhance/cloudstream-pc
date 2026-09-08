@@ -3,7 +3,8 @@ CONFIG += c++17 link_pkgconfig
 PKGCONFIG += mpv sdl2
 TEMPLATE = app
 TARGET = cloudstream-linux
-VERSION = 0.1.0
+include(updates/updates.pri)
+VERSION = $$section(CS_VERSION, -, 0, 0)
 
 win32 {
     TARGET = cloudstream
@@ -24,7 +25,6 @@ SOURCES += main.cpp \
     extensions/ExtensionRegistry.cpp \
     history/WatchHistoryStore.cpp \
     input/GamepadNavigation.cpp \
-    network/CloudStreamRequest.cpp \
     media/ArtworkLoader.cpp \
     media/ArtworkSizing.cpp \
     providers/HomeContentLimiter.cpp \

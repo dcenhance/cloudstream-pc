@@ -11,6 +11,18 @@
 class SettingsPaneTest final : public QObject {
     Q_OBJECT
 private slots:
+    void realUpdaterIsEmbeddedAndOptIn() {
+        QTemporaryDir temporary;
+        QSettings settings(temporary.filePath("settings.ini"), QSettings::IniFormat);
+        CloudStream::SettingsPane pane(&settings);
+        pane.showSection("Updates and backup");
+        QVERIFY(pane.findChild<QPushButton *>("checkAppUpdates"));
+        QVERIFY(pane.findChild<QPushButton *>("downloadAppUpdate"));
+        QVERIFY(pane.findChild<QPushButton *>("cancelAppUpdate"));
+        auto *automatic = pane.findChild<QAbstractButton *>("automaticAppUpdates");
+        QVERIFY(automatic); QVERIFY(!automatic->isChecked()); automatic->click();
+        QVERIFY(settings.value("updates/automaticCheck",false).toBool());
+    }
     void exposesSevenAndroidStyleCategories() {
         QTemporaryDir temporary;
         QSettings settings(temporary.filePath("settings.ini"), QSettings::IniFormat);

@@ -31,6 +31,7 @@
 #include "repositories/RepositoryUrlResolver.h"
 #include "search/SearchHistoryModel.h"
 #include "settings/SettingsPane.h"
+#include "updates/BuildInfo.h"
 #include "storage/XdgPaths.h"
 #include "ui/SmoothScrollController.h"
 
@@ -5569,7 +5570,7 @@ int main(int argc, char **argv) {
     QCoreApplication::setOrganizationName("recloudstream");
     QCoreApplication::setOrganizationDomain("recloudstream.github.io");
     QCoreApplication::setApplicationName("CloudStream");
-    QCoreApplication::setApplicationVersion("0.1.0");
+    QCoreApplication::setApplicationVersion(CloudStream::Updates::buildVersion());
     QGuiApplication::setDesktopFileName("io.github.recloudstream.cloudstream");
     QCommandLineParser parser;
     parser.setApplicationDescription("A native Linux client for CloudStream providers");

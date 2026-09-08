@@ -9,4 +9,5 @@ cd /tmp/build
 qmake6 /tmp/linux-native/cloudstream-linux.pro CONFIG+=release
 make -j4
 cp cloudstream-linux /out/cloudstream-linux-ubuntu24.04
+cp cloudstream-version.txt /out/cloudstream-version.txt
 sleep infinity

@@ -1,4 +1,7 @@
 #include "SettingsPane.h"
+#include "../updates/UpdatePane.h"
+#include "../updates/BuildInfo.h"
+#include <QTimer>
 #include "../storage/XdgPaths.h"
 #include "../ui/SmoothScrollController.h"
 
@@ -166,6 +169,22 @@ QScrollArea *scrollFor(QWidget *content) {
 
 SettingsPane::SettingsPane(QSettings *settings, QWidget *parent)
     : QWidget(parent), settings_(settings) {
+    auto package = Updates::installedPackage();
+    if (package == Updates::Package::Source && QSysInfo::buildCpuArchitecture() == "x86_64") {
+#ifdef Q_OS_WIN
+        package = Updates::Package::WindowsZip;
+#elif defined(Q_OS_LINUX)
+        package = Updates::Package::AppImage;
+#endif
+    }
+    updater_ = new Updates::ReleaseUpdater(Updates::buildVersion(), package, this);
+    connect(updater_, &Updates::ReleaseUpdater::changed, this, [this] {
+        if (!updater_->busy() && updater_->available()) emit statusMessage("CloudStream update available — Settings → Updates and backup");
+    });
+    if (settings_->value("updates/automaticCheck", false).toBool())
+        QTimer::singleShot(10000, updater_, [this] {
+            if (settings_->value("updates/automaticCheck", false).toBool()) updater_->check();
+        });
     auto *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     stack_ = new QStackedWidget;
@@ -240,7 +259,7 @@ QWidget *SettingsPane::buildOverview() {
         connect(row, &QPushButton::clicked, this, [this, name = category.name] { showSection(name); });
         layout->addWidget(row);
     }
-    auto *version = new QLabel("CloudStream Linux 0.1.0  •  native Qt 6");
+    auto *version = new QLabel("CloudStream PC " + Updates::buildVersion() + "  •  native Qt 6");
     version->setObjectName("settingsVersion");
     version->setAlignment(Qt::AlignCenter);
     version->setStyleSheet("color:#73737b;padding:14px;background:transparent;");
@@ -526,10 +545,7 @@ QWidget *SettingsPane::buildSection(const QString &section) {
         });
     } else if (section == "Updates and backup") {
         layout->addWidget(sectionLabel("Updates"));
-        addAction(":/icons/refresh.svg", "Check for CloudStream updates",
-                  "Open the project releases page", {}, [] {
-            QDesktopServices::openUrl(QUrl("https://github.com/recloudstream/cloudstream/releases"));
-        });
+        layout->addWidget(new Updates::UpdatePane(updater_, settings_));
         addAction(":/icons/extension.svg", "Update extensions",
                   "Refresh repository metadata and available versions", {}, [this] { emit extensionsRequested(); });
         layout->addWidget(sectionLabel("Backup"));

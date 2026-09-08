@@ -2,6 +2,10 @@
 
 This is the primary native Linux client. It uses Qt 6 for the desktop UI and runs compatible CloudStream provider JARs through the separate JVM `provider-host` process.
 
+## Application updates
+
+Settings → Updates and backup includes the PC GitHub Releases updater, verified downloads, and package-specific installation/handoff. Automatic checking is opt-in. See [UPDATER.md](UPDATER.md) for supported paths, safety limits, version/packaging metadata, and live verification commands.
+
 ## Build and test
 
 Requirements: Qt 6 Widgets/Network/Concurrent development files, qmake 6, a C++17 compiler, JDK 17, SDL2, and `mpv` for playback.

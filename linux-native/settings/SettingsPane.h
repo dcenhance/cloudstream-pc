@@ -7,6 +7,8 @@ class QStackedWidget;
 
 namespace CloudStream {
 
+namespace Updates { class ReleaseUpdater; }
+
 class SettingsPane final : public QWidget {
     Q_OBJECT
 public:
@@ -28,6 +30,7 @@ private:
     QWidget *buildOverview();
     QWidget *buildSection(const QString &section);
 
+    Updates::ReleaseUpdater *updater_{};
     QSettings *settings_{};
     QStackedWidget *stack_{};
     QString currentSection_ = "Settings";

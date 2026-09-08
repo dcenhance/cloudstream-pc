@@ -32,6 +32,7 @@ run_test home-hero-selection "$ROOT/tests/home-hero-selection.pro" test_home_her
 run_test provider-configuration "$ROOT/tests/provider-configuration.pro" test_provider_configuration
 run_test provider-preference-filter "$ROOT/tests/provider-preference-filter.pro" test_provider_preference_filter
 run_test search-history-model "$ROOT/tests/search-history-model.pro" test_search_history_model
+run_test updater "$ROOT/tests/updater.pro" test_updater
 run_test settings-pane "$ROOT/tests/settings-pane.pro" test_settings_pane
 run_test network-request-policy "$ROOT/tests/network-request-policy.pro" test_network_request_policy
 run_test smooth-scroll-controller "$ROOT/tests/smooth-scroll-controller.pro" test_smooth_scroll_controller

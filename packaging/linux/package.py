@@ -7,6 +7,9 @@ from pathlib import Path
 import shutil
 import subprocess
 import tarfile
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from release_identity import identity, release_version, require_build_version
 
 REPO = Path(__file__).resolve().parents[2]
 ORIGINAL = Path(os.environ.get('CLOUDSTREAM_ORIGINAL', str(REPO)))
@@ -14,7 +17,11 @@ OUT = Path(os.environ.get('CLOUDSTREAM_RELEASE_OUT', str(REPO / 'dist-linux')))
 CONTAINER = os.environ.get('CLOUDSTREAM_CONTAINER', 'cloudstream-linux-packager')
 WORK = OUT / 'build-support'
 ROOT = WORK / 'root'
-VERSION = '0.1.0-preview.4'
+VERSION = release_version()
+BASE_VERSION, _, PRE_RELEASE = VERSION.partition('-')
+DEB_VERSION = VERSION.replace('-', '~')
+DEB_FILENAME_VERSION = VERSION.replace('-', '.')
+RPM_RELEASE = '0.' + PRE_RELEASE if PRE_RELEASE else '1'
 
 def run(*args):
     subprocess.run(args, check=True)
@@ -38,6 +45,7 @@ def copy(source, relative):
         shutil.copy2(source, p)
 
 assert (OUT / 'cloudstream-linux-ubuntu24.04').is_file(), 'Build container ELF first'
+require_build_version(OUT / 'cloudstream-version.txt')
 if ROOT.exists():
     shutil.rmtree(ROOT)
 ROOT.mkdir(parents=True)
@@ -97,15 +105,17 @@ if debroot.exists():
     shutil.rmtree(debroot)
 shutil.copytree(ROOT, debroot)
 (debroot / 'DEBIAN').mkdir()
-(debroot / 'DEBIAN/control').write_text('Package: cloudstream-pc\nVersion: 0.1.0~preview.4\nArchitecture: amd64\nMaintainer: dcenhance <252102103+dcenhance@users.noreply.github.com>\nSection: video\nPriority: optional\nDepends: libc6 (>= 2.39), libstdc++6 (>= 13.2), libgcc-s1, libqt6core6t64 (>= 6.4.2), libqt6widgets6 (>= 6.4.2), libqt6gui6 (>= 6.4.2), libqt6network6 (>= 6.4.2), libqt6opengl6 (>= 6.4.2), libqt6openglwidgets6 (>= 6.4.2), libqt6concurrent6 (>= 6.4.2), libqt6svg6 (>= 6.4.2), libmpv2 (>= 0.37), libsdl2-2.0-0 (>= 2.30), qt6-qpa-plugins, qt6-wayland, qt6-image-formats-plugins, openjdk-17-jre-headless | java17-runtime-headless, ffmpeg (>= 6), ca-certificates\nDescription: CloudStream PC native desktop preview (system runtime)\n Ubuntu 24.04 amd64 baseline; Qt, mpv, Java and FFmpeg are not bundled.\n')
-inside('dpkg-deb --root-owner-group --build /out/build-support/debroot /out/cloudstream-pc_0.1.0.preview.4_amd64.deb')
+(debroot / 'usr/bin/cloudstream-build.json').write_text(identity('deb'))
+(debroot / 'DEBIAN/control').write_text(f'Package: cloudstream-pc\nVersion: {DEB_VERSION}\nArchitecture: amd64\nMaintainer: dcenhance <252102103+dcenhance@users.noreply.github.com>\nSection: video\nPriority: optional\nDepends: libc6 (>= 2.39), libstdc++6 (>= 13.2), libgcc-s1, libqt6core6t64 (>= 6.4.2), libqt6widgets6 (>= 6.4.2), libqt6gui6 (>= 6.4.2), libqt6network6 (>= 6.4.2), libqt6opengl6 (>= 6.4.2), libqt6openglwidgets6 (>= 6.4.2), libqt6concurrent6 (>= 6.4.2), libqt6svg6 (>= 6.4.2), libmpv2 (>= 0.37), libsdl2-2.0-0 (>= 2.30), qt6-qpa-plugins, qt6-wayland, qt6-image-formats-plugins, openjdk-17-jre-headless | java17-runtime-headless, ffmpeg (>= 6), ca-certificates\nDescription: CloudStream PC native desktop preview (system runtime)\n Ubuntu 24.04 amd64 baseline; Qt, mpv, Java and FFmpeg are not bundled.\n')
+inside(f'dpkg-deb --root-owner-group --build /out/build-support/debroot /out/cloudstream-pc_{DEB_FILENAME_VERSION}_amd64.deb')
+put('usr/bin/cloudstream-build.json', identity('rpm'))
 # RPM auto-generated ELF requirements are preserved, plus helper/dlopen dependencies.
 spec = WORK / 'cloudstream-pc.spec'
 spec.write_text('''%global __os_install_post %{nil}
 %global _build_id_links none
 Name: cloudstream-pc
-Version: 0.1.0
-Release: 0.preview.4
+Version: @BASE_VERSION@
+Release: @RPM_RELEASE@
 Summary: CloudStream PC native desktop preview (system runtime)
 Packager: dcenhance
 License: GPL-3.0-only AND Apache-2.0 AND MIT AND MPL-2.0 AND BSD-3-Clause
@@ -131,12 +141,13 @@ mkdir -p %{buildroot}
 cp -a /out/build-support/root/. %{buildroot}/
 %files
 /usr/bin/cloudstream-linux
+/usr/bin/cloudstream-build.json
 /usr/bin/cloudstream-pc
 /usr/libexec/cloudstream
 /usr/share/applications/io.github.recloudstream.cloudstream-pc.desktop
 /usr/share/icons/hicolor/scalable/apps/io.github.recloudstream.cloudstream.svg
 /usr/share/doc/cloudstream-pc
-''')
+'''.replace('@BASE_VERSION@', BASE_VERSION).replace('@RPM_RELEASE@', RPM_RELEASE))
 inside('rpmbuild -bb --define "_topdir /out/build-support/rpmbuild" /out/build-support/cloudstream-pc.spec')
 for p in (WORK / 'rpmbuild/RPMS/x86_64').glob('*.rpm'):
     shutil.copy2(p, OUT / p.name)
@@ -145,6 +156,7 @@ appdir = WORK / 'AppDir'
 if appdir.exists():
     shutil.rmtree(appdir)
 shutil.copytree(ROOT, appdir)
+(appdir / "usr/bin/cloudstream-build.json").write_text(identity("appimage"))
 (appdir / 'AppRun').write_text('#!/bin/sh\nset -eu\nAPPDIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)\nexec "$APPDIR/usr/bin/cloudstream-pc" "$@"\n')
 (appdir / 'AppRun').chmod(0o755)
 shutil.copy2(ROOT / 'usr/share/applications/io.github.recloudstream.cloudstream-pc.desktop', appdir / 'cloudstream-pc.desktop')

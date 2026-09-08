@@ -1,0 +1,45 @@
+name: Windows release build and verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: tooling
+      - uses: actions/checkout@v4
+        with:
+          path: source
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Qt development tools
+        shell: pwsh
+        run: |
+          python -m pip install aqtinstall==3.3.0 pefile
+          if ($LASTEXITCODE) { throw 'Python tools failed' }
+          python -m aqt install-qt windows desktop 6.8.3 win64_msvc2022_64 -O C:\Qt
+          if ($LASTEXITCODE) { throw 'Qt install failed' }
+      - name: Build current source and test audited runtime
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          set PATH=C:\Qt\6.8.3\msvc2022_64\bin;C:\Program Files (x86)\NSIS;%PATH%
+          python tooling\packaging\ci\windows-release.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-release-evidence
+          path: evidence/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-release-packages
+          path: output/
+          compression-level: 0
+          if-no-files-found: error

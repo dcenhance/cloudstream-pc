@@ -1,4 +1,5 @@
 QT += widgets testlib
+include(../updates/updates.pri)
 CONFIG += testcase c++17
 TEMPLATE = app
 TARGET = test_settings_pane

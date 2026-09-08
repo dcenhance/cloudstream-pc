@@ -45,6 +45,13 @@ First launch: add an extension repository you trust in **Extensions**, install p
 
 ## Features
 
+### Preview 5: application updater
+
+Settings → **Updates and backup → CloudStream PC updates** checks the official GitHub latest release, displays compatible versions and notes, and downloads only the matching package with mandatory GitHub SHA-256 verification. Startup checks are optional and off by default; downloading and installing always require user choice.
+
+Writable original AppImages support atomic replacement with a retained `.backup` and separate restart confirmation. The default per-user Windows Setup installation supports an interactive installer handoff. Windows ZIP, Linux DEB/RPM, and development builds offer verified downloads for **manual installation**, not automatic installation. Non-default Windows install locations must also update manually. See [the updater contract and recovery instructions](linux-native/UPDATER.md). Checksums verify consistency with repository metadata, not an independent trusted publisher identity; Windows installers remain unsigned.
+
+
 ### Preview 4: single-window navigation overlap fix
 
 Navigating between pages now dismisses embedded details/player dialogs instead of allowing them to overlap Search or other pages. Closing details disconnects UI completion delivery before cancelling its provider process; an older dialog cannot clear the newer dialog’s resize pointer. Separate dialog windows remain open as intended.
