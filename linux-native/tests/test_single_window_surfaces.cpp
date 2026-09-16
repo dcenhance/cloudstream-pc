@@ -131,7 +131,8 @@ private slots:
         QTRY_VERIFY(!host->isFullScreen());
         QTRY_COMPARE(host->size(), priorSize);
         if (QGuiApplication::platformName() == "xcb") QTRY_COMPARE(host->geometry(), priorGeometry);
-        QCOMPARE(host->isMaximized(), maximized);
+        // Native maximization can trail the fullscreen flag/size transition.
+        QTRY_COMPARE(host->isMaximized(), maximized);
         QVERIFY(QTest::qWaitForWindowActive(host));
         player->setFocus();
         QTest::keyClick(player.data(), Qt::Key_F11);
