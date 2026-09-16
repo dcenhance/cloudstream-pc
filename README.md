@@ -18,24 +18,24 @@ An independent desktop adaptation of [recloudstream/cloudstream](https://github.
 
 | Platform | Status |
 | --- | --- |
-| Linux x86-64 | Built and tested on Nobara/KDE Wayland |
-| Windows x86-64 | Preview 5 built with MSVC 2022 / Qt 6.8.3 on hosted Windows Server 2022; overlap regressions and EXE/ZIP lifecycle checks passed; media-suite limitation below |
+| Linux x86-64 | Preview 6 player/fullscreen changes tested on Nobara/KDE Wayland and XCB; release packages use an Ubuntu 24.04 / Qt 6.4.2 baseline |
+| Windows x86-64 | Preview 6 is built with MSVC 2022 / Qt 6.8.3 on hosted Windows Server 2022; publication is gated on native player/fullscreen suites and EXE/ZIP lifecycle checks reported in the release notes |
 
-Earlier Windows 10 VM playback was tested with software rendering on the previous release. Preview 5 uses hosted native Windows verification without reopening a local emulator. Physical Windows GPU acceleration and controller input remain unverified. Other distributions, Windows versions, and architectures are not yet validated.
+Earlier Windows 10 VM playback was tested with software rendering. Preview 6 uses a native hosted Windows build for the shipping artifacts, then stages that exact published package in the user's disposable Windows 10 VirtualBox guest for manual fullscreen testing. Neither environment establishes physical Windows GPU acceleration or controller support. Other distributions, Windows versions, and architectures are not yet validated.
 
 ## Downloads and installation
 
-**[Download Preview 5 for Linux and Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.5)**. All five runnable formats are provided together: Windows Setup EXE/portable ZIP and Linux AppImage/DEB/RPM, with application and dependency source/support archives and `SHA256SUMS`. [Previous Preview 4 downloads](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.4) remain unchanged. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
+**[Download Preview 6 for Linux and Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.6)**. All five runnable formats are provided together: Windows Setup EXE/portable ZIP and Linux AppImage/DEB/RPM, with application and dependency source/support archives and `SHA256SUMS`. [Previous Preview 5 downloads](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.5) remain unchanged. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
 
 | Download | Installation and requirements |
 | --- | --- |
 | **Windows x64 Setup EXE** | Run the installer. Installs for the current user, adds shortcuts and an uninstaller; application updates do not replace your profile. |
 | **Windows x64 ZIP** | Extract the **entire ZIP** to a writable folder, then run `cloudstream.exe`. Do not run it inside the ZIP or copy just the EXE. Qt, Java, media libraries and Visual C++ runtime DLLs are included. |
-| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_0.1.0.preview.5_amd64.deb` so dependencies are resolved. |
-| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.5.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
+| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_0.1.0.preview.6_amd64.deb` so dependencies are resolved. |
+| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.6.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
 | **Linux x86_64 system-runtime AppImage** | Make executable, then run. **Not self-contained:** requires system Qt, mpv, SDL2, Java and FFmpeg. See the [exact dependencies and FUSE-less launch option](packaging/linux/README.md). |
 
-Linux packages require **glibc 2.39 or newer and Qt 6.4.2 or newer**. They are not universal Linux binaries. Windows packages target Windows 10 x64 or later; Preview 5 testing uses a hosted Windows Server 2022 runner, not a physical GPU/controller certification.
+Linux packages require **glibc 2.39 or newer and Qt 6.4.2 or newer**. They are not universal Linux binaries. Windows packages target Windows 10 x64 or later; hosted Windows Server 2022 and a disposable Windows 10 VirtualBox guest are software-rendered verification environments, not physical GPU/controller certification.
 
 The Windows installer is **unsigned**. Windows may display an unknown-publisher warning; verify the release and its SHA-256 checksums before deciding whether to run it. Do not disable antivirus or system protections to install the application.
 
@@ -44,6 +44,16 @@ The release includes `SHA256SUMS`, application source archives, and separate thi
 First launch: add an extension repository you trust in **Extensions**, install providers, then select one on Home. No repositories or provider accounts are bundled. Uninstalling removes application files, not your saved profile.
 
 ## Features
+
+### Preview 6: full-area player and native fullscreen fixes
+
+Single-window playback now occupies the complete app content area instead of leaving the navigation sidebar or status footer reserved. Back restores the prior page and focus. Separate-window playback remains available.
+
+Embedded and separate players now send native fullscreen to the actual top-level host while keeping libmpv's OpenGL renderer embedded. Leaving fullscreen, closing the player, or pressing Back restores the preceding normal or maximized state; repeated F, F11, double-click and Escape cycles are covered with decoded-frame and compositor-geometry assertions.
+
+The player chrome is closely adapted from official [`recloudstream/cloudstream@81dbdf4b4483ee72566f108ac9cde998a79e519e`](https://github.com/recloudstream/cloudstream/commit/81dbdf4b4483ee72566f108ac9cde998a79e519e); the latest stable upstream release resolved at implementation time was **v4.8.0**. Original GPL vectors and attribution are retained. The desktop player keeps real volume, native-fullscreen, hover/focus and Qt sizing behavior. Android-only episode generation, torrent/cast/PiP, rotation, touch brightness, account/WebView/DRM integrations and pixel-identical Material rendering are not claimed.
+
+Preview 5's opt-in, consent-gated updater remains present. Exact Preview 6 Windows/Linux suite totals, package lifecycle results and any hosted audio/framebuffer limitations are reported in the release notes; successful software-rendered tests do not claim physical GPU, audio-device or controller coverage.
 
 ### Preview 5: application updater
 

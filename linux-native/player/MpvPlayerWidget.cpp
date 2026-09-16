@@ -189,7 +189,7 @@ void MpvPlayerWidget::setMuted(bool muted) {
 }
 
 void MpvPlayerWidget::setPlaybackSpeed(double speed) {
-    currentPlaybackSpeed = std::clamp(speed, 0.25, 4.0);
+    currentPlaybackSpeed = std::clamp(speed, 0.1, 4.0);
     if (!handle) return;
     mpv_set_property(handle, "speed", MPV_FORMAT_DOUBLE, &currentPlaybackSpeed);
 }

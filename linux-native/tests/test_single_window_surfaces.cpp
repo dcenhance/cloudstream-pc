@@ -1,4 +1,6 @@
 #include <QtTest>
+#include <QWindow>
+#include "../player/MpvPlayerWidget.h"
 #include "../updates/ReleaseUpdater.h"
 #define main cloudstreamApplicationMain
 #include "../main.cpp"
@@ -15,6 +17,10 @@ class SingleWindowSurfacesTest final : public QObject {
     }
 
 private slots:
+    void init() {
+        QSettings settings("CloudStream", "CloudStream Linux");
+        settings.setValue("interface/windowMode", "Single-window navigation");
+    }
     void initTestCase() {
         QVERIFY(profile.isValid());
         qputenv("XDG_DATA_HOME", (profile.path() + "/data").toUtf8());
@@ -43,6 +49,134 @@ private slots:
         helper.close();
         QVERIFY(helper.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner));
         qputenv("CLOUDSTREAM_PROVIDER_HOST", helper.fileName().toUtf8());
+    }
+
+    void realPlaybackFullscreenLifecycle_data() {
+        QTest::addColumn<bool>("embedded");
+        QTest::addColumn<bool>("maximized");
+        QTest::newRow("embedded-normal") << true << false;
+        QTest::newRow("embedded-maximized") << true << true;
+        QTest::newRow("separate-normal") << false << false;
+        QTest::newRow("separate-maximized") << false << true;
+    }
+
+    void realPlaybackFullscreenLifecycle() {
+        QFETCH(bool, embedded);
+        QFETCH(bool, maximized);
+        QSettings settings("CloudStream", "CloudStream Linux");
+        settings.setValue("interface/windowMode", embedded ? "Single-window navigation" : "Separate windows");
+        settings.sync();
+        QTemporaryDir media;
+        const auto mediaPath = media.filePath("fixture.mp4");
+        QCOMPARE(QProcess::execute("ffmpeg", {"-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi", "-i",
+            "testsrc2=size=960x540:rate=30", "-t", "30", "-c:v", "libx264", "-preset", "ultrafast", mediaPath}), 0);
+        CloudStreamWindow window(false);
+        window.show();
+        window.selectPage(1);
+        window.openPlayerForPreview(mediaPath, {});
+        QPointer<CloudStream::IntegratedPlayerWindow> player = window.findChild<CloudStream::IntegratedPlayerWindow *>();
+        QVERIFY(player);
+        auto *surface = player->findChild<CloudStream::MpvPlayerWidget *>();
+        auto *host = player->window();
+        if (maximized) host->showMaximized();
+        QVERIFY(QTest::qWaitForWindowExposed(host));
+        QTRY_VERIFY(surface->renderedFrameCount() > 5);
+        QTRY_VERIFY(surface->position() > 0.3);
+        QCOMPARE(surface->currentVideoOutput(), QString("libmpv"));
+        auto *pages = window.findChild<QStackedWidget *>("appPages");
+        QCOMPARE(pages->isVisible(), !embedded);
+        QCOMPARE(player->isWindow(), !embedded);
+        if (embedded) QCOMPARE(player->size(), window.centralWidget()->size());
+        const QSize priorSize = host->size();
+        const QRect priorGeometry = host->geometry();
+        const auto evidence = qEnvironmentVariable("CLOUDSTREAM_TEST_EVIDENCE");
+        const QString prefix = evidence + "/" + QTest::currentDataTag();
+        auto capture = [&](const QString &name) {
+            QTest::qWait(250);
+            if (!evidence.isEmpty()) QVERIFY(host->grab().save(prefix + name + ".png"));
+        };
+        surface->setPaused(true);
+        QTRY_VERIFY(surface->isPaused());
+        capture("-window");
+        // The control overlay must not paint an opaque strip over the movie.
+        // testsrc2's left color bar is red through the transport row.
+        const auto overlayPixel = player->grab().toImage().pixelColor(player->width()/8, player->height()/2);
+        QVERIFY2(overlayPixel.red() > 50, "Opaque transport container covers the movie");
+        QVERIFY2(overlayPixel.red() < 230, "Upstream 40-percent black scrim is missing");
+        const auto frames = surface->renderedFrameCount();
+        surface->setPaused(false);
+        player->findChild<QPushButton *>("playerFullscreen")->click();
+        QTRY_VERIFY(host->isFullScreen());
+        QTRY_COMPARE(host->size(), host->screen()->geometry().size());
+        QVERIFY(host->windowHandle()->windowState() == Qt::WindowFullScreen);
+        QTRY_VERIFY(surface->renderedFrameCount() > frames);
+        surface->setPaused(true);
+        capture("-fullscreen");
+        player->findChild<QPushButton *>("playerTracks")->click();
+        QPointer<QDialog> panel = player->findChild<QDialog *>("playerTrackDialog");
+        QVERIFY(panel && !panel->isWindow());
+        capture("-tracks");
+        QTest::keyClick(panel.data(), Qt::Key_Escape);
+        QTRY_VERIFY(panel.isNull() || !panel->isVisible());
+        QVERIFY(host->isFullScreen());
+        for (const auto &name : {QString("Source"), QString("Speed")}) {
+            player->findChild<QPushButton *>(name == "Source" ? "playerSources" : "playerSpeed")->click();
+            QPointer<QDialog> menu = player->findChild<QDialog *>("player" + name + "Dialog");
+            QVERIFY(menu && !menu->isWindow());
+            capture("-" + name.toLower());
+            QTest::keyClick(menu.data(), Qt::Key_Escape);
+            QTRY_VERIFY(menu.isNull() || !menu->isVisible());
+        }
+        QTest::keyClick(player.data(), Qt::Key_F);
+        QTRY_VERIFY(!host->isFullScreen());
+        QTRY_COMPARE(host->size(), priorSize);
+        if (QGuiApplication::platformName() == "xcb") QTRY_COMPARE(host->geometry(), priorGeometry);
+        QCOMPARE(host->isMaximized(), maximized);
+        QVERIFY(QTest::qWaitForWindowActive(host));
+        player->setFocus();
+        QTest::keyClick(player.data(), Qt::Key_F11);
+        QTRY_VERIFY(host->isFullScreen());
+        QTRY_COMPARE(host->size(), host->screen()->geometry().size());
+        QTest::keyClick(player.data(), Qt::Key_Escape);
+        QTRY_VERIFY(!host->isFullScreen());
+        QVERIFY(player && player->isVisible());
+        capture("-restored");
+        auto *chrome = player->findChild<QWidget *>("playerChrome");
+        QTest::mouseDClick(chrome, Qt::LeftButton, Qt::NoModifier, QPoint(100, 150));
+        QTRY_VERIFY(host->isFullScreen());
+        player->findChild<QPushButton *>("playerBack")->click();
+        QTRY_VERIFY(player.isNull());
+        // Back restores the host through the compositor; the player can be
+        // deleted before the native state/configure transition completes.
+        QTRY_VERIFY(!window.isFullScreen());
+        QVERIFY(pages->isVisible());
+        QCOMPARE(pages->currentIndex(), 1);
+        if (embedded) QTRY_COMPARE(window.isMaximized(), maximized);
+        if (!evidence.isEmpty()) QVERIFY(window.grab().save(prefix + "-navigation.png"));
+        settings.setValue("interface/windowMode", "Single-window navigation");
+    }
+
+    void playbackOccupiesWholeContentAndRestoresNavigation() {
+        CloudStreamWindow window(false);
+        window.show();
+        window.selectPage(1);
+        QVERIFY(QTest::qWaitForWindowExposed(&window));
+        window.openPlayerForPreview(QString(), QString());
+        QPointer<CloudStream::IntegratedPlayerWindow> player = window.findChild<CloudStream::IntegratedPlayerWindow *>();
+        QVERIFY(player);
+        auto *pages = window.findChild<QStackedWidget *>("appPages");
+        const auto evidence = qEnvironmentVariable("CLOUDSTREAM_TEST_EVIDENCE");
+        if (!evidence.isEmpty()) window.grab().save(evidence + "/embedded-before.png");
+        QVERIFY2(!player->isWindow(), "Single-window playback must not create a separate player");
+        QTRY_COMPARE(player->size(), window.centralWidget()->size());
+        QVERIFY(!pages->isVisible());
+        QVERIFY(!window.statusBar()->isVisible());
+        window.resize(1280, 800);
+        QTRY_COMPARE(player->size(), window.centralWidget()->size());
+        player->close();
+        QTRY_VERIFY(player.isNull());
+        QVERIFY(pages->isVisible());
+        QCOMPARE(pages->currentIndex(), 1);
     }
 
     void updaterSettingsRenderAndLiveCheck() {

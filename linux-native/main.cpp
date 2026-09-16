@@ -467,9 +467,8 @@ public:
         preferences.initialVolume = settings.value("player/volume", 80).toInt();
         auto *window = new CloudStream::IntegratedPlayerWindow(
             discovery, "CloudStream Player Preview • Episode 1", 0.0, this, preferences);
-        integratedPlayer = window;
-        window->show();
-        QTimer::singleShot(1400, window, [window, outputPath] {
+        presentPlayer(window);
+        if (!outputPath.isEmpty()) QTimer::singleShot(1400, window, [window, outputPath] {
             window->grab().save(outputPath);
             window->close();
         });
@@ -491,6 +490,32 @@ public:
     }
 
 private:
+    void presentPlayer(CloudStream::IntegratedPlayerWindow *player) {
+        if (integratedPlayer && integratedPlayer != player) integratedPlayer->close();
+        integratedPlayer = player;
+        if (settings.value("interface/windowMode", "Separate windows").toString() ==
+                "Single-window navigation") {
+            const bool statusWasVisible = statusBar()->isVisible();
+            QPointer<QWidget> previousFocus = QApplication::focusWidget();
+            player->setParent(appSurfaces, Qt::Widget);
+            appSurfaces->addWidget(player);
+            appSurfaces->setCurrentWidget(player);
+            statusBar()->hide();
+            connect(player, &QDialog::finished, this,
+                    [this, player, previousFocus, statusWasVisible] {
+                appSurfaces->removeWidget(player);
+                if (integratedPlayer == player) {
+                    appSurfaces->setCurrentIndex(0);
+                    statusBar()->setVisible(statusWasVisible);
+                    if (previousFocus) previousFocus->setFocus();
+                }
+            });
+        }
+        player->show();
+        player->raise();
+        player->setFocus();
+    }
+
     QSettings settings;
     CloudStream::ExtensionRegistry extensionRegistry;
     CloudStream::WatchHistoryStore history;
@@ -500,6 +525,7 @@ private:
     CloudStream::ArtworkLoader *artworkLoader{};
     CloudStream::GamepadNavigation *gamepadNavigation{};
     QStackedWidget *pages{};
+    QStackedWidget *appSurfaces{};
     QWidget *sidebarPanel{};
     QScrollArea *homeScrollArea{};
     QVBoxLayout *homeSectionsLayout{};
@@ -690,7 +716,7 @@ protected:
 private:
     bool playerHasControllerFocus() const {
         if (!integratedPlayer || !integratedPlayer->isVisible()) return false;
-        return QApplication::activeWindow() == integratedPlayer;
+        return QApplication::activeWindow() == integratedPlayer->window();
     }
 
     bool embeddedOverlayIsVisible() const {
@@ -1289,6 +1315,10 @@ private:
         auto *statusMonitor = new QTimer(this);
         statusMonitor->setInterval(100);
         connect(statusMonitor, &QTimer::timeout, this, [this, previousStatus] {
+            if (integratedPlayer && integratedPlayer->isVisible() && !integratedPlayer->isWindow()) {
+                statusBar()->hide();
+                return;
+            }
             const auto message = status ? status->text() : QString();
             if (message == *previousStatus) return;
             *previousStatus = message;
@@ -1305,6 +1335,7 @@ private:
         pages = new QStackedWidget;
         pages->setObjectName("appPages");
         connect(pages, &QStackedWidget::currentChanged, this, [this] {
+            if (integratedPlayer && !integratedPlayer->isWindow()) integratedPlayer->close();
             // Embedded details/player dialogs are siblings of the stacked pages,
             // not entries in their layout. Qt raises the selected page above them;
             // dismiss them on navigation before transparent page areas can mix.
@@ -1333,7 +1364,11 @@ private:
             connect(shortcut, &QShortcut::activated, this, [this, i] { pages->setCurrentIndex(i); });
         }
         layout->addWidget(pages, 1);
-        setCentralWidget(root);
+        appSurfaces = new QStackedWidget;
+        appSurfaces->setObjectName("appSurfaces");
+        appSurfaces->setContentsMargins(0, 0, 0, 0);
+        appSurfaces->addWidget(root);
+        setCentralWidget(appSurfaces);
         refreshContinueWatching();
         QTimer::singleShot(0, this, [this] {
             if (homeScrollArea) homeScrollArea->verticalScrollBar()->setValue(0);
@@ -4944,13 +4979,7 @@ private:
             auto *window = new CloudStream::IntegratedPlayerWindow(
                 discovery, displayTitle.isEmpty() ? provider : displayTitle,
                 resumePosition, this, playerPreferences);
-            if (settings.value("interface/windowMode", "Separate windows").toString() ==
-                    "Single-window navigation" && pages) {
-                window->setWindowFlags(Qt::Widget);
-                window->setParent(pages);
-                window->setGeometry(pages->rect());
-            }
-            integratedPlayer = window;
+            presentPlayer(window);
             connect(window, &CloudStream::IntegratedPlayerWindow::progressUpdated, this,
                     [this, historyId](double position, double duration) {
                 if (!historyId.isEmpty() && duration > 0.0) history.updateProgress(historyId, position, duration);

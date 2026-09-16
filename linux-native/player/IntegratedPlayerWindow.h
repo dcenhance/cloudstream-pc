@@ -4,6 +4,7 @@
 
 #include <QDialog>
 #include <QRect>
+#include <QPointer>
 #include <QSet>
 
 class QCloseEvent;
@@ -45,6 +46,8 @@ signals:
     void progressUpdated(double positionSeconds, double durationSeconds);
 
 protected:
+    void resizeEvent(QResizeEvent *event) override;
+    void done(int result) override;
     void closeEvent(QCloseEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
@@ -59,6 +62,9 @@ private:
     void showSourceDialog();
     void showTrackDialog();
     void showSpeedDialog();
+    void presentPanel(QDialog *dialog);
+    QPointer<QDialog> activePanel;
+    QPointer<QWidget> panelShade;
 
     SourceDiscovery discovery;
     PlayerPreferences preferences;
@@ -96,7 +102,10 @@ private:
     bool subtitlePreferenceApplied = false;
     bool controlsVisible = true;
     bool loading = true;
-    QRect normalGeometry;
+    QPointer<QWidget> fullscreenHost;
+
+    Qt::WindowStates savedWindowState{};
+    void restoreFullscreen();
 };
 
 } // namespace CloudStream

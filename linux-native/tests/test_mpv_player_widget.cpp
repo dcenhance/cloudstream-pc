@@ -1,6 +1,9 @@
 #include "../player/MpvPlayerWidget.h"
 #include "../player/IntegratedPlayerWindow.h"
 
+#include <QShortcut>
+#include <QScreen>
+#include <QGraphicsEffect>
 #include <QComboBox>
 #include <QDialog>
 #include <QFile>
@@ -21,6 +24,110 @@ class MpvPlayerWidgetTest : public QObject {
     Q_OBJECT
 
 private slots:
+    void chromeFadesBeforeItHides() {
+        CloudStream::IntegratedPlayerWindow player({}, "Fade regression");
+        player.setAttribute(Qt::WA_DeleteOnClose, false);
+        player.show();
+        QVERIFY(QTest::qWaitForWindowExposed(&player));
+        auto *chrome = player.findChild<QWidget *>("playerChrome");
+        QVERIFY(QTest::qWaitForWindowActive(&player));
+        player.setFocus();
+        QTest::keyClick(&player, Qt::Key_H);
+        QVERIFY(chrome->graphicsEffect());
+        QTest::qWait(45);
+        const double opacity = chrome->graphicsEffect()->property("opacity").toDouble();
+        QVERIFY(opacity > 0.0 && opacity < 1.0);
+        QTest::qWait(180);
+        QVERIFY(player.findChild<QWidget *>("playerControls")->isHidden());
+    }
+
+    void upstreamControlsAndEmbeddedSpeedPanel() {
+        CloudStream::IntegratedPlayerWindow player({}, "Upstream controls");
+        player.setAttribute(Qt::WA_DeleteOnClose, false);
+        player.show();
+        QVERIFY(QTest::qWaitForWindowExposed(&player));
+        auto *play = player.findChild<QPushButton *>("playerPlayPause");
+        auto *rew = player.findChild<QPushButton *>("playerRewind");
+        auto *ff = player.findChild<QPushButton *>("playerForward");
+        QVERIFY(play && rew && ff);
+        // Upstream has 70dp bare transport targets at 25/50/75 percent.
+        QCOMPARE(play->size(), QSize(70, 70));
+        QCOMPARE(play->iconSize(), QSize(70, 70));
+        QCOMPARE(player.findChild<QPushButton *>("playerBack")->size(), QSize(70, 70));
+        QVERIFY(player.findChild<QSlider *>("playerVolume")->minimumHeight() >= 30);
+        QVERIFY(qAbs(rew->mapTo(&player, rew->rect().center()).x() - player.width()/4) < 8);
+        QVERIFY(qAbs(ff->mapTo(&player, ff->rect().center()).x() - player.width()*3/4) < 8);
+        auto *lock = player.findChild<QPushButton *>("playerLock");
+        lock->click();
+        QVERIFY2(lock->isEnabled(), "Lock must remain reachable inside the responsive action scroller");
+        QVERIFY(!play->isEnabled());
+        lock->click();
+        QVERIFY(play->isEnabled());
+        player.findChild<QPushButton *>("playerSpeed")->click();
+        QPointer<QDialog> panel = player.findChild<QDialog *>("playerSpeedDialog");
+        QVERIFY(panel);
+        QVERIFY(!panel->isWindow());
+        auto *slider = panel->findChild<QSlider *>("playerSpeedSlider");
+        QCOMPARE(slider->minimum(), 10);
+        QVERIFY(panel->findChild<QPushButton *>("playerSpeed25"));
+        slider->setValue(150);
+        QVERIFY(QTest::qWaitForWindowActive(&player));
+        panel->setFocus();
+        QTest::keyClick(panel.data(), Qt::Key_F);
+        QTest::qWait(60);
+        QVERIFY2(!player.isFullScreen(), "Player shortcuts must not escape a modal panel");
+        slider->setFocus();
+        QVERIFY(slider->isEnabled());
+        QTRY_COMPARE(QApplication::focusWidget(), static_cast<QWidget *>(slider));
+        QCOMPARE(slider->singleStep(), 5);
+        for (auto *shortcut : player.findChildren<QShortcut *>(QString(), Qt::FindDirectChildrenOnly))
+            QCOMPARE(shortcut->isEnabled(), shortcut->key() == QKeySequence(Qt::Key_Escape));
+        QTest::keyClick(slider, Qt::Key_Left);
+        QTRY_COMPARE(slider->value(), 145);
+        QTest::keyClick(panel.data(), Qt::Key_Escape);
+        QTRY_VERIFY(panel.isNull() || !panel->isVisible());
+        QCOMPARE(player.findChild<CloudStream::MpvPlayerWidget *>()->playbackSpeed(), 1.0);
+        QVERIFY(player.isVisible());
+    }
+
+    void embeddedFullscreenTargetsNativeHost() {
+        QWidget host;
+        host.resize(960, 640);
+        auto *layout = new QVBoxLayout(&host);
+        layout->setContentsMargins(0, 0, 0, 0);
+        CloudStream::IntegratedPlayerWindow player({}, "Fullscreen regression");
+        player.setAttribute(Qt::WA_DeleteOnClose, false);
+        player.setParent(&host, Qt::Widget);
+        layout->addWidget(&player);
+        host.show();
+        QVERIFY(QTest::qWaitForWindowExposed(&host));
+        const auto normal = host.size();
+        auto *button = player.findChild<QPushButton *>("playerFullscreen");
+        QVERIFY(button);
+        button->click();
+        QTRY_VERIFY(host.isFullScreen());
+        QTRY_COMPARE(host.size(), host.screen()->geometry().size());
+        QVERIFY(!player.isWindow());
+        QCOMPARE(player.window(), &host);
+        QTest::keyClick(&player, Qt::Key_Escape);
+        QTRY_VERIFY(!host.isFullScreen());
+        QTRY_COMPARE(host.size(), normal);
+        QVERIFY(player.isVisible());
+        host.showMaximized();
+        QTRY_VERIFY(host.isMaximized());
+        // Window state flags change synchronously, before the compositor's
+        // configure. Exercise an entered maximized mode, not a queued request.
+        QTRY_COMPARE(host.width(), host.screen()->availableGeometry().width());
+        QTRY_VERIFY(host.isMaximized());
+        button->click();
+        QTRY_VERIFY(host.isFullScreen());
+        QTRY_COMPARE(host.size(), host.screen()->geometry().size());
+        QTest::qWait(150);
+        player.close();
+        QTRY_VERIFY(host.isMaximized());
+        QVERIFY(!host.isFullScreen());
+    }
+
     void rendersAndAdvancesGeneratedVideo() {
         QTemporaryDir directory;
         QVERIFY(directory.isValid());

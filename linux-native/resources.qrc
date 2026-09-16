@@ -3,6 +3,18 @@
     <file alias="cloudstream.svg">assets/cloudstream.svg</file>
     <file alias="cloudstream-launcher.png">assets/cloudstream-launcher.png</file>
   </qresource>
+  <qresource prefix="/player">
+    <file alias="forward.svg">player/upstream/netflix_skip_forward.svg</file>
+    <file alias="pause.svg">player/upstream/netflix_pause.svg</file>
+    <file alias="play.svg">player/upstream/netflix_play.svg</file>
+    <file alias="lock.svg">player/upstream/video_locked.svg</file>
+    <file alias="aspect.svg">player/upstream/ic_baseline_aspect_ratio_24.svg</file>
+    <file alias="speed.svg">player/upstream/ic_baseline_speed_24.svg</file>
+    <file alias="tracks.svg">player/upstream/ic_baseline_equalizer_24.svg</file>
+    <file alias="sources.svg">player/upstream/ic_baseline_playlist_play_24.svg</file>
+    <file alias="back.svg">player/upstream/ic_baseline_arrow_back_24.svg</file>
+    <file alias="fullscreen.svg">player/upstream/baseline_fullscreen_24.svg</file>
+  </qresource>
   <qresource prefix="/icons">
     <file alias="home-outline.svg">assets/icons/home-outline.svg</file>
     <file alias="home-filled.svg">assets/icons/home-filled.svg</file>

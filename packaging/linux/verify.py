@@ -7,12 +7,21 @@ from pathlib import Path
 import subprocess
 import shutil
 import tarfile
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from release_identity import release_version
 
 REPO = Path(__file__).resolve().parents[2]
 OUT = Path(os.environ.get('CLOUDSTREAM_RELEASE_OUT', str(REPO / 'dist-linux')))
 V = OUT / 'verification'
 V.mkdir(exist_ok=True)
 CONTAINER = os.environ.get('CLOUDSTREAM_CONTAINER', 'cloudstream-linux-packager')
+VERSION = release_version()
+DEB = f'cloudstream-pc_{VERSION.replace("-", ".")}_amd64.deb'
+BASE_VERSION, _, PRE_RELEASE = VERSION.partition('-')
+RPM = f'cloudstream-pc-{BASE_VERSION}-0.{PRE_RELEASE}.x86_64.rpm'
+APPIMAGE = f'CloudStream-PC-{VERSION}-x86_64-system-runtime.AppImage'
 
 def command(args, name, accepted=(0,)):
     p = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=90)
@@ -26,12 +35,15 @@ for name in ('deb', 'rpm', 'appimage'):
     if (V/name).exists():
         shutil.rmtree(V/name)
     (V/name).mkdir()
-result['fresh-extraction'] = command(['podman', 'exec', CONTAINER, 'bash', '-lc', 'set -euo pipefail; dpkg-deb -x /out/cloudstream-pc_0.1.0.preview.4_amd64.deb /out/verification/deb; cd /out/verification/rpm; rpm2cpio /out/cloudstream-pc-0.1.0-0.preview.4.x86_64.rpm | cpio -idm; cd /out/verification/appimage; /out/CloudStream-PC-0.1.0-preview.4-x86_64-system-runtime.AppImage --appimage-extract'], 'fresh-extraction.log')
-result['rpm-requirements'] = command(['rpm', '-qp', '--requires', str(OUT/'cloudstream-pc-0.1.0-0.preview.4.x86_64.rpm')], 'rpm-requirements.txt')
+extract = (f'set -euo pipefail; dpkg-deb -x /out/{DEB} /out/verification/deb; '
+           f'cd /out/verification/rpm; rpm2cpio /out/{RPM} | cpio -idm; '
+           f'cd /out/verification/appimage; /out/{APPIMAGE} --appimage-extract')
+result['fresh-extraction'] = command(['podman', 'exec', CONTAINER, 'bash', '-lc', extract], 'fresh-extraction.log')
+result['rpm-requirements'] = command(['rpm', '-qp', '--requires', str(OUT/RPM)], 'rpm-requirements.txt')
 assert 'qt6-qtsvg >= 6.4.2' in (V/'rpm-requirements.txt').read_text()
-for suffix, args in [('deb', ['podman','exec',CONTAINER,'dpkg-deb','-I','/out/cloudstream-pc_0.1.0.preview.4_amd64.deb']), ('rpm', ['rpm','-qpi',str(OUT/'cloudstream-pc-0.1.0-0.preview.4.x86_64.rpm')])]:
+for suffix, args in [('deb', ['podman','exec',CONTAINER,'dpkg-deb','-I','/out/'+DEB]), ('rpm', ['rpm','-qpi',str(OUT/RPM)])]:
     result[suffix+'-inspection'] = command(args, suffix+'-inspection.txt')
-result['rpm-dependency-transaction-test-nobara44'] = command(['rpm','-U','--test',str(OUT/'cloudstream-pc-0.1.0-0.preview.4.x86_64.rpm')], 'rpm-host-transaction-test.log')
+result['rpm-dependency-transaction-test-nobara44'] = command(['rpm','-U','--test',str(OUT/RPM)], 'rpm-host-transaction-test.log')
 expected = hashlib.sha256((OUT / 'cloudstream-linux-ubuntu24.04').read_bytes()).hexdigest()
 paths = {'deb': V/'deb', 'rpm': V/'rpm', 'appimage': V/'appimage/squashfs-root'}
 for name, root in paths.items():
@@ -55,7 +67,7 @@ for name, root in paths.items():
     shell = f'mkdir -p {state}; cd /tmp; HOME={state} XDG_CONFIG_HOME={state}/config XDG_DATA_HOME={state}/data XDG_CACHE_HOME={state}/cache timeout -k 5 10 xvfb-run -a {croot}/usr/bin/cloudstream-pc'
     result[name+'-extracted-launch'] = command(['podman','exec',CONTAINER,'bash','-lc',shell],name+'-extracted-launch.log',(124,))
     result[name+'-provider-operation'] = command(['podman','exec',CONTAINER,croot+'/usr/libexec/cloudstream/provider-host/bin/cloudstream-provider-host','repository-candidates',croot+'/usr/libexec/cloudstream/provider-host/lib/provider-host-4.8.0.jar'],name+'-provider-operation.json')
-result['appimage-executable-extract-and-run'] = command(['podman','exec',CONTAINER,'bash','-lc','cd /tmp; HOME=/tmp/cloudstream-verify-appimage timeout -k 5 10 xvfb-run -a /out/CloudStream-PC-0.1.0-preview.4-x86_64-system-runtime.AppImage --appimage-extract-and-run'],'appimage-direct-launch.log',(124,))
+result['appimage-executable-extract-and-run'] = command(['podman','exec',CONTAINER,'bash','-lc',f'cd /tmp; HOME=/tmp/cloudstream-verify-appimage timeout -k 5 10 xvfb-run -a /out/{APPIMAGE} --appimage-extract-and-run'],'appimage-direct-launch.log',(124,))
 result['elf_sha256'] = expected
 result['jar_count_per_package'] = 61
 result['baseline'] = 'Ubuntu 24.04 amd64, glibc 2.39, Qt 6.4.2; system runtime dependencies'
