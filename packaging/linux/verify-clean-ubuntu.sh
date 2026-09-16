@@ -3,8 +3,10 @@ set -euo pipefail
 cp /src/packaging/linux/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources
 mkdir -p /etc/ssl/certs
 cp /host-ca.pem /etc/ssl/certs/ca-certificates.crt
+VERSION=$(tr -d '\r\n' < /src/linux-native/VERSION.txt)
+DEB_FILENAME_VERSION=${VERSION/-/.}
 apt-get -o Acquire::ForceIPv4=true -o Acquire::https::Timeout=30 -o Acquire::Retries=1 update
-DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install /out/cloudstream-pc_0.1.0.preview.4_amd64.deb xvfb xauth
+DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install "/out/cloudstream-pc_${DEB_FILENAME_VERSION}_amd64.deb" xvfb xauth
 test -f /usr/lib/x86_64-linux-gnu/qt6/plugins/iconengines/libqsvgicon.so
 mkdir -p /tmp/test-home
 set +e
