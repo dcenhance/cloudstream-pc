@@ -35,7 +35,7 @@ private:
     };
 
     SmoothScrollController(QAbstractScrollArea *area, WheelMode mode);
-    void animate(QScrollBar *bar, int delta);
+    void animate(QScrollBar *bar, int delta, bool immediate = false);
     void stopMotion(QScrollBar *bar, int position);
     void updateMotion();
     AxisMotion &motionFor(QScrollBar *bar);

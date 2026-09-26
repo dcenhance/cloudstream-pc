@@ -94,4 +94,13 @@ QList<EpisodeEntry> EpisodeCatalog::page(const QList<EpisodeEntry> &episodes,
     return episodes.mid(start, limit);
 }
 
+int EpisodeCatalog::nextPlayableIndex(const QList<EpisodeEntry> &episodes, int currentIndex) {
+    if (currentIndex < 0 || currentIndex >= episodes.size() ||
+        episodes[currentIndex].data.trimmed().isEmpty()) return -1;
+    for (int index = currentIndex + 1; index < episodes.size(); ++index) {
+        if (!episodes[index].data.trimmed().isEmpty()) return index;
+    }
+    return -1;
+}
+
 } // namespace CloudStream

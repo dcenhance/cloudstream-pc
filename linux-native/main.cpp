@@ -10,6 +10,7 @@
 #include "extensions/ExtensionListFilter.h"
 #include "extensions/ExtensionInstallBatch.h"
 #include "history/WatchHistoryStore.h"
+#include "history/LibraryCollectionStore.h"
 #include "input/GamepadNavigation.h"
 #include "network/CloudStreamRequest.h"
 #include "media/ArtworkLoader.h"
@@ -30,6 +31,7 @@
 #include "repositories/RepositoryManifestParser.h"
 #include "repositories/RepositoryUrlResolver.h"
 #include "search/SearchHistoryModel.h"
+#include "search/SearchPaginationModel.h"
 #include "settings/SettingsPane.h"
 #include "updates/BuildInfo.h"
 #include "storage/XdgPaths.h"
@@ -262,6 +264,7 @@ public:
         : settings("CloudStream", "CloudStream Linux"),
           extensionRegistry(CloudStream::XdgPaths::dataDir() + "/extension-registry.json"),
           history(CloudStream::XdgPaths::dataDir() + "/watch-history.json"),
+          collections(CloudStream::XdgPaths::dataDir() + "/library-collections.json"),
           downloadQueue(CloudStream::XdgPaths::dataDir() + "/download-queue.json"),
           downloadManager(&downloadQueue) {
         setWindowTitle(
@@ -519,6 +522,7 @@ private:
     QSettings settings;
     CloudStream::ExtensionRegistry extensionRegistry;
     CloudStream::WatchHistoryStore history;
+    CloudStream::LibraryCollectionStore collections;
     CloudStream::DownloadQueueStore downloadQueue;
     CloudStream::DownloadManager downloadManager;
     QNetworkAccessManager network;
@@ -887,6 +891,12 @@ private:
             allProviderChoices, settings.value("searchProviderKeys").toStringList(),
             settings.value("providers/language", "All languages").toString(),
             settings.value("providers/allowNsfw", false).toBool());
+    }
+
+    QStringList selectedSearchProviderKeys() const {
+        QStringList keys;
+        for (const auto &provider : selectedSearchProviders()) keys << providerKey(provider);
+        return keys;
     }
 
     void refreshSearchProviderButton() {
@@ -1815,9 +1825,9 @@ private:
     void resetHomeViewport() {
         if (!homeScrollArea) return;
         if (!navigationButtons.isEmpty()) navigationButtons.first()->setFocus(Qt::OtherFocusReason);
+        // Reset once for the new Home content. Delayed resets used to erase
+        // the first wheel gesture if the user scrolled during layout settling.
         homeScrollArea->verticalScrollBar()->setValue(0);
-        QTimer::singleShot(0, homeScrollArea, [this] { homeScrollArea->verticalScrollBar()->setValue(0); });
-        QTimer::singleShot(150, homeScrollArea, [this] { homeScrollArea->verticalScrollBar()->setValue(0); });
     }
 
     void showHomeMessage(const QString &message) {
@@ -1853,6 +1863,9 @@ private:
         next->setText("›");
         next->setAccessibleName("Next titles");
         next->setFixedSize(34, 34);
+        auto *loadMore = button("Show more titles");
+        loadMore->setObjectName("homeRowLoadMore");
+        header->addWidget(loadMore);
         header->addWidget(previous);
         header->addWidget(next);
         layout->addLayout(header);
@@ -1904,38 +1917,54 @@ private:
             painter.drawPixmap((placeholder.width() - logo.width()) / 2, (placeholder.height() - logo.height()) / 2, logo);
         }
 
-        list->setUpdatesEnabled(false);
-        int posterIndex = 0;
-        for (const auto &value : section.value("items").toArray()) {
-            const auto media = value.toObject();
-            auto *item = new QListWidgetItem(QIcon(placeholder), media.value("name").toString("Untitled"));
-            item->setTextAlignment(Qt::AlignLeft | Qt::AlignTop);
-            item->setData(Qt::UserRole, media.value("url").toString());
-            item->setData(Qt::UserRole + 1, media.value("apiName").toString());
-            item->setData(Qt::UserRole + 2, currentHomeJar);
-            item->setToolTip(media.value("name").toString());
-            list->addItem(item);
-            const auto posterUrl = media.value("posterUrl").toString();
-            if (!posterUrl.isEmpty()) {
-                const QPointer<QListWidget> safeList(list);
-                const QPersistentModelIndex itemIndex(
-                    list->model()->index(list->row(item), 0));
-                const auto priority = distanceFromViewport == 0 && posterIndex < 8
-                    ? CloudStream::ArtworkLoader::HighPriority
-                    : (distanceFromViewport < 2
-                           ? CloudStream::ArtworkLoader::NormalPriority
-                           : CloudStream::ArtworkLoader::LowPriority);
-                artworkLoader->load(QUrl(posterUrl), iconSize, list,
-                    [safeList, itemIndex](const QImage &image) {
-                    if (!safeList || !itemIndex.isValid()) return;
-                    if (auto *liveItem = safeList->item(itemIndex.row())) {
-                        liveItem->setIcon(QIcon(QPixmap::fromImage(image)));
-                    }
-                }, priority);
+        const auto items = section.value("items").toArray();
+        auto appendItems = [this, list, items, iconSize, placeholder, distanceFromViewport]
+                           (int first, int count) {
+            list->setUpdatesEnabled(false);
+            for (int index = first; index < std::min(first + count, int(items.size())); ++index) {
+                const auto media = items[index].toObject();
+                auto *item = new QListWidgetItem(QIcon(placeholder), media.value("name").toString("Untitled"));
+                item->setTextAlignment(Qt::AlignLeft | Qt::AlignTop);
+                item->setData(Qt::UserRole, media.value("url").toString());
+                item->setData(Qt::UserRole + 1, media.value("apiName").toString());
+                item->setData(Qt::UserRole + 2, currentHomeJar);
+                item->setToolTip(media.value("name").toString());
+                list->addItem(item);
+                const auto posterUrl = media.value("posterUrl").toString();
+                if (!posterUrl.isEmpty()) {
+                    const QPointer<QListWidget> safeList(list);
+                    const QPersistentModelIndex itemIndex(list->model()->index(list->row(item), 0));
+                    const auto priority = distanceFromViewport == 0 && index < 8
+                        ? CloudStream::ArtworkLoader::HighPriority
+                        : (distanceFromViewport < 2
+                               ? CloudStream::ArtworkLoader::NormalPriority
+                               : CloudStream::ArtworkLoader::LowPriority);
+                    artworkLoader->load(QUrl(posterUrl), iconSize, list,
+                        [safeList, itemIndex](const QImage &image) {
+                        if (!safeList || !itemIndex.isValid()) return;
+                        if (auto *liveItem = safeList->item(itemIndex.row())) {
+                            liveItem->setIcon(QIcon(QPixmap::fromImage(image)));
+                        }
+                    }, priority);
+                }
             }
-            ++posterIndex;
-        }
-        list->setUpdatesEnabled(true);
+            list->setUpdatesEnabled(true);
+        };
+        appendItems(0, 24);
+        auto updateMore = [list, loadMore, total = items.size()] {
+            const int remaining = total - list->count();
+            loadMore->setVisible(remaining > 0);
+            if (remaining > 0)
+                loadMore->setText("Show more titles (" + QString::number(remaining) + ")");
+        };
+        updateMore();
+        connect(loadMore, &QPushButton::clicked, card, [list, appendItems, updateMore] {
+            const int first = list->count();
+            appendItems(first, 24);
+            updateMore();
+            if (first < list->count())
+                list->scrollToItem(list->item(first), QAbstractItemView::PositionAtCenter);
+        });
         list->horizontalScrollBar()->setValue(0);
         connect(list, &QListWidget::itemActivated, this, [this](QListWidgetItem *item) {
             const auto url = item->data(Qt::UserRole).toString();
@@ -1947,21 +1976,21 @@ private:
         return card;
     }
 
-    void appendHomeSections(int batchSize) {
+    void appendHomeSections() {
         if (!homeSectionsLayout || homeAppendingSections || progressiveHomeSections.isEmpty()) return;
+        // A row can allocate 24 item widgets/icons. Keep each GUI event bounded to
+        // one row so paint, scrolling and navigation can run between rows.
         const auto nextCount = CloudStream::HomeContentLimiter::nextSectionCount(
-            renderedHomeSectionCount, progressiveHomeSections.size(), batchSize);
+            renderedHomeSectionCount, progressiveHomeSections.size(), 1);
         if (nextCount <= renderedHomeSectionCount) return;
         QElapsedTimer batchTimer;
         batchTimer.start();
         homeAppendingSections = true;
         if (homeSectionsContainer) homeSectionsContainer->setUpdatesEnabled(false);
         const auto firstSection = renderedHomeSectionCount;
-        const auto limited = CloudStream::HomeContentLimiter::limitRange(
-            progressiveHomeSections, firstSection, nextCount - firstSection, 24);
-        for (int offset = 0; offset < limited.size(); ++offset) {
+        for (int index = firstSection; index < nextCount; ++index) {
             homeSectionsLayout->addWidget(
-                providerHomeSection(limited[offset].toObject(), offset));
+                providerHomeSection(progressiveHomeSections[index].toObject(), index - firstSection));
         }
         renderedHomeSectionCount = nextCount;
         if (homeSectionsContainer) homeSectionsContainer->setUpdatesEnabled(true);
@@ -1981,10 +2010,13 @@ private:
             bar->value() + (bar->pageStep() * 2) < bar->maximum()) return;
         homeAppendScheduled = true;
         const auto generation = homeSectionGeneration;
-        QTimer::singleShot(0, homeSectionsContainer, [this, generation] {
+        QTimer::singleShot(8, homeSectionsContainer, [this, generation] {
             if (generation != homeSectionGeneration) return;
             homeAppendScheduled = false;
-            appendHomeSections(4);
+            appendHomeSections();
+            // The scrollbar's range may not change until layout activation;
+            // check again after each row even when the viewport is still empty.
+            maybeAppendHomeSections();
         });
     }
 
@@ -1993,7 +2025,7 @@ private:
         progressiveHomeSections = sections;
         progressiveHomeProviderName = providerName;
         updateHomeHero(sections, providerName);
-        appendHomeSections(6);
+        appendHomeSections();
         if (resetHomeScrollPending && homeScrollArea) {
             resetHomeScrollPending = false;
             resetHomeViewport();
@@ -2375,6 +2407,15 @@ private:
         results->setSpacing(8);
         results->hide();
         v->addWidget(results, 1);
+        auto *loadMore = button("Load more results");
+        loadMore->setObjectName("searchLoadMore");
+        loadMore->setProperty("primary", true);
+        loadMore->hide();
+        v->addWidget(loadMore, 0, Qt::AlignHCenter);
+        auto loadNext = std::make_shared<std::function<void()>>();
+        connect(loadMore, &QPushButton::clicked, this, [loadNext] {
+            if (*loadNext) (*loadNext)();
+        });
 
         auto refreshHistory = [this, historyList, historyPanel, searchEmpty] {
             historyList->clear();
@@ -2390,10 +2431,13 @@ private:
         refreshHistory();
 
         auto search = std::make_shared<std::function<void()>>();
-        *search = [this, query, results, historyPanel, searchEmpty, typeFilter, refreshHistory] {
+        *search = [this, query, results, historyPanel, searchEmpty, typeFilter,
+                   refreshHistory, loadMore, loadNext] {
             const auto term = query->text().trimmed();
             if (term.isEmpty()) return;
             cancelActiveSearch();
+            *loadNext = {};
+            loadMore->hide();
             const auto providers = selectedSearchProviders();
             if (providers.isEmpty()) {
                 results->clear();
@@ -2419,6 +2463,9 @@ private:
             status->setText("Searching " + QString::number(providers.size()) + " provider(s)");
             struct SearchRun {
                 QList<QJsonObject> providers;
+                QList<QJsonObject> pending;
+                CloudStream::SearchPaginationModel model;
+                QStringList keys;
                 QSet<QString> seen;
                 int nextProvider = 0;
                 int active = 0;
@@ -2428,17 +2475,38 @@ private:
             };
             auto run = std::make_shared<SearchRun>();
             run->providers = providers;
-            run->remaining = providers.size();
-            run->launchMore = [this, run, helper, term, results, typeFilter,
-                               generation, artworkContext] {
+            run->keys = selectedSearchProviderKeys();
+            run->model.reset(run->keys);
+            *loadNext = [this, run, loadMore, helper, term, results, typeFilter,
+                         generation, artworkContext] {
+                if (!searchRequestGeneration.isCurrent(generation) || run->remaining) return;
+                if (selectedSearchProviderKeys() != run->keys) {
+                    cancelActiveSearch();
+                    loadMore->hide();
+                    return;
+                }
+                run->pending.clear();
+                for (const auto &provider : run->providers) {
+                    if (run->model.pageFor(providerKey(provider)) > 0)
+                        run->pending.append(provider);
+                }
+                if (run->pending.isEmpty()) { loadMore->hide(); return; }
+                loadMore->setEnabled(false);
+                loadMore->setText("Loading more…");
+                run->nextProvider = 0;
+                run->remaining = run->pending.size();
+                run->launchMore = [this, run, loadMore, helper, term, results, typeFilter,
+                                   generation, artworkContext] {
                 if (!searchRequestGeneration.isCurrent(generation)) {
-                    run->launchMore = {};
+                    QTimer::singleShot(0, this, [run] { run->launchMore = {}; });
                     return;
                 }
                 constexpr int maximumConcurrentProviders = 4;
                 while (run->active < maximumConcurrentProviders &&
-                       run->nextProvider < run->providers.size()) {
-                    const auto provider = run->providers[run->nextProvider++];
+                       run->nextProvider < run->pending.size()) {
+                    const auto provider = run->pending[run->nextProvider++];
+                    const auto key = providerKey(provider);
+                    const int page = run->model.pageFor(key);
                     const auto jar = provider.value("jarPath").toString();
                     const auto providerName = provider.value("name").toString();
                     auto *searchProcess = new QProcess(this);
@@ -2446,45 +2514,75 @@ private:
                     ++run->active;
                     searchPeakConcurrentProcesses = std::max(
                         searchPeakConcurrentProcesses, run->active);
-                    helper.configure(searchProcess, {"search", jar, "auto", providerName, term});
+                    helper.configure(searchProcess, {"search", jar, "auto", providerName,
+                                                     "--page", QString::number(page), term});
                     auto handled = std::make_shared<bool>(false);
                     const auto finishProvider =
-                        [this, run, searchProcess, results, typeFilter, jar,
+                        [this, run, searchProcess, results, typeFilter, loadMore, key, page, jar,
                          providerName, generation, artworkContext, handled]
                         (int searchExit, bool failedToStart) {
                         if (*handled) return;
                         *handled = true;
                         activeSearchProcesses.removeAll(searchProcess);
-                        if (!searchRequestGeneration.isCurrent(generation)) {
+                        if (!searchRequestGeneration.isCurrent(generation) ||
+                            selectedSearchProviderKeys() != run->keys) {
+                            if (searchRequestGeneration.isCurrent(generation)) {
+                                cancelActiveSearch();
+                                loadMore->hide();
+                            }
                             searchProcess->deleteLater();
                             run->launchMore = {};
                             return;
                         }
                         QList<QJsonObject> batch;
+                        bool hasNext = false;
                         if (!failedToStart && searchExit == 0) {
-                            const auto values = QJsonDocument::fromJson(
-                                searchProcess->readAllStandardOutput()).array();
-                            for (const auto &value : values) {
-                                auto result = value.toObject();
-                                result.insert("_jarPath", jar);
-                                result.insert("_providerName", providerName);
-                                batch.append(result);
+                            const auto document = QJsonDocument::fromJson(searchProcess->readAllStandardOutput());
+                            if (!document.isObject() || !document.object().value("items").isArray() ||
+                                !document.object().value("hasNext").isBool()) {
+                                ++run->failures;
+                                qWarning().noquote() << "Invalid paged search response from" << providerName;
+                            } else {
+                                const auto response = document.object();
+                                hasNext = response.value("hasNext").toBool();
+                                for (const auto &value : response.value("items").toArray()) {
+                                    auto result = value.toObject();
+                                    result.insert("_jarPath", jar);
+                                    result.insert("_providerName", providerName);
+                                    batch.append(result);
+                                }
                             }
                         } else {
                             ++run->failures;
                             qWarning().noquote() << "Provider search failed for"
                                 << providerName << searchProcess->readAllStandardError();
                         }
+                        const auto unique = run->model.complete(key, page, hasNext, batch);
                         searchProcess->deleteLater();
-                        --run->active;
-                        --run->remaining;
-                        if (artworkContext) {
-                            appendSearchResults(results, typeFilter, batch,
-                                                &run->seen, artworkContext,
-                                                searchResultProviderFilter);
-                        }
-                        if (run->remaining == 0) {
-                            if (results->count() == 0) {
+                        auto finalize = [this, run, results, loadMore, generation] {
+                            if (!searchRequestGeneration.isCurrent(generation) ||
+                                selectedSearchProviderKeys() != run->keys) {
+                                if (searchRequestGeneration.isCurrent(generation)) {
+                                    cancelActiveSearch();
+                                    loadMore->hide();
+                                }
+                                run->launchMore = {};
+                                return;
+                            }
+                            --run->active;
+                            --run->remaining;
+                            if (run->remaining == 0) {
+                            bool moreAvailable = false;
+                            for (const auto &provider : run->providers) {
+                                if (run->model.pageFor(providerKey(provider)) > 0) {
+                                    moreAvailable = true;
+                                    break;
+                                }
+                            }
+                            loadMore->setText("Load more results");
+                            loadMore->setEnabled(moreAvailable);
+                            loadMore->setVisible(moreAvailable);
+                            if (results->count() == 0 && !moreAvailable) {
                                 results->addItem(run->failures > 0
                                     ? "Search failed in " + QString::number(run->failures) + " provider(s)."
                                     : "No results found");
@@ -2501,6 +2599,42 @@ private:
                             " result(s) • searching " +
                             QString::number(run->remaining) + " provider(s)");
                         if (run->launchMore) run->launchMore();
+                        };
+                        if (unique.isEmpty() || !artworkContext) {
+                            finalize();
+                            return;
+                        }
+                        auto values = std::make_shared<QList<QJsonObject>>(unique);
+                        auto offset = std::make_shared<int>(0);
+                        auto appendChunk = std::make_shared<std::function<void()>>();
+                        *appendChunk = [this, run, results, typeFilter, loadMore, artworkContext,
+                                        generation, values, offset, appendChunk, finalize] {
+                            if (!searchRequestGeneration.isCurrent(generation) ||
+                                selectedSearchProviderKeys() != run->keys) {
+                                if (searchRequestGeneration.isCurrent(generation)) {
+                                    cancelActiveSearch();
+                                    loadMore->hide();
+                                }
+                                run->launchMore = {};
+                                QTimer::singleShot(0, this, [appendChunk] { *appendChunk = {}; });
+                                return;
+                            }
+                            constexpr int maxItemsPerUiTurn = 24;
+                            const auto count = std::min<qsizetype>(maxItemsPerUiTurn, values->size() - *offset);
+                            appendSearchResults(results, typeFilter, values->mid(*offset, count),
+                                                &run->seen, artworkContext,
+                                                searchResultProviderFilter);
+                            *offset += count;
+                            if (*offset < values->size()) {
+                                QTimer::singleShot(0, this, [appendChunk] {
+                                    if (*appendChunk) (*appendChunk)();
+                                });
+                            } else {
+                                QTimer::singleShot(0, this, [appendChunk] { *appendChunk = {}; });
+                                finalize();
+                            }
+                        };
+                        (*appendChunk)();
                     };
                     connect(searchProcess,
                             qOverload<int, QProcess::ExitStatus>(&QProcess::finished),
@@ -2517,12 +2651,19 @@ private:
                     });
                 }
             };
-            run->launchMore();
+                run->launchMore();
+            };
+            (*loadNext)();
         };
         searchAutomation = [query, search](const QString &term) {
             query->setText(term);
             (*search)();
         };
+        connect(query, &QLineEdit::textEdited, this, [this, loadMore, loadNext] {
+            cancelActiveSearch();
+            *loadNext = {};
+            loadMore->hide();
+        });
         connect(submitAction, &QAction::triggered, this, [search] { (*search)(); });
         connect(query, &QLineEdit::returnPressed, this, [search] { (*search)(); });
         connect(providerAction, &QAction::triggered, this, [this, query, search] {
@@ -2652,6 +2793,35 @@ private:
     QWidget *libraryPage() {
         auto *page = pageFrame("Library", {});
         auto *v = qobject_cast<QVBoxLayout *>(page->layout());
+        auto *collectionBar = new QHBoxLayout;
+        auto *collectionSelector = new QComboBox;
+        collectionSelector->setObjectName("libraryCollectionSelector");
+        collectionSelector->setAccessibleName("Library list selector");
+        collectionSelector->setMinimumHeight(42);
+        collectionSelector->setMinimumWidth(210);
+        auto *createCollection = button("New list");
+        auto *renameCollection = button("Rename list");
+        auto *deleteCollection = button("Delete list");
+        collectionBar->addWidget(new QLabel("List:"));
+        collectionBar->addWidget(collectionSelector, 1);
+        collectionBar->addWidget(createCollection);
+        collectionBar->addWidget(renameCollection);
+        collectionBar->addWidget(deleteCollection);
+        v->addLayout(collectionBar);
+        auto populateCollections = [this, collectionSelector, renameCollection, deleteCollection] {
+            QSignalBlocker blocker(collectionSelector);
+            collectionSelector->clear();
+            collectionSelector->addItem("All library", QString());
+            const auto selected = collections.selectedId();
+            for (const auto &collection : collections.collections()) {
+                collectionSelector->addItem(collection.name, collection.id);
+            }
+            const auto index = collectionSelector->findData(selected);
+            collectionSelector->setCurrentIndex(index < 0 ? 0 : index);
+            renameCollection->setEnabled(!selected.isEmpty());
+            deleteCollection->setEnabled(!selected.isEmpty());
+        };
+        populateCollections();
         auto *tabs = new QTabBar;
         tabs->setObjectName("libraryTabs");
         tabs->setExpanding(false);
@@ -2716,13 +2886,27 @@ private:
         auto localFileCache = std::make_shared<QList<QFileInfo>>();
         auto localFileCacheRoots = std::make_shared<QString>();
         auto localFileCacheValid = std::make_shared<bool>(false);
-        auto refresh = [list, content, emptyMessage, summary, this, tabs, filter, sort,
+        auto refresh = [list, content, emptyMessage, summary, this, tabs, filter, sort, collectionSelector,
                         localFileCache, localFileCacheRoots, localFileCacheValid] {
             list->setUpdatesEnabled(false);
             list->clear();
             static const QStringList states{"Watching", "Completed", "Paused", "Cancelled"};
             const auto state = tabs->currentIndex() == 0 ? QString() : states.value(tabs->currentIndex() - 1);
             auto providerEntries = history.entries(state);
+            const auto selectedCollection = collectionSelector->currentData().toString();
+            if (!selectedCollection.isEmpty()) {
+                QSet<QString> members;
+                for (const auto &collection : collections.collections()) {
+                    if (collection.id == selectedCollection) {
+                        for (const auto &id : collection.itemIds) members.insert(id);
+                        break;
+                    }
+                }
+                providerEntries.erase(std::remove_if(providerEntries.begin(), providerEntries.end(),
+                    [&members](const CloudStream::WatchEntry &entry) {
+                        return !members.contains(entry.id);
+                    }), providerEntries.end());
+            }
             const auto searchTerm = filter->text().trimmed();
             providerEntries.erase(std::remove_if(providerEntries.begin(), providerEntries.end(), [&searchTerm](const CloudStream::WatchEntry &entry) {
                 return !searchTerm.isEmpty() && !entry.name.contains(searchTerm, Qt::CaseInsensitive) &&
@@ -2768,7 +2952,7 @@ private:
                         }, priority);
                 }
             }
-            if (tabs->currentIndex() == 0) {
+            if (tabs->currentIndex() == 0 && selectedCollection.isEmpty()) {
                 QStringList roots;
                 roots << settings.value("libraryFolder").toString() << QDir::homePath() + "/Videos";
                 roots.removeDuplicates();
@@ -2806,8 +2990,10 @@ private:
             list->setUpdatesEnabled(true);
             if (list->count() == 0) {
                 summary->hide();
-                emptyMessage->setText(state.isEmpty() ? "Titles you watch or mark will appear here"
-                                                       : "No titles are marked " + state.toLower());
+                emptyMessage->setText(!selectedCollection.isEmpty()
+                    ? "This list has no titles in the selected watch state. Add a title from All library."
+                    : state.isEmpty() ? "Titles you watch or mark will appear here"
+                                      : "No titles are marked " + state.toLower());
                 content->setCurrentWidget(content->widget(0));
             } else {
                 summary->setText(QString::number(list->count()) + (list->count() == 1 ? " title" : " titles"));
@@ -2816,6 +3002,59 @@ private:
             }
         };
         libraryRefresh = refresh;
+        connect(collectionSelector, qOverload<int>(&QComboBox::currentIndexChanged), this,
+                [this, collectionSelector, renameCollection, deleteCollection, refresh](int index) {
+            const auto id = collectionSelector->itemData(index).toString();
+            if (!collections.select(id)) {
+                status->setText("Could not select list");
+                return;
+            }
+            renameCollection->setEnabled(!id.isEmpty());
+            deleteCollection->setEnabled(!id.isEmpty());
+            refresh();
+        });
+        connect(createCollection, &QPushButton::clicked, this, [this, populateCollections, refresh] {
+            bool accepted = false;
+            const auto name = QInputDialog::getText(this, "New library list", "List name:",
+                                                    QLineEdit::Normal, {}, &accepted);
+            if (!accepted) return;
+            const auto id = collections.create(name);
+            if (id.isEmpty() || !collections.select(id)) {
+                status->setText("Could not create list (name may be empty or already used)");
+                return;
+            }
+            populateCollections();
+            refresh();
+        });
+        connect(renameCollection, &QPushButton::clicked, this,
+                [this, collectionSelector, populateCollections, refresh] {
+            const auto id = collectionSelector->currentData().toString();
+            if (id.isEmpty()) return;
+            bool accepted = false;
+            const auto name = QInputDialog::getText(this, "Rename library list", "List name:",
+                QLineEdit::Normal, collectionSelector->currentText(), &accepted);
+            if (!accepted) return;
+            if (!collections.rename(id, name)) {
+                status->setText("Could not rename list (name may be empty or already used)");
+                return;
+            }
+            populateCollections();
+            refresh();
+        });
+        connect(deleteCollection, &QPushButton::clicked, this,
+                [this, collectionSelector, populateCollections, refresh] {
+            const auto id = collectionSelector->currentData().toString();
+            if (id.isEmpty()) return;
+            if (QMessageBox::question(this, "Delete library list",
+                "Delete list “" + collectionSelector->currentText() + "”? Titles and watch history remain in All library.")
+                != QMessageBox::Yes) return;
+            if (!collections.removeCollection(id)) {
+                status->setText("Could not delete list");
+                return;
+            }
+            populateCollections();
+            refresh();
+        });
         v->addWidget(content, 1);
         auto *selectionBar = new QWidget;
         selectionBar->setObjectName("selectionBar");
@@ -2830,6 +3069,8 @@ private:
         stateTarget->addItems({"Watching", "Completed", "Paused", "Cancelled"});
         stateTarget->setMinimumHeight(42);
         auto *move = button("Move");
+        auto *addToCollection = button("Add to list…");
+        addToCollection->setObjectName("libraryAddToCollection");
         auto *removeFromLibrary = button("Remove from library");
         removeFromLibrary->setProperty("danger", true);
         removeFromLibrary->setIcon(QIcon(":/icons/delete.svg"));
@@ -2839,6 +3080,7 @@ private:
         actions->addStretch();
         actions->addWidget(stateTarget);
         actions->addWidget(move);
+        actions->addWidget(addToCollection);
         actions->addWidget(removeFromLibrary);
         selectionBar->hide();
         v->addWidget(selectionBar);
@@ -2901,8 +3143,46 @@ private:
                 status->setText("Moved title to " + stateTarget->currentText());
             }
         });
+        connect(addToCollection, &QPushButton::clicked, this,
+                [this, selectedItem, addToCollection, populateCollections, refresh] {
+            auto *item = selectedItem();
+            if (!item || item->data(Qt::UserRole + 1).toString() != "provider") return;
+            const auto titleId = item->data(Qt::UserRole + 2).toString();
+            QMenu menu(addToCollection);
+            for (const auto &collection : collections.collections()) {
+                auto *action = menu.addAction(collection.name);
+                action->setCheckable(true);
+                action->setChecked(collections.contains(collection.id, titleId));
+                connect(action, &QAction::triggered, &menu,
+                    [this, collection, titleId, refresh](bool checked) {
+                    const bool ok = checked ? collections.add(collection.id, titleId)
+                                            : collections.removeItem(collection.id, titleId);
+                    status->setText(ok ? (checked ? "Added to " : "Removed from ") + collection.name
+                                       : "Could not update list");
+                    if (ok) refresh();
+                });
+            }
+            if (!menu.actions().isEmpty()) menu.addSeparator();
+            auto *create = menu.addAction("New list…");
+            connect(create, &QAction::triggered, &menu,
+                [this, titleId, populateCollections, refresh] {
+                bool accepted = false;
+                const auto name = QInputDialog::getText(this, "New library list", "List name:",
+                                                        QLineEdit::Normal, {}, &accepted);
+                if (!accepted) return;
+                const auto id = collections.create(name);
+                if (id.isEmpty() || !collections.add(id, titleId)) {
+                    status->setText("Could not create list (name may be empty or already used)");
+                    return;
+                }
+                populateCollections();
+                refresh();
+                status->setText("Added to " + name.trimmed());
+            });
+            menu.exec(addToCollection->mapToGlobal(QPoint(0, addToCollection->height())));
+        });
         connect(removeFromLibrary, &QPushButton::clicked, this,
-                [this, selectedItem, refresh] {
+                [this, selectedItem, refresh, collectionSelector] {
             auto *item = selectedItem();
             if (!item) return;
             if (item->data(Qt::UserRole + 1).toString() != "provider") {
@@ -2910,6 +3190,14 @@ private:
                 return;
             }
             const auto id = item->data(Qt::UserRole + 2).toString();
+            const auto collectionId = collectionSelector->currentData().toString();
+            if (!collectionId.isEmpty()) {
+                if (collections.removeItem(collectionId, id)) {
+                    refresh();
+                    status->setText("Removed from list; title remains in All library");
+                } else status->setText("Could not remove title from list");
+                return;
+            }
             if (history.remove(id)) {
                 refresh();
                 refreshContinueWatching();
@@ -2921,10 +3209,13 @@ private:
             playSelected();
         });
         connect(list, &QListWidget::currentItemChanged, this,
-                [selectionBar, removeFromLibrary](QListWidgetItem *current) {
+                [selectionBar, removeFromLibrary, addToCollection, collectionSelector](QListWidgetItem *current) {
             selectionBar->setVisible(current && current->data(Qt::UserRole).isValid());
-            removeFromLibrary->setEnabled(current &&
-                current->data(Qt::UserRole + 1).toString() == "provider");
+            const bool provider = current && current->data(Qt::UserRole + 1).toString() == "provider";
+            addToCollection->setEnabled(provider);
+            removeFromLibrary->setEnabled(provider);
+            removeFromLibrary->setText(collectionSelector->currentData().toString().isEmpty()
+                ? "Remove from library" : "Remove from list");
         });
         connect(tabs, &QTabBar::currentChanged, this, [refresh] { refresh(); });
         auto *filterDebounce = new QTimer(page);
@@ -4632,10 +4923,31 @@ private:
         status->setText("Queued " + displayTitle + " for download");
     }
 
+    struct EpisodePlayback {
+        QJsonObject details;
+        QList<CloudStream::EpisodeEntry> catalog;
+        QString jar;
+        QString provider;
+        QString url;
+        CloudStream::PlaybackSource preferredSource;
+        bool hasPreferredSource = false;
+        int index;
+        EpisodePlayback() : index(-1) {}
+    };
+
+    static QString episodeLabel(const CloudStream::EpisodeEntry &episode) {
+        QStringList parts;
+        if (episode.season > 0) parts << "S" + QString::number(episode.season);
+        if (episode.number > 0) parts << "E" + QString::number(episode.number);
+        parts << (episode.name.isEmpty() ? (episode.number > 0
+            ? "Episode " + QString::number(episode.number) : "Episode") : episode.name);
+        return parts.join("  •  ");
+    }
+
     void resolveAndPlay(const QString &jar, const QString &provider, const QString &data,
                         const QString &historyId = {}, const QString &displayTitle = {},
                         bool chooseSource = false, bool downloadSource = false,
-                        QObject *requestContext = nullptr) {
+                        QObject *requestContext = nullptr, EpisodePlayback episodePlayback = {}) {
         const auto playbackGeneration = playbackRequestGeneration.begin();
         if (activePlaybackResolutionProcess &&
             activePlaybackResolutionProcess->state() != QProcess::NotRunning) {
@@ -4659,7 +4971,7 @@ private:
         status->setText("Finding playable hosters and qualities…");
         CloudStream::ProcessCompletion::watch(process, this,
                 [this, process, historyId, displayTitle, jar, provider, data, chooseSource,
-                 downloadSource, playbackGeneration, safeRequestContext]
+                 downloadSource, playbackGeneration, safeRequestContext, episodePlayback]
                 (int exitCode, QProcess::ExitStatus, bool startFailure) {
             if (activePlaybackResolutionProcess == process) {
                 activePlaybackResolutionProcess = nullptr;
@@ -4682,7 +4994,8 @@ private:
             double resumePosition = 0.0;
             if (!historyId.isEmpty()) {
                 for (const auto &entry : history.entries()) {
-                    if (entry.id == historyId && entry.state != "Completed") {
+                    if (entry.id == historyId && entry.playbackData == data &&
+                        entry.state != "Completed") {
                         resumePosition = entry.positionSeconds;
                         break;
                     }
@@ -4706,6 +5019,11 @@ private:
                         }
                     }
                 }
+            }
+            if (episodePlayback.hasPreferredSource && !chooseSource && !downloadSource) {
+                const int preferredIndex = CloudStream::SourceCatalog::preferredContinuationIndex(
+                    discovery.sources, episodePlayback.preferredSource);
+                if (preferredIndex > 0) discovery.sources.prepend(discovery.sources.takeAt(preferredIndex));
             }
             int selectedSubtitleOverride = -2;
             if (chooseSource || downloadSource) {
@@ -4963,6 +5281,11 @@ private:
                 }
             }
             if (integratedPlayer) integratedPlayer->close();
+            if (episodePlayback.index >= 0) {
+                saveProviderHistory(episodePlayback.details, episodePlayback.jar,
+                    episodePlayback.provider, episodePlayback.url, data,
+                    episodeLabel(episodePlayback.catalog[episodePlayback.index]));
+            }
             CloudStream::PlayerPreferences playerPreferences;
             playerPreferences.seekSeconds = settings.value("player/seekSeconds", 10).toInt();
             const bool muteNsfw = settings.value(
@@ -4976,18 +5299,45 @@ private:
             playerPreferences.selectFirstSubtitle = selectedSubtitleOverride == -2
                 ? settings.value("player/subtitles", "Off").toString() == "First available"
                 : selectedSubtitleOverride >= 0;
+            playerPreferences.autoplayNext = settings.value("player/autoplayNext", false).toBool();
             auto *window = new CloudStream::IntegratedPlayerWindow(
                 discovery, displayTitle.isEmpty() ? provider : displayTitle,
                 resumePosition, this, playerPreferences);
+            const int nextIndex = CloudStream::EpisodeCatalog::nextPlayableIndex(
+                episodePlayback.catalog, episodePlayback.index);
+            if (nextIndex >= 0) {
+                const auto next = episodePlayback.catalog[nextIndex];
+                window->setNextEpisode(episodeLabel(next));
+                connect(window, &CloudStream::IntegratedPlayerWindow::nextEpisodeRequested,
+                        this, [this, sourceWindow = QPointer<CloudStream::IntegratedPlayerWindow>(window),
+                               discovery, episodePlayback, nextIndex, next] {
+                    if (!sourceWindow || integratedPlayer != sourceWindow) return;
+                    auto continuation = episodePlayback;
+                    continuation.index = nextIndex;
+                    const int selected = sourceWindow->currentSourceIndex();
+                    if (selected >= 0 && selected < discovery.sources.size()) {
+                        continuation.preferredSource = discovery.sources[selected];
+                        continuation.hasPreferredSource = true;
+                    }
+                    const auto label = episodeLabel(next);
+                    const auto id = CloudStream::WatchHistoryStore::idFor(
+                        episodePlayback.provider, episodePlayback.url);
+                    const auto title = episodePlayback.details.value("name").toString() + " • " + label;
+                    resolveAndPlay(episodePlayback.jar, episodePlayback.provider, next.data,
+                                   id, title, false, false, sourceWindow, continuation);
+                });
+            }
             presentPlayer(window);
             connect(window, &CloudStream::IntegratedPlayerWindow::progressUpdated, this,
                     [this, historyId](double position, double duration) {
                 if (!historyId.isEmpty() && duration > 0.0) history.updateProgress(historyId, position, duration);
             });
-            connect(window, &QObject::destroyed, this, [this] {
-                refreshContinueWatching();
-                if (libraryLoaded && libraryRefresh) libraryRefresh();
-            });
+            if (continueWatchingList) {
+                connect(window, &QObject::destroyed, continueWatchingList, [this] {
+                    refreshContinueWatching();
+                    if (libraryLoaded && libraryRefresh) libraryRefresh();
+                });
+            }
             QSet<QString> hosters;
             for (const auto &source : discovery.sources) hosters.insert(source.hosterName());
             status->setText("Found " + QString::number(discovery.sources.size()) + " playable source(s) from " +
@@ -5136,8 +5486,22 @@ private:
                 const auto id = saveProviderHistory(details, jar, provider, url, data, episodeName);
                 const auto playerTitle = episodeName.isEmpty() ? details.value("name").toString()
                     : details.value("name").toString() + " • " + episodeName;
+                EpisodePlayback playback;
+                if (!episodeCatalog.isEmpty()) {
+                    playback.details = details;
+                    playback.catalog = episodeCatalog;
+                    playback.jar = jar;
+                    playback.provider = provider;
+                    playback.url = url;
+                    for (int index = 0; index < episodeCatalog.size(); ++index) {
+                        if (episodeCatalog[index].data == data) {
+                            playback.index = index;
+                            break;
+                        }
+                    }
+                }
                 resolveAndPlay(jar, provider, data, id, playerTitle, chooseSource, false,
-                               safeDialog);
+                               safeDialog, playback);
             };
             const auto downloadSelection = [this, details, selectedPlayback, selectedEpisodeName,
                                              episodeCatalog, jar, provider, safeDialog] {

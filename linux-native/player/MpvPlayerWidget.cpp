@@ -107,6 +107,10 @@ MpvPlayerWidget::MpvPlayerWidget(QWidget *parent) : QOpenGLWidget(parent) {
     mpv_observe_property(handle, VolumeProperty, "volume", MPV_FORMAT_DOUBLE);
     mpv_observe_property(handle, MuteProperty, "mute", MPV_FORMAT_FLAG);
     mpv_observe_property(handle, TrackListProperty, "track-list", MPV_FORMAT_NODE);
+    mpv_observe_property(handle, EofProperty, "eof-reached", MPV_FORMAT_FLAG);
+    mpv_observe_property(handle, SeekingProperty, "seeking", MPV_FORMAT_FLAG);
+    mpv_observe_property(handle, PausedForCacheProperty, "paused-for-cache", MPV_FORMAT_FLAG);
+    mpv_observe_property(handle, CacheBufferingStateProperty, "cache-buffering-state", MPV_FORMAT_INT64);
     setVolume(currentVolume);
 }
 
@@ -151,6 +155,14 @@ void MpvPlayerWidget::loadSource(const PlaybackSource &source,
     pendingSubtitles = subtitles;
     resumePosition = std::max(0.0, resumePositionSeconds);
     hasPendingSource = true;
+    eofNotified = false;
+    fileReady = false;
+    if (seekingPlayback || pausedForCache) {
+        seekingPlayback = false;
+        pausedForCache = false;
+        cacheBufferingPercent = 0;
+        emit playbackActivityChanged(false, false, 0);
+    }
     externalAudioAdded = false;
     currentPosition = 0.0;
     currentDuration = 0.0;
@@ -317,10 +329,35 @@ void MpvPlayerWidget::processEvents() {
             } else if (event->reply_userdata == TrackListProperty && property->format == MPV_FORMAT_NODE) {
                 currentTracks = parseTracks(static_cast<mpv_node *>(property->data));
                 emit tracksChanged(currentTracks);
+            } else if (event->reply_userdata == CacheBufferingStateProperty &&
+                       property->format == MPV_FORMAT_INT64) {
+                const int progress = std::clamp(int(*static_cast<int64_t *>(property->data)), 0, 100);
+                if (cacheBufferingPercent != progress) {
+                    cacheBufferingPercent = progress;
+                    if (pausedForCache)
+                        emit playbackActivityChanged(seekingPlayback, pausedForCache, cacheBufferingPercent);
+                }
+            } else if (event->reply_userdata == SeekingProperty && property->format == MPV_FORMAT_FLAG) {
+                const bool active = *static_cast<int *>(property->data) != 0;
+                if (seekingPlayback != active) {
+                    seekingPlayback = active;
+                    emit playbackActivityChanged(seekingPlayback, pausedForCache, cacheBufferingPercent);
+                }
+            } else if (event->reply_userdata == PausedForCacheProperty && property->format == MPV_FORMAT_FLAG) {
+                const bool active = *static_cast<int *>(property->data) != 0;
+                if (pausedForCache != active) {
+                    pausedForCache = active;
+                    emit playbackActivityChanged(seekingPlayback, pausedForCache, cacheBufferingPercent);
+                }
+            } else if (event->reply_userdata == EofProperty && property->format == MPV_FORMAT_FLAG &&
+                       *static_cast<int *>(property->data) && fileReady && !eofNotified) {
+                eofNotified = true;
+                emit endReached();
             }
         } else if (event->event_id == MPV_EVENT_START_FILE) {
             emit loadingChanged(true);
         } else if (event->event_id == MPV_EVENT_FILE_LOADED) {
+            fileReady = true;
             if (!externalAudioAdded) {
                 externalAudioAdded = true;
                 for (int index = 0; index < pendingSource.audioTracks.size(); ++index) {
@@ -339,7 +376,10 @@ void MpvPlayerWidget::processEvents() {
             if (end && end->reason == MPV_END_FILE_REASON_ERROR) {
                 emit playbackError(mpvError(end->error));
             } else if (end && end->reason == MPV_END_FILE_REASON_EOF) {
-                emit endReached();
+                if (fileReady && !eofNotified) {
+                    eofNotified = true;
+                    emit endReached();
+                }
             }
         } else if (event->event_id == MPV_EVENT_LOG_MESSAGE) {
             const auto *message = static_cast<mpv_event_log_message *>(event->data);

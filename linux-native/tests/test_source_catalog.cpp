@@ -8,6 +8,20 @@ class SourceCatalogTest : public QObject {
     Q_OBJECT
 
 private slots:
+    void continuesOnPreviouslyChosenHosterWhenAvailable() {
+        CloudStream::PlaybackSource first;
+        first.source = "Primary";
+        first.quality = 1080;
+        CloudStream::PlaybackSource alternate = first;
+        alternate.source = "Alternate";
+        alternate.quality = 720;
+        const QList<CloudStream::PlaybackSource> sources{first, alternate};
+        QCOMPARE(CloudStream::SourceCatalog::preferredContinuationIndex(sources, alternate), 1);
+        alternate.quality = 480;
+        QCOMPARE(CloudStream::SourceCatalog::preferredContinuationIndex(sources, alternate), 1);
+        alternate.source = "Absent";
+        QCOMPARE(CloudStream::SourceCatalog::preferredContinuationIndex(sources, alternate), -1);
+    }
     void parsesDeduplicatesAndSortsPlayableSources() {
         const QByteArray payload = QByteArrayLiteral(
             "{\"success\":true,\"links\":["

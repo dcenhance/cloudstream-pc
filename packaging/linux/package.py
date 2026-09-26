@@ -56,7 +56,7 @@ copy(ORIGINAL / 'provider-host/build/install/cloudstream-provider-host', 'usr/li
 for p in (ROOT / 'usr/libexec/cloudstream/provider-host/bin').glob('*.bat'):
     p.unlink()
 (ROOT / 'usr/libexec/cloudstream/provider-host/bin/cloudstream-provider-host').chmod(0o755)
-put('usr/share/applications/io.github.recloudstream.cloudstream-pc.desktop', '[Desktop Entry]\nType=Application\nName=CloudStream PC\nComment=CloudStream native desktop preview\nExec=cloudstream-pc\nIcon=io.github.recloudstream.cloudstream\nTerminal=false\nCategories=AudioVideo;Video;\nStartupWMClass=cloudstream-linux\n')
+put('usr/share/applications/io.github.recloudstream.cloudstream-pc.desktop', '[Desktop Entry]\nType=Application\nName=CloudStream PC\nComment=CloudStream native desktop app\nExec=cloudstream-pc\nIcon=io.github.recloudstream.cloudstream\nTerminal=false\nCategories=AudioVideo;Video;\nStartupWMClass=cloudstream-linux\n')
 copy(REPO / 'linux-native/packaging/io.github.recloudstream.cloudstream.svg', 'usr/share/icons/hicolor/scalable/apps/io.github.recloudstream.cloudstream.svg')
 doc = Path('usr/share/doc/cloudstream-pc')
 copy(REPO / 'LICENSE', str(doc / 'LICENSE'))
@@ -106,7 +106,7 @@ if debroot.exists():
 shutil.copytree(ROOT, debroot)
 (debroot / 'DEBIAN').mkdir()
 (debroot / 'usr/bin/cloudstream-build.json').write_text(identity('deb'))
-(debroot / 'DEBIAN/control').write_text(f'Package: cloudstream-pc\nVersion: {DEB_VERSION}\nArchitecture: amd64\nMaintainer: dcenhance <252102103+dcenhance@users.noreply.github.com>\nSection: video\nPriority: optional\nDepends: libc6 (>= 2.39), libstdc++6 (>= 13.2), libgcc-s1, libqt6core6t64 (>= 6.4.2), libqt6widgets6 (>= 6.4.2), libqt6gui6 (>= 6.4.2), libqt6network6 (>= 6.4.2), libqt6opengl6 (>= 6.4.2), libqt6openglwidgets6 (>= 6.4.2), libqt6concurrent6 (>= 6.4.2), libqt6svg6 (>= 6.4.2), libmpv2 (>= 0.37), libsdl2-2.0-0 (>= 2.30), qt6-qpa-plugins, qt6-wayland, qt6-image-formats-plugins, openjdk-17-jre-headless | java17-runtime-headless, ffmpeg (>= 6), ca-certificates\nDescription: CloudStream PC native desktop preview (system runtime)\n Ubuntu 24.04 amd64 baseline; Qt, mpv, Java and FFmpeg are not bundled.\n')
+(debroot / 'DEBIAN/control').write_text(f'Package: cloudstream-pc\nVersion: {DEB_VERSION}\nArchitecture: amd64\nMaintainer: dcenhance <252102103+dcenhance@users.noreply.github.com>\nSection: video\nPriority: optional\nDepends: libc6 (>= 2.39), libstdc++6 (>= 13.2), libgcc-s1, libqt6core6t64 (>= 6.4.2), libqt6widgets6 (>= 6.4.2), libqt6gui6 (>= 6.4.2), libqt6network6 (>= 6.4.2), libqt6opengl6 (>= 6.4.2), libqt6openglwidgets6 (>= 6.4.2), libqt6concurrent6 (>= 6.4.2), libqt6svg6 (>= 6.4.2), libmpv2 (>= 0.37), libsdl2-2.0-0 (>= 2.30), qt6-qpa-plugins, qt6-wayland, qt6-image-formats-plugins, openjdk-17-jre-headless | java17-runtime-headless, ffmpeg (>= 6), ca-certificates\nDescription: CloudStream PC native desktop app (system runtime)\n Ubuntu 24.04 amd64 baseline; Qt, mpv, Java and FFmpeg are not bundled.\n')
 inside(f'dpkg-deb --root-owner-group --build /out/build-support/debroot /out/cloudstream-pc_{DEB_FILENAME_VERSION}_amd64.deb')
 put('usr/bin/cloudstream-build.json', identity('rpm'))
 # RPM auto-generated ELF requirements are preserved, plus helper/dlopen dependencies.
@@ -116,7 +116,7 @@ spec.write_text('''%global __os_install_post %{nil}
 Name: cloudstream-pc
 Version: @BASE_VERSION@
 Release: @RPM_RELEASE@
-Summary: CloudStream PC native desktop preview (system runtime)
+Summary: CloudStream PC native desktop app (system runtime)
 Packager: dcenhance
 License: GPL-3.0-only AND Apache-2.0 AND MIT AND MPL-2.0 AND BSD-3-Clause
 BuildArch: x86_64

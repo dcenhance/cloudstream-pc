@@ -10,7 +10,7 @@ import tarfile
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from release_identity import release_version
+from release_identity import release_version, rpm_filename
 
 REPO = Path(__file__).resolve().parents[2]
 OUT = Path(os.environ.get('CLOUDSTREAM_RELEASE_OUT', str(REPO / 'dist-linux')))
@@ -20,7 +20,7 @@ CONTAINER = os.environ.get('CLOUDSTREAM_CONTAINER', 'cloudstream-linux-packager'
 VERSION = release_version()
 DEB = f'cloudstream-pc_{VERSION.replace("-", ".")}_amd64.deb'
 BASE_VERSION, _, PRE_RELEASE = VERSION.partition('-')
-RPM = f'cloudstream-pc-{BASE_VERSION}-0.{PRE_RELEASE}.x86_64.rpm'
+RPM = rpm_filename(VERSION)
 APPIMAGE = f'CloudStream-PC-{VERSION}-x86_64-system-runtime.AppImage'
 
 def command(args, name, accepted=(0,)):
@@ -54,7 +54,12 @@ for name, root in paths.items():
         staged = OUT/'build-support/root/usr/libexec/cloudstream/provider-host/lib'/jar.name
         assert hashlib.sha256(jar.read_bytes()).digest() == hashlib.sha256(staged.read_bytes()).digest()
     with tarfile.open(root/'usr/share/doc/cloudstream-pc/cloudstream-corresponding-source.tar.gz') as archive:
-        for relative in ('linux-native/main.cpp', 'linux-native/app/PackagedRuntimeEnvironment.h', 'linux-native/providers/HomeProcessResult.h', 'provider-host/src/main/kotlin/com/lagradost/cloudstream3/linux/host/Main.kt'):
+        for relative in ('linux-native/main.cpp', 'linux-native/app/PackagedRuntimeEnvironment.h',
+                         'linux-native/history/LibraryCollectionStore.cpp',
+                         'linux-native/search/SearchPaginationModel.h',
+                         'linux-native/tests/test_mpv_player_widget.cpp',
+                         'linux-native/providers/HomeProcessResult.h',
+                         'provider-host/src/main/kotlin/com/lagradost/cloudstream3/linux/host/Main.kt'):
             member = archive.extractfile('cloudstream/'+relative)
             assert member is not None
             assert member.read() == (REPO/relative).read_bytes()

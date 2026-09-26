@@ -25,6 +25,7 @@ struct PlayerPreferences {
     bool automaticFallback = true;
     bool showInformation = true;
     bool selectFirstSubtitle = false;
+    bool autoplayNext = false;
     int autoHideDelayMs = 3200;
 };
 
@@ -41,9 +42,11 @@ public:
     double position() const;
     double duration() const;
     int currentSourceIndex() const;
+    void setNextEpisode(const QString &title);
 
 signals:
     void progressUpdated(double positionSeconds, double durationSeconds);
+    void nextEpisodeRequested();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -57,6 +60,7 @@ private:
     void handlePlaybackError(const QString &message);
     void toggleFullscreen();
     void refreshTimeLabel();
+    void refreshPlaybackOverlay();
     void setControlsVisible(bool visible);
     void scheduleAutoHide();
     void showSourceDialog();
@@ -83,6 +87,7 @@ private:
     QPushButton *forward{};
     QPushButton *mute{};
     QPushButton *fullscreen{};
+    QPushButton *nextEpisode{};
     QSlider *seek{};
     QSlider *volumeSlider{};
     QComboBox *sourceSelector{};
@@ -90,6 +95,8 @@ private:
     QComboBox *subtitleSelector{};
     QTimer *progressTimer{};
     QTimer *autoHideTimer{};
+    QTimer *activityTimer{};
+    QSet<QObject *> hoveredControls;
     QSet<int> failedSources;
     quint64 sourceGeneration = 0;
     int sourceIndex = -1;
@@ -102,6 +109,12 @@ private:
     bool subtitlePreferenceApplied = false;
     bool controlsVisible = true;
     bool loading = true;
+    bool sourceLoading = true;
+    bool activitySeeking = false;
+    bool activityBuffering = false;
+    int activityPercent = 0;
+    bool playbackFailure = false;
+    bool autoAdvanceTriggered = false;
     QPointer<QWidget> fullscreenHost;
 
     Qt::WindowStates savedWindowState{};

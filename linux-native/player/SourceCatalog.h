@@ -48,6 +48,8 @@ struct SourceDiscovery {
 class SourceCatalog final {
 public:
     static SourceDiscovery parse(const QByteArray &payload);
+    static int preferredContinuationIndex(const QList<PlaybackSource> &sources,
+                                          const PlaybackSource &previous);
 };
 
 } // namespace CloudStream

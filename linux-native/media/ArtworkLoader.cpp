@@ -184,6 +184,10 @@ void ArtworkLoader::load(const QUrl &url, const QSize &targetSize, QObject *cont
 }
 
 void ArtworkLoader::pump() {
+    // Once all pipeline slots are occupied, nothing can start. In particular,
+    // avoid copying and pruning the entire backlog for every new thumbnail:
+    // consumer destruction already prunes its own pending request.
+    if (activeRequests_ >= maximumActiveRequests_) return;
     const auto queuedKeys = queue_;
     for (const auto &key : queuedKeys) prune(key);
     while (activeRequests_ < maximumActiveRequests_ && !queue_.isEmpty()) {

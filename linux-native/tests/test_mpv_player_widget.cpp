@@ -24,6 +24,205 @@ class MpvPlayerWidgetTest : public QObject {
     Q_OBJECT
 
 private slots:
+    void nextEpisodeOnlyAppearsWithContinuation() {
+        CloudStream::IntegratedPlayerWindow player({}, "Standalone");
+        player.setAttribute(Qt::WA_DeleteOnClose, false);
+        auto *next = player.findChild<QPushButton *>("playerNextEpisode");
+        QVERIFY(next);
+        QVERIFY(next->isHidden());
+        QSignalSpy requested(&player, &CloudStream::IntegratedPlayerWindow::nextEpisodeRequested);
+        player.setNextEpisode("Episode 2");
+        QVERIFY(!next->isHidden());
+        QCOMPARE(next->accessibleName(), QString("Play next episode: Episode 2"));
+        next->click();
+        QCOMPARE(requested.size(), 1);
+        player.setNextEpisode({});
+        QVERIFY(next->isHidden());
+    }
+
+    void autoplayNextOnlyAtActualVideoEofWhenEnabled() {
+        QTemporaryDir directory;
+        QVERIFY(directory.isValid());
+        const auto path = directory.filePath("short.mp4");
+        QCOMPARE(QProcess::execute("ffmpeg", {"-hide_banner", "-loglevel", "error", "-y",
+            "-f", "lavfi", "-i", "testsrc2=size=160x90:rate=24", "-t", "1",
+            "-c:v", "libx264", "-preset", "ultrafast", path}), 0);
+        CloudStream::SourceDiscovery discovery;
+        CloudStream::PlaybackSource source;
+        source.url = path;
+        source.type = "VIDEO";
+        discovery.sources << source;
+        for (bool autoplay : {false, true}) {
+            CloudStream::PlayerPreferences preferences;
+            preferences.autoplayNext = autoplay;
+            CloudStream::IntegratedPlayerWindow player(discovery, "Episode 1", 0, nullptr, preferences);
+            player.setAttribute(Qt::WA_DeleteOnClose, false);
+            player.setNextEpisode("Episode 2");
+            QSignalSpy requested(&player, &CloudStream::IntegratedPlayerWindow::nextEpisodeRequested);
+            auto *video = player.findChild<CloudStream::MpvPlayerWidget *>();
+            QSignalSpy ended(video, &CloudStream::MpvPlayerWidget::endReached);
+            player.show();
+            QTRY_VERIFY_WITH_TIMEOUT(!ended.isEmpty(), 7000);
+            QCOMPARE(requested.size(), autoplay ? 1 : 0);
+            player.hide();
+        }
+        CloudStream::PlayerPreferences preferences;
+        preferences.autoplayNext = true;
+        CloudStream::IntegratedPlayerWindow standalone(discovery, "Movie", 0, nullptr, preferences);
+        standalone.setAttribute(Qt::WA_DeleteOnClose, false);
+        QSignalSpy requested(&standalone, &CloudStream::IntegratedPlayerWindow::nextEpisodeRequested);
+        auto *video = standalone.findChild<CloudStream::MpvPlayerWidget *>();
+        QSignalSpy ended(video, &CloudStream::MpvPlayerWidget::endReached);
+        standalone.show();
+        QTRY_VERIFY_WITH_TIMEOUT(!ended.isEmpty(), 7000);
+        QCOMPARE(requested.size(), 0);
+    }
+
+    void timelineDragPreviewsFarPositionWithoutRepeatedDecoding() {
+        QTemporaryDir directory;
+        QVERIFY(directory.isValid());
+        const auto path = directory.filePath("long.mp4");
+        QCOMPARE(QProcess::execute("ffmpeg", {"-hide_banner", "-loglevel", "error", "-y",
+            "-f", "lavfi", "-i", "testsrc2=size=160x90:rate=24", "-t", "35",
+            "-c:v", "libx264", "-preset", "ultrafast", "-movflags", "+faststart", path}), 0);
+        CloudStream::SourceDiscovery discovery;
+        CloudStream::PlaybackSource source;
+        source.url = path;
+        source.type = "VIDEO";
+        discovery.sources << source;
+        CloudStream::IntegratedPlayerWindow player(discovery, "Far seek");
+        player.setAttribute(Qt::WA_DeleteOnClose, false);
+        player.show();
+        auto *video = player.findChild<CloudStream::MpvPlayerWidget *>();
+        QSlider *slider = nullptr;
+        for (auto *candidate : player.findChildren<QSlider *>()) {
+            if (candidate->accessibleName() == "Playback position") slider = candidate;
+        }
+        auto *time = player.findChild<QLabel *>("playerPosition");
+        QVERIFY(video && slider && time);
+        QTRY_VERIFY_WITH_TIMEOUT(video->position() > 0.2, 5000);
+        video->setPaused(true);
+        QTRY_VERIFY(video->isPaused());
+        slider->setSliderDown(true);
+        slider->setSliderPosition(250);
+        slider->setSliderPosition(500);
+        slider->setSliderPosition(700);
+        QTest::qWait(550);
+        QVERIFY2(video->position() < 3.0, "Dragging caused expensive exact seeks before release");
+        QCOMPARE(time->text(), QString("0:25"));
+        QSignalSpy activity(video, &CloudStream::MpvPlayerWidget::playbackActivityChanged);
+        slider->setSliderDown(false);
+        QTRY_VERIFY_WITH_TIMEOUT(video->position() > 20.0, 5000);
+        QVERIFY2(std::any_of(activity.cbegin(), activity.cend(), [](const auto &change) {
+            return change.at(0).toBool();
+        }), "libmpv did not report an in-progress seek");
+    }
+    void timelineClickJumpsToRequestedPosition() {
+        QTemporaryDir directory;
+        QVERIFY(directory.isValid());
+        const auto path = directory.filePath("click.mp4");
+        QCOMPARE(QProcess::execute("ffmpeg", {"-hide_banner", "-loglevel", "error", "-y",
+            "-f", "lavfi", "-i", "testsrc2=size=160x90:rate=24", "-t", "35",
+            "-c:v", "libx264", "-preset", "ultrafast", "-movflags", "+faststart", path}), 0);
+        CloudStream::PlaybackSource source;
+        source.url = path;
+        source.type = "VIDEO";
+        CloudStream::SourceDiscovery discovery;
+        discovery.sources << source;
+        CloudStream::IntegratedPlayerWindow player(discovery, "Click to jump");
+        player.setAttribute(Qt::WA_DeleteOnClose, false);
+        player.show();
+        auto *video = player.findChild<CloudStream::MpvPlayerWidget *>();
+        auto *slider = player.findChild<QSlider *>("playerSeek");
+        QVERIFY(video && slider);
+        QTRY_VERIFY_WITH_TIMEOUT(video->position() > 0.2, 5000);
+        video->setPaused(true);
+        QTRY_VERIFY(video->isPaused());
+        QTest::mouseClick(slider, Qt::LeftButton, Qt::NoModifier,
+                          QPoint(slider->width() * 3 / 4, slider->height() / 2));
+        QTRY_VERIFY_WITH_TIMEOUT(video->position() > 20.0, 5000);
+    }
+    void playerShowsSeekAndBufferingProgressWithoutReplacingVideo() {
+        QTemporaryDir directory;
+        QVERIFY(directory.isValid());
+        const auto path = directory.filePath("busy.mp4");
+        QCOMPARE(QProcess::execute("ffmpeg", {"-hide_banner", "-loglevel", "error", "-y",
+            "-f", "lavfi", "-i", "testsrc2=size=160x90:rate=24", "-t", "8",
+            "-c:v", "libx264", "-preset", "ultrafast", path}), 0);
+        CloudStream::PlaybackSource source;
+        source.url = path;
+        source.type = "VIDEO";
+        CloudStream::SourceDiscovery discovery;
+        discovery.sources << source;
+        CloudStream::IntegratedPlayerWindow player(discovery, "Busy playback");
+        player.setAttribute(Qt::WA_DeleteOnClose, false);
+        player.show();
+        auto *video = player.findChild<CloudStream::MpvPlayerWidget *>();
+        auto *overlay = player.findChild<QLabel *>("playerLoadingOverlay");
+        auto *stack = player.findChild<QStackedLayout *>("playerVideoStack");
+        QVERIFY(video && overlay && stack);
+        QTRY_VERIFY_WITH_TIMEOUT(video->position() > 0.2, 4000);
+        QVERIFY(QMetaObject::invokeMethod(video, "playbackActivityChanged", Qt::DirectConnection,
+            Q_ARG(bool, true), Q_ARG(bool, false), Q_ARG(int, 0)));
+        QTRY_VERIFY_WITH_TIMEOUT(overlay->isVisible(), 1000);
+        QVERIFY(overlay->text().contains("Seeking"));
+        QCOMPARE(stack->currentWidget(), static_cast<QWidget *>(video));
+        QVERIFY(QMetaObject::invokeMethod(video, "playbackActivityChanged", Qt::DirectConnection,
+            Q_ARG(bool, false), Q_ARG(bool, true), Q_ARG(int, 42)));
+        QTRY_VERIFY_WITH_TIMEOUT(overlay->text().contains("42%"), 1000);
+        QVERIFY(QMetaObject::invokeMethod(video, "playbackActivityChanged", Qt::DirectConnection,
+            Q_ARG(bool, false), Q_ARG(bool, false), Q_ARG(int, 0)));
+        QTRY_VERIFY_WITH_TIMEOUT(overlay->isHidden(), 1000);
+    }
+    void seekControlsStayVisibleWhilePointerIsOverThem() {
+        QTemporaryDir directory;
+        QVERIFY(directory.isValid());
+        const auto videoPath = directory.filePath("hover.mp4");
+        QCOMPARE(QProcess::execute("ffmpeg", {
+            "-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi", "-i",
+            "testsrc2=size=320x180:rate=24", "-t", "8", "-c:v", "libx264",
+            "-preset", "ultrafast", videoPath,
+        }), 0);
+        CloudStream::SourceDiscovery discovery;
+        CloudStream::PlaybackSource source;
+        source.url = videoPath;
+        source.type = "VIDEO";
+        discovery.sources << source;
+        CloudStream::PlayerPreferences preferences;
+        preferences.autoHideDelayMs = 300;
+        CloudStream::IntegratedPlayerWindow player(discovery, "Seek hover", 0, nullptr, preferences);
+        player.setAttribute(Qt::WA_DeleteOnClose, false);
+        player.show();
+        QVERIFY(QTest::qWaitForWindowExposed(&player));
+        auto *video = player.findChild<CloudStream::MpvPlayerWidget *>();
+        auto *controls = player.findChild<QWidget *>("playerControls");
+        auto *seek = player.findChild<QSlider *>();
+        QVERIFY(video && controls && seek);
+        QTRY_VERIFY_WITH_TIMEOUT(video->position() > 0.1, 3000);
+        // Wayland does not let QTest move the compositor's physical cursor.
+        // Deliver the same hover transitions a real pointer produces instead.
+        QEvent seekEnter(QEvent::Enter);
+        QCoreApplication::sendEvent(seek, &seekEnter);
+        QTest::qWait(550);
+        QVERIFY2(controls->isVisible(), "Timeline vanished while the pointer was resting on the seek slider");
+        auto *volume = player.findChild<QSlider *>("playerVolume");
+        QVERIFY(volume);
+        QEvent seekLeave(QEvent::Leave);
+        QCoreApplication::sendEvent(seek, &seekLeave);
+        QEvent volumeEnter(QEvent::Enter);
+        QCoreApplication::sendEvent(volume, &volumeEnter);
+        QTest::qWait(550);
+        QVERIFY2(controls->isVisible(), "Volume control vanished while the pointer was resting on it");
+        QTest::mousePress(seek, Qt::LeftButton, Qt::NoModifier, seek->rect().center());
+        QTest::qWait(550);
+        QVERIFY2(controls->isVisible(), "Timeline vanished during a seek drag");
+        QTest::mouseRelease(seek, Qt::LeftButton, Qt::NoModifier, seek->rect().center());
+        QEvent volumeLeave(QEvent::Leave);
+        QCoreApplication::sendEvent(volume, &volumeLeave);
+        QTest::mouseMove(video, QPoint(video->width() / 2, video->height() / 3));
+        QTRY_VERIFY_WITH_TIMEOUT(!controls->isVisible(), 1200);
+    }
+
     void chromeFadesBeforeItHides() {
         CloudStream::IntegratedPlayerWindow player({}, "Fade regression");
         player.setAttribute(Qt::WA_DeleteOnClose, false);

@@ -487,7 +487,7 @@ private fun usage(): Nothing {
             "load <jar> <plugin-class> <provider-name> <url> | " +
             "sources <jar> <plugin-class> <provider-name> <data> | " +
             "links <jar> <plugin-class> <provider-name> <data> | " +
-            "search <jar> <plugin-class> <provider-name> <query>"
+            "search <jar> <plugin-class> <provider-name> [--page <number>] <query>"
     )
 }
 
@@ -565,9 +565,20 @@ fun main(args: Array<String>) {
                     if (args.size < 5) usage()
                     val provider = loaded.providers.firstOrNull { it.name == args[3] }
                         ?: error("Provider not found: ${args[3]}")
-                    val query = args.drop(4).joinToString(" ")
-                    val results = runBlocking { provider.search(query, 1)?.items.orEmpty() }
-                    protocolOut.println(JsonArray(results.map(::searchResultJson)))
+                    val paged = args[4] == "--page"
+                    val page = if (paged) {
+                        if (args.size < 7) usage()
+                        args[5].toIntOrNull()?.takeIf { it > 0 }
+                            ?: error("Search page must be a positive integer")
+                    } else 1
+                    val query = args.drop(if (paged) 6 else 4).joinToString(" ")
+                    val response = runBlocking { provider.search(query, page) }
+                    val items = JsonArray(response?.items.orEmpty().map(::searchResultJson))
+                    // Calls without --page retain the original array protocol.
+                    protocolOut.println(if (paged) buildJsonObject {
+                        put("items", items)
+                        put("hasNext", JsonPrimitive(response?.hasNext == true))
+                    } else items)
                 }
                 else -> usage()
             }

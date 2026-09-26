@@ -1,4 +1,4 @@
-"""Current source Windows release build, without changing shipped dependency bytes.
+"""Build the current Windows source; retain audited third-party runtime bytes.
 Runs only on a disposable Windows Actions runner. Never publishes automatically.
 """
 import hashlib
@@ -14,6 +14,9 @@ import zipfile
 
 ROOT = Path.cwd()
 SOURCE = ROOT / 'source'
+sys.path.insert(0, str(SOURCE / 'packaging'))
+from release_identity import pe_version_words
+from release_runtime import refresh_provider_host
 EVIDENCE = ROOT / 'evidence'
 OUTPUT = ROOT / 'output'
 EVIDENCE.mkdir(exist_ok=True)
@@ -91,6 +94,11 @@ def build(project, name):
 exe = build(SOURCE / 'linux-native/cloudstream-linux.pro', 'app')
 shutil.copy2(exe, runtime / 'cloudstream.exe')
 assert sha(runtime / 'cloudstream.exe') != old_exe
+run(['cmd', '/c', str(SOURCE / 'gradlew.bat'), ':provider-host:test', ':provider-host:installDist', '--no-daemon'],
+    SOURCE, EVIDENCE / 'provider-host-gradle.log', timeout=1800)
+changed_provider_files = refresh_provider_host(
+    runtime, SOURCE / 'provider-host/build/install/cloudstream-provider-host',
+    SOURCE / 'packaging/windows-licenses/jvm-provenance.json')
 # The only adaptation to tagged tests is a native fixture executable in place
 # of the POSIX shell fixture. Assertions and production source stay unchanged.
 fixture = ROOT / 'fixture.cpp'
@@ -112,7 +120,10 @@ env.update(QT_OPENGL='software', QT_QPA_PLATFORM='windows',
            CLOUDSTREAM_TEST_EVIDENCE=str(EVIDENCE), CLOUDSTREAM_UPDATER_LIVE='1',
            PATH=str(runtime) + os.pathsep + os.environ['PATH'])
 results = {}
-for name in ['updater', 'settings-pane', 'single-window-surfaces', 'home-process-result', 'details-presentation', 'player-command', 'mpv-player-widget']:
+for name in ['updater', 'settings-pane', 'single-window-surfaces', 'home-process-result',
+             'home-render-yield', 'library-collections', 'search-pagination-model',
+             'search-pagination-gui', 'episode-catalog', 'details-presentation',
+             'player-command', 'mpv-player-widget']:
     binary = build(SOURCE / ('linux-native/tests/' + name + '.pro'), name)
     deployed_test = runtime / binary.name
     shutil.copy2(binary, deployed_test)
@@ -134,16 +145,19 @@ assert 'Usage: cloudstream-provider-host list' in helper.stdout
 run([runtime / 'ffmpeg.exe', '-version'], runtime, 'ffmpeg-version.txt', timeout=30, env=clean_env)
 after = {p.relative_to(runtime).as_posix(): sha(p) for p in runtime.rglob('*') if p.is_file()}
 assert before.keys() == after.keys()
-assert [p for p in before if before[p] != after[p]] == ['cloudstream.exe']
+changed_runtime_files = sorted(p for p in before if before[p] != after[p])
+assert changed_runtime_files == sorted(['cloudstream.exe', *changed_provider_files]), changed_runtime_files
 (EVIDENCE / 'runtime-manifest.json').write_text(json.dumps(after, indent=2))
 (EVIDENCE / 'build-evidence.json').write_text(json.dumps({'source_commit': PIN, 'base_zip_sha256': BASE_HASH,
-    'old_exe_sha256': old_exe, 'exe_sha256': after['cloudstream.exe'], 'changed_runtime_files': ['cloudstream.exe'],
+    'old_exe_sha256': old_exe, 'exe_sha256': after['cloudstream.exe'],
+    'provider_host_sha256': after[changed_provider_files[0]], 'changed_runtime_files': changed_runtime_files,
     'tests': results, 'physical_gpu_tested': False, 'test_fixture': 'native C++ instead of /bin/sh; assertions unchanged'}, indent=2))
 shutil.copy2(ROOT / 'build-app/cloudstream-version.txt', runtime / 'cloudstream-version.txt')
 assert (runtime / 'cloudstream-version.txt').read_text().strip() == VERSION
 version_info = pefile.PE(str(runtime / 'cloudstream.exe'))
-assert version_info.VS_FIXEDFILEINFO[0].FileVersionMS == 1  # 0.1
-assert version_info.VS_FIXEDFILEINFO[0].FileVersionLS == 0  # 0.0
+expected_version_ms, expected_version_ls = pe_version_words(VERSION)
+assert version_info.VS_FIXEDFILEINFO[0].FileVersionMS == expected_version_ms
+assert version_info.VS_FIXEDFILEINFO[0].FileVersionLS == expected_version_ls
 portable = OUTPUT / f'CloudStream-PC-{VERSION}-Windows-x64.zip'
 run([sys.executable, SOURCE / 'packaging/build-windows-portable.py', runtime, portable], log='portable-package.txt')
 with zipfile.ZipFile(portable) as z:

@@ -24,6 +24,7 @@ SOURCES += main.cpp \
     extensions/ExtensionInstallBatch.cpp \
     extensions/ExtensionRegistry.cpp \
     history/WatchHistoryStore.cpp \
+    history/LibraryCollectionStore.cpp \
     input/GamepadNavigation.cpp \
     media/ArtworkLoader.cpp \
     media/ArtworkSizing.cpp \
@@ -57,6 +58,7 @@ HEADERS += app/Logger.h \
     extensions/ExtensionInstallBatch.h \
     extensions/ExtensionRegistry.h \
     history/WatchHistoryStore.h \
+    history/LibraryCollectionStore.h \
     input/GamepadNavigation.h \
     network/CloudStreamRequest.h \
     media/ArtworkLoader.h \

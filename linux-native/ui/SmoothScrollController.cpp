@@ -89,10 +89,11 @@ const SmoothScrollController::AxisMotion &SmoothScrollController::motionFor(QScr
     return bar == area_->horizontalScrollBar() ? horizontalMotion_ : verticalMotion_;
 }
 
-void SmoothScrollController::animate(QScrollBar *bar, int delta) {
+void SmoothScrollController::animate(QScrollBar *bar, int delta, bool immediate) {
     if (!bar || delta == 0 || bar->maximum() <= bar->minimum()) return;
     auto &motion = motionFor(bar);
-    if (!motion.active) {
+    const bool starting = !motion.active;
+    if (starting) {
         motion.position = bar->value();
         motion.target = bar->value();
         motion.velocity = 0.0;
@@ -104,6 +105,16 @@ void SmoothScrollController::animate(QScrollBar *bar, int delta) {
     if (std::abs(next - motion.target) < 0.01) return;
     motion.target = next;
     motion.active = true;
+    if (immediate && starting) {
+        // Show a small first step now, then let the spring animate the rest.
+        // A wheel notch at the top should not look ignored for one timer frame.
+        const auto step = std::copysign(std::min(24.0, std::abs(delta) * 0.16), delta);
+        motion.position = std::clamp(motion.position + step,
+                                     double(bar->minimum()), double(bar->maximum()));
+        applyingMotion_ = true;
+        bar->setValue(int(std::round(motion.position)));
+        applyingMotion_ = false;
+    }
     if (!motionTimer_->isActive()) {
         qreal refreshRate = 0.0;
         if (area_->window() && area_->window()->windowHandle() &&
@@ -257,7 +268,7 @@ bool SmoothScrollController::eventFilter(QObject *watched, QEvent *event) {
         const auto next = std::clamp(base + delta,
                                      double(bar->minimum()), double(bar->maximum()));
         if (next == base) return false;
-        animate(bar, delta);
+        animate(bar, delta, !horizontal);
     }
     wheel->accept();
     return true;

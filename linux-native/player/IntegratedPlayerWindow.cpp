@@ -21,6 +21,7 @@
 #include <QSlider>
 #include <QStackedLayout>
 #include <QStyle>
+#include <QStyleOptionSlider>
 #include <QTimer>
 #include <QVBoxLayout>
 #include <algorithm>
@@ -62,6 +63,61 @@ protected:
 private:
     int seconds;
     bool backwards;
+};
+
+class SeekSlider final : public QSlider {
+public:
+    explicit SeekSlider(QWidget *parent = nullptr) : QSlider(Qt::Horizontal, parent) {}
+protected:
+    void mousePressEvent(QMouseEvent *event) override {
+        if (event->button() != Qt::LeftButton) {
+            QSlider::mousePressEvent(event);
+            return;
+        }
+        QStyleOptionSlider option;
+        initStyleOption(&option);
+        const auto handle = style()->subControlRect(QStyle::CC_Slider, &option,
+                                                     QStyle::SC_SliderHandle, this);
+        if (handle.contains(event->position().toPoint())) {
+            QSlider::mousePressEvent(event);
+            return;
+        }
+        grooveDragging = true;
+        setSliderDown(true);
+        setSliderPosition(valueAt(event->position().toPoint()));
+        event->accept();
+    }
+    void mouseMoveEvent(QMouseEvent *event) override {
+        if (!grooveDragging) {
+            QSlider::mouseMoveEvent(event);
+            return;
+        }
+        setSliderPosition(valueAt(event->position().toPoint()));
+        event->accept();
+    }
+    void mouseReleaseEvent(QMouseEvent *event) override {
+        if (!grooveDragging || event->button() != Qt::LeftButton) {
+            QSlider::mouseReleaseEvent(event);
+            return;
+        }
+        setSliderPosition(valueAt(event->position().toPoint()));
+        grooveDragging = false;
+        setSliderDown(false);
+        event->accept();
+    }
+private:
+    int valueAt(const QPoint &point) const {
+        QStyleOptionSlider option;
+        initStyleOption(&option);
+        const auto groove = style()->subControlRect(QStyle::CC_Slider, &option,
+                                                     QStyle::SC_SliderGroove, this);
+        const auto handle = style()->subControlRect(QStyle::CC_Slider, &option,
+                                                     QStyle::SC_SliderHandle, this);
+        return QStyle::sliderValueFromPosition(minimum(), maximum(),
+            point.x() - groove.x() - handle.width() / 2,
+            groove.width() - handle.width(), option.upsideDown);
+    }
+    bool grooveDragging = false;
 };
 
 QString trackLabel(const MpvTrack &track, const QString &fallback) {
@@ -106,6 +162,9 @@ IntegratedPlayerWindow::IntegratedPlayerWindow(const SourceDiscovery &sourceDisc
         "QSlider::groove:horizontal{height:2px;background:rgba(181,181,181,102);}"
         "QSlider::sub-page:horizontal{background:#3d50fa;border-radius:3px;}"
         "QSlider::handle:horizontal{width:24px;margin:-11px 0;background:#3d50fa;border-radius:12px;}"
+        "QSlider#playerSeek::groove:horizontal{height:6px;background:rgba(18,19,27,225);border-radius:3px;}"
+        "QSlider#playerSeek::sub-page:horizontal{background:#7385ff;border-radius:3px;}"
+        "QSlider#playerSeek::handle:horizontal{width:20px;margin:-7px 0;background:#a2aeff;border-radius:10px;}"
     );
 
     auto *root = new QVBoxLayout(this);
@@ -206,6 +265,17 @@ IntegratedPlayerWindow::IntegratedPlayerWindow(const SourceDiscovery &sourceDisc
     loadingLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
     loadingLabel->hide();
     chromeLayout->addWidget(loadingLabel, 0, 0, Qt::AlignCenter);
+    activityTimer = new QTimer(this);
+    activityTimer->setSingleShot(true);
+    activityTimer->setInterval(160);
+    connect(activityTimer, &QTimer::timeout, this, [this] {
+        if (!sourceLoading && (activitySeeking || activityBuffering)) {
+            loadingLabel->setText(activityBuffering
+                ? "Buffering… " + QString::number(activityPercent) + "%"
+                : "Seeking…");
+            loadingLabel->show();
+        }
+    });
 
     controls = new QWidget;
     controls->setObjectName("playerControls");
@@ -221,9 +291,10 @@ IntegratedPlayerWindow::IntegratedPlayerWindow(const SourceDiscovery &sourceDisc
     timeLabel->setMinimumWidth(54);
     timeLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     timeline->addWidget(timeLabel);
-    seek = new QSlider(Qt::Horizontal);
+    seek = new SeekSlider;
+    seek->setObjectName("playerSeek");
     seek->setRange(0, 1000);
-    seek->setMinimumHeight(30);
+    seek->setMinimumHeight(34);
     seek->setAccessibleName("Playback position");
     timeline->addWidget(seek, 1);
     durationLabel = new QLabel("0:00");
@@ -282,6 +353,11 @@ IntegratedPlayerWindow::IntegratedPlayerWindow(const SourceDiscovery &sourceDisc
     buttonRow->addWidget(speedControl);
     buttonRow->addWidget(sourcesControl);
     buttonRow->addWidget(tracksControl);
+    nextEpisode = new QPushButton("Next episode");
+    nextEpisode->setObjectName("playerNextEpisode");
+    nextEpisode->setProperty("playerAction", true);
+    nextEpisode->hide();
+    buttonRow->addWidget(nextEpisode);
     buttonRow->addStretch();
     mute = new QPushButton("Sound");
     mute->setObjectName("playerMute");
@@ -348,15 +424,17 @@ IntegratedPlayerWindow::IntegratedPlayerWindow(const SourceDiscovery &sourceDisc
         mute->setIcon(QIcon(value ? ":/icons/player-muted.svg" : ":/icons/volume-up.svg"));
     });
     connect(video, &MpvPlayerWidget::loadingChanged, this,
-            [this](bool loading) {
-        loadingLabel->setVisible(loading);
-        this->loading = loading;
-        if (loading) {
-            autoHideTimer->stop();
-            setControlsVisible(true);
-        } else {
-            scheduleAutoHide();
-        }
+            [this](bool sourceIsLoading) {
+        sourceLoading = sourceIsLoading;
+        if (!sourceIsLoading) loadingLabel->hide();
+        refreshPlaybackOverlay();
+    });
+    connect(video, &MpvPlayerWidget::playbackActivityChanged, this,
+            [this](bool seekingPlayback, bool buffering, int percentage) {
+        activitySeeking = seekingPlayback;
+        activityBuffering = buffering;
+        activityPercent = percentage;
+        refreshPlaybackOverlay();
     });
     connect(video, &MpvPlayerWidget::fileLoaded, this, [this] {
         if (sourceIndex >= 0 && sourceIndex < discovery.sources.size()) {
@@ -405,19 +483,34 @@ IntegratedPlayerWindow::IntegratedPlayerWindow(const SourceDiscovery &sourceDisc
     connect(video, &MpvPlayerWidget::endReached, this, [this] {
         sourceStatus->setText("Playback finished");
         video->setPaused(true);
+        if (!closing && preferences.autoplayNext && !nextEpisode->isHidden() &&
+            !autoAdvanceTriggered) {
+            autoAdvanceTriggered = true;
+            emit nextEpisodeRequested();
+        }
+    });
+    connect(nextEpisode, &QPushButton::clicked, this, [this] {
+        if (!closing) emit nextEpisodeRequested();
     });
     connect(playPause, &QPushButton::clicked, video, &MpvPlayerWidget::togglePaused);
     connect(rewind, &QPushButton::clicked, this, [this] { video->seekBy(-preferences.seekSeconds); });
     connect(forward, &QPushButton::clicked, this, [this] { video->seekBy(preferences.seekSeconds); });
-    connect(seek, &QSlider::sliderPressed, this, [this] { seeking = true; });
-    connect(seek, &QSlider::sliderMoved, this, [this](int value) {
-        const auto duration = durationSeconds > 0.0 ? durationSeconds : video->duration();
-        if (duration > 0.0) video->seekTo((value / 1000.0) * duration);
+    connect(seek, &QSlider::sliderPressed, this, [this] {
+        seeking = true;
+        autoHideTimer->stop();
+    });
+    connect(seek, &QSlider::sliderMoved, this, [this](int) {
+        // Scrubbing previews the target. Seeking every pixel during a drag
+        // queues costly exact decodes, especially on remote streams.
+        refreshTimeLabel();
     });
     connect(seek, &QSlider::sliderReleased, this, [this] {
-        seeking = false;
         const auto duration = durationSeconds > 0.0 ? durationSeconds : video->duration();
-        if (duration > 0.0) video->seekTo((seek->value() / 1000.0) * duration);
+        const auto target = duration > 0.0 ? (seek->value() / 1000.0) * duration : 0.0;
+        seeking = false;
+        if (duration > 0.0) video->seekTo(target);
+        refreshTimeLabel();
+        scheduleAutoHide();
     });
     connect(volumeSlider, &QSlider::valueChanged, video, &MpvPlayerWidget::setVolume);
     video->setVolume(preferences.initialVolume);
@@ -498,13 +591,30 @@ IntegratedPlayerWindow::IntegratedPlayerWindow(const SourceDiscovery &sourceDisc
     autoHideTimer = new QTimer(this);
     autoHideTimer->setSingleShot(true);
     connect(autoHideTimer, &QTimer::timeout, this, [this] {
-        if (!video->isPaused() && !loading) setControlsVisible(false);
+        // The pointer can be resting on the timeline, transport or an action
+        // when the last video-surface movement's timer expires. Never make a
+        // control disappear from underneath an interaction.
+        if (seeking || !hoveredControls.isEmpty() || controls->underMouse() ||
+            topBar->underMouse() || rewind->parentWidget()->underMouse()) {
+            scheduleAutoHide();
+        } else if (!video->isPaused() && !loading) {
+            setControlsVisible(false);
+        }
     });
     chrome->setProperty("chromeVisible", true);
     chrome->setMouseTracking(true);
     chrome->installEventFilter(this);
     video->setMouseTracking(true);
     video->installEventFilter(this);
+    // Track actual enter/leave transitions as well as underMouse(). Synthetic
+    // Qt input on Wayland cannot move the compositor cursor, so underMouse()
+    // alone can miss a hovered control while the playback timer is running.
+    for (QWidget *target : std::initializer_list<QWidget *>{topBar, center, controls, seek, volumeSlider,
+                            closeButton, rewind, playPause, forward, mute,
+                            fullscreen, lockControl, scaleControl, speedControl,
+                            sourcesControl, tracksControl, nextEpisode}) {
+        target->installEventFilter(this);
+    }
 
     if (!video->isAvailable()) {
         loadingLabel->setText(video->initializationError());
@@ -521,6 +631,13 @@ double IntegratedPlayerWindow::position() const { return positionSeconds; }
 double IntegratedPlayerWindow::duration() const { return durationSeconds; }
 int IntegratedPlayerWindow::currentSourceIndex() const { return sourceIndex; }
 
+void IntegratedPlayerWindow::setNextEpisode(const QString &title) {
+    const auto available = !title.trimmed().isEmpty();
+    nextEpisode->setAccessibleName(available ? "Play next episode: " + title : QString());
+    nextEpisode->setToolTip(available ? "Play " + title : QString());
+    nextEpisode->setVisible(available);
+}
+
 void IntegratedPlayerWindow::closeEvent(QCloseEvent *event) {
     restoreFullscreen();
     closing = true;
@@ -529,6 +646,15 @@ void IntegratedPlayerWindow::closeEvent(QCloseEvent *event) {
 }
 
 bool IntegratedPlayerWindow::eventFilter(QObject *watched, QEvent *event) {
+    if (watched != chrome && watched != video) {
+        if (event->type() == QEvent::Enter) {
+            hoveredControls.insert(watched);
+            autoHideTimer->stop();
+        } else if (event->type() == QEvent::Leave) {
+            hoveredControls.remove(watched);
+            if (hoveredControls.isEmpty()) scheduleAutoHide();
+        }
+    }
     if (watched == chrome || watched == video) {
         if (event->type() == QEvent::MouseButtonDblClick) {
             toggleFullscreen();
@@ -849,6 +975,7 @@ void IntegratedPlayerWindow::switchSource(int index, bool automaticFallback) {
     ++sourceGeneration;
     sourceIndex = index;
     if (!automaticFallback) failedSources.clear();
+    playbackFailure = false;
     const QSignalBlocker blocker(sourceSelector);
     sourceSelector->setCurrentIndex(index);
     loadingLabel->setText(automaticFallback ? "Trying the next source…" : "Loading stream…");
@@ -863,6 +990,7 @@ void IntegratedPlayerWindow::handlePlaybackError(const QString &message) {
     if (closing || sourceIndex < 0) return;
     failedSources.insert(sourceIndex);
     if (!preferences.automaticFallback) {
+        playbackFailure = true;
         loadingLabel->setText("Playback failed. Choose another source to retry.");
         loadingLabel->show();
         sourceStatus->setText("Playback failed: " + message);
@@ -879,6 +1007,7 @@ void IntegratedPlayerWindow::handlePlaybackError(const QString &message) {
         });
         return;
     }
+    playbackFailure = true;
     loadingLabel->setText("Every discovered source failed. Choose a source to retry.");
     loadingLabel->show();
     sourceStatus->setText("Playback failed: " + message);
@@ -897,7 +1026,14 @@ void IntegratedPlayerWindow::restoreFullscreen() {
     // QWidget retains its normal geometry while fullscreen. Applying a second
     // restoreGeometry here races the Wayland configure for the state change:
     // the next fullscreen request can retain the old, windowed size.
-    host->setWindowState(savedWindowState);
+    if (savedWindowState.testFlag(Qt::WindowMaximized)) {
+        // Request a fresh maximized configure after leaving fullscreen; merely
+        // changing Qt's state bit can leave Wayland at the old normal size.
+        host->showNormal();
+        host->showMaximized();
+    } else {
+        host->setWindowState(savedWindowState);
+    }
 
     fullscreen->setText("Full screen");
     fullscreen->setIcon(QIcon(":/player/fullscreen.svg"));
@@ -922,8 +1058,38 @@ void IntegratedPlayerWindow::toggleFullscreen() {
 }
 
 void IntegratedPlayerWindow::refreshTimeLabel() {
-    timeLabel->setText(formatTime(positionSeconds));
+    const auto preview = seeking && durationSeconds > 0.0
+        ? (seek->sliderPosition() / 1000.0) * durationSeconds : positionSeconds;
+    timeLabel->setText(formatTime(preview));
     durationLabel->setText(formatTime(durationSeconds));
+}
+
+void IntegratedPlayerWindow::refreshPlaybackOverlay() {
+    loading = sourceLoading || activitySeeking || activityBuffering || playbackFailure;
+    if (sourceLoading || playbackFailure) {
+        activityTimer->stop();
+        loadingLabel->show();
+        if (autoHideTimer) autoHideTimer->stop();
+        setControlsVisible(true);
+        return;
+    }
+    if (activitySeeking || activityBuffering) {
+        if (autoHideTimer) autoHideTimer->stop();
+        setControlsVisible(true);
+        if (loadingLabel->isVisible()) {
+            loadingLabel->setText(activityBuffering
+                ? "Buffering… " + QString::number(activityPercent) + "%"
+                : "Seeking…");
+        } else if (!activityTimer->isActive()) {
+            // A local seek often resolves within one frame. Avoid flashing a
+            // loading overlay for those while still explaining network stalls.
+            activityTimer->start();
+        }
+        return;
+    }
+    activityTimer->stop();
+    loadingLabel->hide();
+    scheduleAutoHide();
 }
 
 void IntegratedPlayerWindow::setControlsVisible(bool visible) {
@@ -966,7 +1132,7 @@ void IntegratedPlayerWindow::setControlsVisible(bool visible) {
 }
 
 void IntegratedPlayerWindow::scheduleAutoHide() {
-    if (!autoHideTimer || activePanel || preferences.autoHideDelayMs <= 0 || video->isPaused() || loading) return;
+    if (!autoHideTimer || activePanel || preferences.autoHideDelayMs <= 0 || video->isPaused() || loading || seeking) return;
     autoHideTimer->start(std::max(50, preferences.autoHideDelayMs));
 }
 

@@ -18,21 +18,21 @@ An independent desktop adaptation of [recloudstream/cloudstream](https://github.
 
 | Platform | Status |
 | --- | --- |
-| Linux x86-64 | Preview 6 player/fullscreen changes tested on Nobara/KDE Wayland and XCB; release packages use an Ubuntu 24.04 / Qt 6.4.2 baseline |
-| Windows x86-64 | Preview 6 is built with MSVC 2022 / Qt 6.8.3 on hosted Windows Server 2022; publication is gated on native player/fullscreen suites and EXE/ZIP lifecycle checks reported in the release notes |
+| Linux x86-64 | Version 1.0.0 is verified on Nobara/KDE Wayland and built against Ubuntu 24.04 / Qt 6.4.2 for the release packages. The DEB installs and launches in a clean Ubuntu userspace container; clean graphical-desktop and live-provider playback tests are separate limits. |
+| Windows x86-64 | Version 1.0.0 targets MSVC 2022 / Qt 6.8.3 on hosted Windows Server 2022; native media/GUI tests and package lifecycle results are reported in the release notes. |
 
 Earlier Windows 10 VM playback was tested with software rendering. Preview 6 uses a native hosted Windows build for the shipping artifacts, then stages that exact published package in the user's disposable Windows 10 VirtualBox guest for manual fullscreen testing. Neither environment establishes physical Windows GPU acceleration or controller support. Other distributions, Windows versions, and architectures are not yet validated.
 
 ## Downloads and installation
 
-**[Download Preview 6 for Linux and Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.6)**. All five runnable formats are provided together: Windows Setup EXE/portable ZIP and Linux AppImage/DEB/RPM, with application and dependency source/support archives and `SHA256SUMS`. [Previous Preview 5 downloads](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.5) remain unchanged. These are experimental desktop builds, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
+**[Download CloudStream PC 1.0.0 for Linux and Windows](https://github.com/dcenhance/cloudstream-pc/releases/tag/v1.0.0)**. Runnable formats are Windows Setup EXE/portable ZIP and Linux AppImage/DEB/RPM, with application and dependency source/support archives and `SHA256SUMS`. [Previous Preview 6 downloads](https://github.com/dcenhance/cloudstream-pc/releases/tag/v0.1.0-preview.6) remain unchanged. This is an independent desktop adaptation, not an official CloudStream release. Choose a runnable package below, not GitHub's automatic source-code ZIP.
 
 | Download | Installation and requirements |
 | --- | --- |
 | **Windows x64 Setup EXE** | Run the installer. Installs for the current user, adds shortcuts and an uninstaller; application updates do not replace your profile. |
 | **Windows x64 ZIP** | Extract the **entire ZIP** to a writable folder, then run `cloudstream.exe`. Do not run it inside the ZIP or copy just the EXE. Qt, Java, media libraries and Visual C++ runtime DLLs are included. |
-| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_0.1.0.preview.6_amd64.deb` so dependencies are resolved. |
-| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-0.1.0-0.preview.6.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
+| **Linux amd64 DEB** | Ubuntu 24.04 baseline. Install the downloaded file with `sudo apt install ./cloudstream-pc_1.0.0_amd64.deb` so dependencies are resolved. |
+| **Linux x86_64 RPM** | Fedora/Nobara-family package; install with `sudo dnf install ./cloudstream-pc-1.0.0-1.x86_64.rpm`. Full installation on a clean RPM-based desktop is not yet validated. |
 | **Linux x86_64 system-runtime AppImage** | Make executable, then run. **Not self-contained:** requires system Qt, mpv, SDL2, Java and FFmpeg. See the [exact dependencies and FUSE-less launch option](packaging/linux/README.md). |
 
 Linux packages require **glibc 2.39 or newer and Qt 6.4.2 or newer**. They are not universal Linux binaries. Windows packages target Windows 10 x64 or later; hosted Windows Server 2022 and a disposable Windows 10 VirtualBox guest are software-rendered verification environments, not physical GPU/controller certification.
@@ -44,6 +44,12 @@ The release includes `SHA256SUMS`, application source archives, and separate thi
 First launch: add an extension repository you trust in **Extensions**, install providers, then select one on Home. No repositories or provider accounts are bundled. Uninstalling removes application files, not your saved profile.
 
 ## Features
+
+### Version 1.0.0: navigation, library, and player
+
+Home adds sections incrementally and reveals more titles in 24-card batches. Search loads further provider result pages without mixing stale results. Library supports named local collections. Episodic playback offers a Next episode control and optional autoplay-next (off by default), resolving the next source afresh.
+
+The player previews the destination time during a timeline drag and issues a single seek on release; clicking the timeline jumps directly to that position. A more visible timeline and delayed Seeking/Buffering feedback make stalls clearer without flashing for brief local seeks. This reduces redundant decoding while scrubbing; live-provider seek latency still depends on the stream and server and has not been benchmarked.
 
 ### Preview 6: full-area player and native fullscreen fixes
 
@@ -86,8 +92,10 @@ These are focused Home fixes, not a new certification of playback or hardware su
 
 - Rounded dark desktop UI with Home, Search, Library, Downloads, Settings, and Extensions.
 - Provider-scoped Home search, global search filters, and an in-app provider picker.
-- Poster-based Continue Watching and history management.
-- Embedded video playback, seeking, subtitles, audio tracks, and fullscreen controls.
+- Home rows render incrementally and can reveal additional provider titles in 24-item batches instead of silently stopping at the first 24.
+- Multi-page provider Search with a Load more action, deduplication, and stale-query cancellation.
+- Poster-based Continue Watching, watch-state history, and named local Library lists.
+- Embedded video playback with a single seek on timeline release (dragging previews the target time without repeatedly decoding intermediate positions), a brief-seek-suppressed Seeking/Buffering overlay, subtitles, audio tracks, fullscreen controls, and a Next episode action when available; optional autoplay-next is off by default.
 - Resumable direct downloads and FFmpeg-backed adaptive downloads.
 - Extension repository management and a separate JVM provider host.
 - Keyboard and SDL2 controller navigation.
@@ -109,6 +117,8 @@ From the repository root, with `JAVA_HOME` set to your Java 17 installation:
 ```
 
 The build script's fallback Java path is distribution-specific; set `JAVA_HOME` explicitly on other systems. Linux uses XDG storage rather than writing profiles into the source tree.
+
+To put a **local test build** in the KDE application menu and on the Desktop without replacing the existing AppImage, run `python3 packaging/linux/install-local-test.py` after building. The `CloudStream PC (Test Build)` shortcut points at a copied binary and matching provider host under `~/.local/share/cloudstream-pc-test`, not the mutable build directory. It uses the existing CloudStream profile, so close an older running instance before testing to avoid concurrent profile writes. This local Nobara build is not a portable release package.
 
 ### Windows
 

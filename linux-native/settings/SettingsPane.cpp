@@ -413,6 +413,8 @@ QWidget *SettingsPane::buildSection(const QString &section) {
         });
         addToggle(":/icons/source-selector.svg", "Automatic source fallback",
                   "Try the next resolved hoster when playback fails", "player/automaticFallback", true);
+        addToggle(":/icons/play.svg", "Autoplay next episode",
+                  "Start the next episode when playback finishes", "player/autoplayNext", false);
         addToggle(":/icons/info.svg", "Show player information",
                   "Display title, source and quality above the video", "player/showInformation", true);
         layout->addWidget(sectionLabel("Subtitles"));

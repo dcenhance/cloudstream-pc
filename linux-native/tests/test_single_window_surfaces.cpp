@@ -1,5 +1,8 @@
 #include <QtTest>
 #include <QWindow>
+#include <QTcpServer>
+#include <QTcpSocket>
+
 #include "../player/MpvPlayerWidget.h"
 #include "../updates/ReleaseUpdater.h"
 #define main cloudstreamApplicationMain
@@ -18,10 +21,12 @@ class SingleWindowSurfacesTest final : public QObject {
 
 private slots:
     void init() {
+        if (profile.isValid()) qputenv("CLOUDSTREAM_PROVIDER_HOST", (profile.path() + "/provider-host").toUtf8());
         QSettings settings("CloudStream", "CloudStream Linux");
         settings.setValue("interface/windowMode", "Single-window navigation");
     }
     void initTestCase() {
+
         QVERIFY(profile.isValid());
         qputenv("XDG_DATA_HOME", (profile.path() + "/data").toUtf8());
         qputenv("XDG_CONFIG_HOME", (profile.path() + "/config").toUtf8());
@@ -157,6 +162,84 @@ private slots:
         settings.setValue("interface/windowMode", "Single-window navigation");
     }
 
+    void libraryCollectionControlsPreserveTitles() {
+        CloudStream::WatchHistoryStore history(CloudStream::XdgPaths::dataDir() + "/watch-history.json");
+        CloudStream::WatchEntry entry;
+        entry.id = CloudStream::WatchHistoryStore::idFor("Fixture", "https://fixture.invalid/collection-title");
+        entry.name = "Collection fixture title";
+        entry.sourceUrl = "https://fixture.invalid/collection-title";
+        entry.provider = "Fixture";
+        QVERIFY(history.upsert(entry));
+
+        CloudStreamWindow window(false);
+        window.show();
+        window.selectPage(2);
+        auto *pages = window.findChild<QStackedWidget *>("appPages");
+        QVERIFY(pages);
+        auto *library = pages->widget(2);
+        auto *selector = library->findChild<QComboBox *>("libraryCollectionSelector");
+        auto *list = library->findChild<QListWidget *>("mediaList");
+        auto *add = library->findChild<QPushButton *>("libraryAddToCollection");
+        QVERIFY(selector && list && add);
+        QTRY_VERIFY(list->count() > 0);
+        auto buttonNamed = [&](const QString &name) -> QPushButton * {
+            for (auto *candidate : window.findChildren<QPushButton *>()) {
+                if (candidate->text() == name && candidate->isVisible()) return candidate;
+            }
+            return nullptr;
+        };
+        auto *create = buttonNamed("New list");
+        QVERIFY(create);
+        QTimer::singleShot(50, [] {
+            auto *dialog = qobject_cast<QInputDialog *>(QApplication::activeModalWidget());
+            if (dialog) { dialog->setTextValue("Weekend picks"); dialog->accept(); }
+        });
+        create->click();
+        QCOMPARE(selector->currentText(), QString("Weekend picks"));
+        const auto collectionId = selector->currentData().toString();
+        QVERIFY(!collectionId.isEmpty());
+        selector->setCurrentIndex(0);
+        QListWidgetItem *titleItem = nullptr;
+        for (int i = 0; i < list->count(); ++i) {
+            if (list->item(i)->data(Qt::UserRole + 2).toString() == entry.id) {
+                titleItem = list->item(i);
+                break;
+            }
+        }
+        QVERIFY(titleItem);
+        list->setCurrentItem(titleItem);
+        QVERIFY(add->isEnabled());
+        CloudStream::LibraryCollectionStore collections(CloudStream::XdgPaths::dataDir() + "/library-collections.json");
+        if (QGuiApplication::platformName() == "wayland") {
+            // QtTest's synthetic click has no Wayland seat serial for a grabbing
+            // QMenu. Cover the popup path under offscreen; exercise the live
+            // collection filtering and removal path here with seeded membership.
+            QVERIFY(collections.add(collectionId, entry.id));
+        } else {
+            QTimer::singleShot(50, [] {
+                for (auto *widget : QApplication::topLevelWidgets()) {
+                    auto *menu = qobject_cast<QMenu *>(widget);
+                    if (!menu || menu->actions().isEmpty()) continue;
+                    menu->actions().first()->trigger();
+                    menu->close();
+                    break;
+                }
+            });
+            add->click();
+        }
+        QVERIFY(collections.contains(collectionId, entry.id));
+        selector->setCurrentIndex(selector->findData(collectionId));
+        QCOMPARE(list->count(), 1);
+        QCOMPARE(list->item(0)->data(Qt::UserRole + 2).toString(), entry.id);
+        list->setCurrentRow(0);
+        auto *remove = buttonNamed("Remove from list");
+        QVERIFY(remove);
+        remove->click();
+        QCOMPARE(list->count(), 0);
+        QVERIFY(!collections.contains(collectionId, entry.id));
+        QCOMPARE(history.entries().first().id, entry.id);
+    }
+
     void playbackOccupiesWholeContentAndRestoresNavigation() {
         CloudStreamWindow window(false);
         window.show();
@@ -178,6 +261,100 @@ private slots:
         QTRY_VERIFY(player.isNull());
         QVERIFY(pages->isVisible());
         QCOMPARE(pages->currentIndex(), 1);
+    }
+
+    void detailsEpisodeNextResolvesInSameWindow() {
+        QTemporaryDir media;
+        QVERIFY(media.isValid());
+        const auto videoPath = media.filePath("episode.mp4");
+        QCOMPARE(QProcess::execute("ffmpeg", {"-hide_banner", "-loglevel", "error", "-y",
+            "-f", "lavfi", "-i", "testsrc2=size=160x90:rate=24", "-t", "12",
+            "-c:v", "libx264", "-preset", "ultrafast", "-movflags", "+faststart", videoPath}), 0);
+        QFile videoFile(videoPath);
+        QVERIFY(videoFile.open(QIODevice::ReadOnly));
+        const QByteArray videoBytes = videoFile.readAll();
+        QTcpServer server;
+        QVERIFY(server.listen(QHostAddress::LocalHost));
+        connect(&server, &QTcpServer::newConnection, &server, [&] {
+            while (server.hasPendingConnections()) {
+                auto *socket = server.nextPendingConnection();
+                connect(socket, &QTcpSocket::readyRead, socket, [socket, videoBytes] {
+                    const auto request = socket->readAll();
+                    if (!request.contains("\r\n\r\n")) return;
+                    const QByteArray response = "HTTP/1.1 200 OK\r\nContent-Type: video/mp4\r\nContent-Length: " +
+                        QByteArray::number(videoBytes.size()) + "\r\nConnection: close\r\n\r\n";
+                    socket->write(response);
+                    socket->write(videoBytes);
+                    socket->disconnectFromHost();
+                });
+                connect(socket, &QTcpSocket::disconnected, socket, &QObject::deleteLater);
+            }
+        });
+        QFile helper(media.filePath("provider-host"));
+        QVERIFY(helper.open(QIODevice::WriteOnly));
+        helper.write("#!/bin/sh\ncase \"$1\" in\n"
+                     "load) printf '%s\\n' '{\"name\":\"Series\",\"episodes\":[{\"season\":1,\"episode\":1,\"name\":\"One\",\"data\":\"ep1\"},{\"season\":1,\"episode\":2,\"name\":\"Two\",\"data\":\"ep2\"}]}' ;;\n"
+                     "sources) if [ \"$5\" = ep2 ] && [ \"$CLOUDSTREAM_EPISODE_SLOW\" = 1 ]; then sleep 2; fi; printf '{\"success\":true,\"links\":[{\"source\":\"Primary\",\"quality\":1080,\"type\":\"VIDEO\",\"url\":\"%s\"},{\"source\":\"Alternate\",\"quality\":720,\"type\":\"VIDEO\",\"url\":\"%s?alternate\"}]}' \"$CLOUDSTREAM_EPISODE_VIDEO\" \"$CLOUDSTREAM_EPISODE_VIDEO\" ;;\n"
+                     "esac\n");
+        helper.close();
+        QVERIFY(helper.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner));
+        qputenv("CLOUDSTREAM_PROVIDER_HOST", helper.fileName().toUtf8());
+        qputenv("CLOUDSTREAM_EPISODE_VIDEO", ("http://127.0.0.1:" + QString::number(server.serverPort()) + "/episode.mp4").toUtf8());
+        CloudStreamWindow window(false);
+        window.show();
+        window.openDetailsForPreview("fixture.jar", "Fixture", "https://fixture.invalid/series");
+        auto *details = window.findChild<QDialog *>("detailsDialog");
+        QVERIFY(details);
+        QTRY_VERIFY_WITH_TIMEOUT(details->findChild<QListWidget *>("episodeList"), 5000);
+        auto *list = details->findChild<QListWidget *>("episodeList");
+        QCOMPARE(list->count(), 2);
+        QList<QPushButton *> playButtons;
+        for (auto *button : details->findChildren<QPushButton *>())
+            if (button->accessibleName().startsWith("Play S1 E1")) playButtons << button;
+        QVERIFY(!playButtons.isEmpty());
+        playButtons.first()->click();
+        QTRY_VERIFY_WITH_TIMEOUT(window.findChild<CloudStream::IntegratedPlayerWindow *>(), 7000);
+        QPointer<CloudStream::IntegratedPlayerWindow> first = window.findChild<CloudStream::IntegratedPlayerWindow *>();
+        auto *next = first->findChild<QPushButton *>("playerNextEpisode");
+        QVERIFY(next && next->isVisible());
+        QVERIFY(!first->isWindow());
+        auto *firstSurface = first->findChild<CloudStream::MpvPlayerWidget *>();
+        QTRY_VERIFY_WITH_TIMEOUT(firstSurface->position() > 0.1, 5000);
+        auto *firstSources = first->findChild<QComboBox *>("sourceSelector");
+        QVERIFY(firstSources);
+        QVERIFY(firstSources->itemText(1).contains("Alternate"));
+        firstSources->setCurrentIndex(1);
+        QTRY_COMPARE_WITH_TIMEOUT(first->currentSourceIndex(), 1, 3000);
+        QTRY_VERIFY_WITH_TIMEOUT(firstSurface->position() > 0.1, 5000);
+        firstSurface->seekTo(5);
+        QTRY_VERIFY_WITH_TIMEOUT(firstSurface->position() > 4, 3000);
+        QTest::qWait(1200);
+        next->click();
+        QTRY_VERIFY_WITH_TIMEOUT(first.isNull(), 7000);
+        auto *second = window.findChild<CloudStream::IntegratedPlayerWindow *>();
+        QVERIFY(second);
+        QVERIFY(!second->isWindow());
+        QVERIFY(second->windowTitle().contains("Two"));
+        QTRY_COMPARE_WITH_TIMEOUT(second->currentSourceIndex(), 0, 3000);
+        QVERIFY(second->findChild<QComboBox *>("sourceSelector")->itemText(0).contains("Alternate"));
+        QVERIFY(second->findChild<QPushButton *>("playerNextEpisode")->isHidden());
+        auto *secondSurface = second->findChild<CloudStream::MpvPlayerWidget *>();
+        QVERIFY(secondSurface);
+        QTRY_VERIFY_WITH_TIMEOUT(secondSurface->position() > 0.1, 5000);
+        QVERIFY2(secondSurface->position() < 3.0, "Next episode inherited the prior episode's resume position");
+        // A slow provider result must not reopen playback after Back.
+        qputenv("CLOUDSTREAM_EPISODE_SLOW", "1");
+        playButtons.first()->click();
+        QTRY_VERIFY_WITH_TIMEOUT(window.findChild<CloudStream::IntegratedPlayerWindow *>() &&
+                                 window.findChild<CloudStream::IntegratedPlayerWindow *>() != second, 7000);
+        QPointer<CloudStream::IntegratedPlayerWindow> replay = window.findChild<CloudStream::IntegratedPlayerWindow *>();
+        QVERIFY(replay);
+        replay->findChild<QPushButton *>("playerNextEpisode")->click();
+        replay->close();
+        QTRY_VERIFY_WITH_TIMEOUT(replay.isNull(), 3000);
+        QTest::qWait(2400);
+        QVERIFY(!window.findChild<CloudStream::IntegratedPlayerWindow *>());
+        qunsetenv("CLOUDSTREAM_EPISODE_SLOW");
     }
 
     void updaterSettingsRenderAndLiveCheck() {

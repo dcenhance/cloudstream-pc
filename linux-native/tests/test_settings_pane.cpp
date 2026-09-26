@@ -23,6 +23,20 @@ private slots:
         QVERIFY(automatic); QVERIFY(!automatic->isChecked()); automatic->click();
         QVERIFY(settings.value("updates/automaticCheck",false).toBool());
     }
+    void autoplayNextIsOptInAndPersists() {
+        QTemporaryDir temporary;
+        QSettings settings(temporary.filePath("settings.ini"), QSettings::IniFormat);
+        CloudStream::SettingsPane pane(&settings);
+        pane.showSection("Player");
+        QAbstractButton *autoplay = nullptr;
+        for (auto *candidate : pane.findChildren<QAbstractButton *>()) {
+            if (candidate->accessibleName() == "Autoplay next episode") autoplay = candidate;
+        }
+        QVERIFY(autoplay);
+        QVERIFY(!autoplay->isChecked());
+        autoplay->click();
+        QVERIFY(settings.value("player/autoplayNext", false).toBool());
+    }
     void exposesSevenAndroidStyleCategories() {
         QTemporaryDir temporary;
         QSettings settings(temporary.filePath("settings.ini"), QSettings::IniFormat);

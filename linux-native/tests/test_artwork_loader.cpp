@@ -85,6 +85,27 @@ private slots:
         QCOMPARE(fixture.requestCount, 1);
     }
 
+    void largeBacklogDoesNotRescanOnEveryLoad() {
+        QTemporaryDir cache;
+        QVERIFY(cache.isValid());
+        ArtworkHttpFixture fixture;
+        QVERIFY(fixture.listen());
+        QScopedPointer<CloudStream::ArtworkLoader> loader(localLoader(cache.path()));
+        QObject context;
+        QElapsedTimer clock;
+        clock.start();
+        // No event processing during submission: eight requests fill the active slots,
+        // while the remaining distinct URLs stay queued behind those replies.
+        for (int index = 0; index < 12000; ++index) {
+            auto url = fixture.url();
+            url.setPath(QStringLiteral("/poster-%1.jpg").arg(index));
+            loader->load(url, QSize(150, 225), &context, [](const QImage &) {});
+        }
+        const auto elapsed = clock.elapsed();
+        qInfo() << "12000 queued artwork submissions (ms):" << elapsed;
+        QVERIFY2(elapsed < 1500, "Queued artwork submissions blocked the GUI thread");
+    }
+
     void dropsDeadConsumersAndReleasesTheirPipelineSlot() {
         QTemporaryDir cache;
         QVERIFY(cache.isValid());

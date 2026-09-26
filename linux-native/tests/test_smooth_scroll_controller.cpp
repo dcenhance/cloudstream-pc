@@ -42,6 +42,22 @@ private slots:
         QTRY_VERIFY_WITH_TIMEOUT(area.verticalScrollBar()->value() >= 250, 600);
     }
 
+    void verticalWheelRespondsOnFirstFrameAtTop() {
+        QScrollArea area;
+        auto *content = new QWidget;
+        content->setFixedSize(500, 2400);
+        area.setWidget(content);
+        area.resize(500, 400);
+        area.show();
+        CloudStream::SmoothScrollController::attach(&area);
+        QApplication::processEvents();
+        QCOMPARE(area.verticalScrollBar()->value(), 0);
+        wheel(area.viewport(), {}, QPoint(0, -120));
+        QVERIFY2(area.verticalScrollBar()->value() > 0,
+                 "First wheel notch at the top waited for the spring timer to paint");
+        QTRY_COMPARE_WITH_TIMEOUT(area.verticalScrollBar()->value(), 150, 1200);
+    }
+
     void verticalMouseWheelOnShelfScrollsContainingPageNotShelf() {
         QScrollArea page;
         auto *content = new QWidget;
@@ -62,7 +78,8 @@ private slots:
         QApplication::processEvents();
 
         wheel(shelf->viewport(), {}, QPoint(0, -120));
-        QTRY_VERIFY_WITH_TIMEOUT(page.verticalScrollBar()->value() > 0, 500);
+        QVERIFY2(page.verticalScrollBar()->value() > 0,
+                 "The first downward notch over a Home shelf must move the page immediately");
         QCOMPARE(shelf->horizontalScrollBar()->value(), 0);
     }
 

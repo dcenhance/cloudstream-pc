@@ -27,6 +27,7 @@ public:
                                       const QString &query);
     static QList<EpisodeEntry> page(const QList<EpisodeEntry> &episodes,
                                     int offset, int limit);
+    static int nextPlayableIndex(const QList<EpisodeEntry> &episodes, int currentIndex);
 };
 
 } // namespace CloudStream

@@ -50,6 +50,19 @@ private slots:
         QVERIFY(CloudStream::EpisodeCatalog::page(episodes, 200, 50).isEmpty());
         QVERIFY(CloudStream::EpisodeCatalog::page(episodes, 0, 0).isEmpty());
     }
+    void nextPlayableEpisodeCrossesSeasonsButSkipsMissingData() {
+        const auto episodes = CloudStream::EpisodeCatalog::fromJson(QJsonArray{
+            QJsonObject{{"data", "s2e1"}, {"season", 2}, {"episode", 1}},
+            QJsonObject{{"data", "s1e1"}, {"season", 1}, {"episode", 1}},
+            QJsonObject{{"season", 1}, {"episode", 2}},
+            QJsonObject{{"data", "s1e3"}, {"season", 1}, {"episode", 3}},
+        });
+        QCOMPARE(CloudStream::EpisodeCatalog::nextPlayableIndex(episodes, 0), 2);
+        QCOMPARE(CloudStream::EpisodeCatalog::nextPlayableIndex(episodes, 2), 3);
+        QCOMPARE(CloudStream::EpisodeCatalog::nextPlayableIndex(episodes, 3), -1);
+        QCOMPARE(CloudStream::EpisodeCatalog::nextPlayableIndex(episodes, -1), -1);
+        QCOMPARE(CloudStream::EpisodeCatalog::nextPlayableIndex(episodes, 100), -1);
+    }
 };
 
 QTEST_APPLESS_MAIN(EpisodeCatalogTest)

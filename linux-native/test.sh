@@ -17,6 +17,7 @@ run_test repository-url "$ROOT/tests/repository-url.pro" test_repository_url_res
 run_test repository-manifest "$ROOT/tests/repository-manifest.pro" test_repository_manifest_parser
 run_test player-command "$ROOT/tests/player-command.pro" test_player_command
 run_test watch-history "$ROOT/tests/watch-history.pro" test_watch_history_store
+run_test library-collections "$ROOT/tests/library-collections.pro" test_library_collection_store
 run_test mpv-ipc-protocol "$ROOT/tests/mpv-ipc-protocol.pro" test_mpv_ipc_protocol
 run_test process-completion "$ROOT/tests/process-completion.pro" test_process_completion
 run_test extension-registry "$ROOT/tests/extension-registry.pro" test_extension_registry
@@ -29,9 +30,12 @@ run_test provider-validation "$ROOT/tests/provider-validation.pro" test_provider
 run_test home-process-result "$ROOT/tests/home-process-result.pro" test_home_process_result
 run_test home-content-limiter "$ROOT/tests/home-content-limiter.pro" test_home_content_limiter
 run_test home-hero-selection "$ROOT/tests/home-hero-selection.pro" test_home_hero_selection
+run_test home-render-yield "$ROOT/tests/home-render-yield.pro" test_home_render_yield
 run_test provider-configuration "$ROOT/tests/provider-configuration.pro" test_provider_configuration
 run_test provider-preference-filter "$ROOT/tests/provider-preference-filter.pro" test_provider_preference_filter
 run_test search-history-model "$ROOT/tests/search-history-model.pro" test_search_history_model
+run_test search-pagination-model "$ROOT/tests/search-pagination-model.pro" test_search_pagination_model
+run_test search-pagination-gui "$ROOT/tests/search-pagination-gui.pro" test_search_pagination_gui
 run_test updater "$ROOT/tests/updater.pro" test_updater
 run_test settings-pane "$ROOT/tests/settings-pane.pro" test_settings_pane
 run_test network-request-policy "$ROOT/tests/network-request-policy.pro" test_network_request_policy

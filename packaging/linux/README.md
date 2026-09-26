@@ -1,6 +1,6 @@
-# Linux preview packages
+# Linux packages
 
-Version: 0.1.0-preview.6, x86-64 only. Native GUI compiled inside Ubuntu 24.04
+Version: 1.0.0, x86-64 only. Native GUI compiled inside Ubuntu 24.04
 with its Qt 6.4.2 toolchain, not the host's Nobara Qt 6.11 toolchain.
 The shared source uses Qt 6.4's `setTransferTimeout(20000)` milliseconds API,
 equivalent to the newer chrono overload's 20 seconds. No private application
@@ -23,10 +23,10 @@ Ubuntu 24.04 runtime installation for the AppImage:
 
 ```sh
 sudo apt install libqt6widgets6 libqt6network6 libqt6openglwidgets6 libqt6concurrent6 libqt6svg6 libmpv2 libsdl2-2.0-0 qt6-qpa-plugins qt6-wayland qt6-image-formats-plugins openjdk-17-jre-headless ffmpeg ca-certificates
-chmod +x CloudStream-PC-0.1.0-preview.6-x86_64-system-runtime.AppImage
-./CloudStream-PC-0.1.0-preview.6-x86_64-system-runtime.AppImage
+chmod +x CloudStream-PC-1.0.0-x86_64-system-runtime.AppImage
+./CloudStream-PC-1.0.0-x86_64-system-runtime.AppImage
 # FUSE-less alternative supported by the upstream type-2 runtime:
-./CloudStream-PC-0.1.0-preview.6-x86_64-system-runtime.AppImage --appimage-extract-and-run
+./CloudStream-PC-1.0.0-x86_64-system-runtime.AppImage --appimage-extract-and-run
 ```
 
 The DEB/RPM install `cloudstream-pc`, desktop integration and provider-host
@@ -43,7 +43,7 @@ Preview 4 verification limitation: the Ubuntu 24.04 software-rendered container 
 
 Preview 5 verification: the initial Ubuntu software-rendered run had 242 passes and one audio-track-selection failure with no audio device. With a private PulseAudio null sink, the unchanged media suite passed all 11 cases. This is virtual audio/software rendering, not hardware certification. The final full run completed all 32 suites with 242 passes and one framebuffer-color failure (`colors.size() >= 8`) despite null audio. Updater (12), Settings (10), and single-window surfaces (8) passed. A fresh Ubuntu userspace DEB install, dependency resolution, SVG plugin, GUI startup and helper startup passed. The prior Preview 4 framebuffer intermittency is not claimed fixed.
 
-Preview 6 adds the full-app-area player and native fullscreen lifecycle regressions. Release publication remains gated on a fresh Ubuntu 24.04/Qt 6.4.2 build, package extraction and clean DEB userspace installation. Software-rendered container audio/framebuffer results are reported exactly in the release notes; they are not treated as physical audio, GPU or controller certification.
+Version 1.0.0 adds named local Library lists, paginated Search, additional Home titles, next-episode controls, and a seek timeline that previews drag targets before issuing one request. The release is gated on a fresh Ubuntu 24.04/Qt 6.4.2 build, package extraction, and clean DEB userspace installation. Software-rendered container audio/framebuffer results are reported exactly in the release notes; they do not establish live-provider seek performance or physical audio, GPU, or controller support.
 
 ## Build
 

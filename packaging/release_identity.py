@@ -13,6 +13,19 @@ def release_version():
     return version
 
 
+def rpm_filename(version):
+    base, _, prerelease = version.partition('-')
+    rpm_release = '0.' + prerelease if prerelease else '1'
+    return f'cloudstream-pc-{base}-{rpm_release}.x86_64.rpm'
+
+
+def pe_version_words(version):
+    major, minor, patch = map(int, version.partition('-')[0].split('.'))
+    if any(part > 65535 for part in (major, minor, patch)):
+        raise ValueError('PE version component exceeds 16 bits')
+    return (major << 16) | minor, patch << 16
+
+
 def identity(package, version=None):
     if package not in {'windows-setup', 'windows-zip', 'appimage', 'deb', 'rpm'}:
         raise ValueError('Unknown package identity')

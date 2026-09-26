@@ -50,6 +50,18 @@ QString PlaybackSource::hosterName() const {
     return hoster.isEmpty() ? QStringLiteral("Direct") : hoster;
 }
 
+int SourceCatalog::preferredContinuationIndex(const QList<PlaybackSource> &sources,
+                                               const PlaybackSource &previous) {
+    if (previous.source.trimmed().isEmpty()) return -1;
+    int sameHoster = -1;
+    for (int index = 0; index < sources.size(); ++index) {
+        if (sources[index].source != previous.source) continue;
+        if (sources[index].quality == previous.quality) return index;
+        if (sameHoster < 0) sameHoster = index;
+    }
+    return sameHoster;
+}
+
 QString PlaybackSource::displayLabel() const {
     QStringList facts{hosterName()};
     if (quality > 0) facts << QString::number(quality) + "p";

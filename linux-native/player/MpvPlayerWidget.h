@@ -63,6 +63,7 @@ signals:
     void volumeChanged(int volume);
     void mutedChanged(bool muted);
     void loadingChanged(bool loading);
+    void playbackActivityChanged(bool seeking, bool buffering, int percentage);
     void playbackError(const QString &message);
     void endReached();
     void fileLoaded();
@@ -80,6 +81,10 @@ private:
         VolumeProperty,
         MuteProperty,
         TrackListProperty,
+        EofProperty,
+        SeekingProperty,
+        PausedForCacheProperty,
+        CacheBufferingStateProperty,
     };
 
     static void *getProcAddress(void *context, const char *name);
@@ -103,6 +108,11 @@ private:
     double currentDuration = 0.0;
     double resumePosition = 0.0;
     bool paused = false;
+    bool eofNotified = false;
+    bool fileReady = false;
+    bool seekingPlayback = false;
+    bool pausedForCache = false;
+    int cacheBufferingPercent = 0;
     bool currentMuted = false;
     int currentVolume = 80;
     double currentPlaybackSpeed = 1.0;
