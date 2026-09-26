@@ -99,17 +99,18 @@ run(['cmd', '/c', str(SOURCE / 'gradlew.bat'), ':provider-host:test', ':provider
 changed_provider_files = refresh_provider_host(
     runtime, SOURCE / 'provider-host/build/install/cloudstream-provider-host',
     SOURCE / 'packaging/windows-licenses/jvm-provenance.json')
-# The only adaptation to tagged tests is a native fixture executable in place
-# of the POSIX shell fixture. Assertions and production source stay unchanged.
-fixture = ROOT / 'fixture.cpp'
-fixture.write_text('#include <cstdio>\nint main(){puts(R"json({"name":"Regression series","plot":"Details must cover Search.","episodes":[{"name":"First episode","season":1,"episode":1,"data":"fixture"}]})json");}\n')
-run(['cl', '/nologo', '/EHsc', '/MT', fixture, '/Fe:' + str(ROOT / 'fixture.exe')])
+# Windows CI uses a native helper for both POSIX-only shell fixtures; the
+# assertions and production application source stay unchanged.
+fixture = SOURCE / 'packaging/ci/provider-fixture.cpp'
+run(['cl', '/nologo', '/EHsc', '/std:c++17', '/MT', fixture, '/Fe:' + str(ROOT / 'fixture.exe')])
 test = SOURCE / 'linux-native/tests/test_single_window_surfaces.cpp'
 text = test.read_text(encoding='utf-8')
 start = text.index('        QFile helper(profile.path()')
 end = text.index('\n    }', start)
-original_fixture = text[start:end]
 text = text[:start] + '        const auto helper = qEnvironmentVariable("CLOUDSTREAM_TEST_PROVIDER_FIXTURE");\n        QVERIFY(QFileInfo::exists(helper));\n        qputenv("CLOUDSTREAM_PROVIDER_HOST", helper.toUtf8());' + text[end:]
+start = text.index('        QFile helper(media.filePath("provider-host"));')
+end = text.index('        qputenv("CLOUDSTREAM_EPISODE_VIDEO"', start)
+text = text[:start] + '        const auto helper = qEnvironmentVariable("CLOUDSTREAM_TEST_PROVIDER_FIXTURE");\n        QVERIFY(QFileInfo::exists(helper));\n        qputenv("CLOUDSTREAM_PROVIDER_HOST", helper.toUtf8());\n' + text[end:]
 test.write_text(text, encoding='utf-8')
 (EVIDENCE / 'test-fixture-adaptation.diff').write_text(run(['git', 'diff', '--', 'linux-native/tests/test_single_window_surfaces.cpp'], SOURCE).stdout)
 # Test DLLs must resolve from the packaged directory before developer Qt.
