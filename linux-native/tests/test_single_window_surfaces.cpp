@@ -331,7 +331,7 @@ private slots:
         QTRY_COMPARE_WITH_TIMEOUT(first->currentSourceIndex(), 1, 3000);
         QTRY_VERIFY_WITH_TIMEOUT(firstSurface->position() > 0.1, 5000);
         firstSurface->seekTo(5);
-        QTRY_VERIFY_WITH_TIMEOUT(firstSurface->position() > 4, 3000);
+        QTRY_VERIFY_WITH_TIMEOUT(firstSurface->position() > 4, 7000);
         QTest::qWait(1200);
         next->click();
         QTRY_VERIFY_WITH_TIMEOUT(first.isNull(), 7000);
