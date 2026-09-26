@@ -21,7 +21,11 @@ class SingleWindowSurfacesTest final : public QObject {
 
 private slots:
     void init() {
-        if (profile.isValid()) qputenv("CLOUDSTREAM_PROVIDER_HOST", (profile.path() + "/provider-host").toUtf8());
+        const auto nativeFixture = qEnvironmentVariable("CLOUDSTREAM_TEST_PROVIDER_FIXTURE");
+        if (!nativeFixture.isEmpty())
+            qputenv("CLOUDSTREAM_PROVIDER_HOST", nativeFixture.toUtf8());
+        else if (profile.isValid())
+            qputenv("CLOUDSTREAM_PROVIDER_HOST", (profile.path() + "/provider-host").toUtf8());
         QSettings settings("CloudStream", "CloudStream Linux");
         settings.setValue("interface/windowMode", "Single-window navigation");
     }
@@ -355,6 +359,7 @@ private slots:
         QTest::qWait(2400);
         QVERIFY(!window.findChild<CloudStream::IntegratedPlayerWindow *>());
         qunsetenv("CLOUDSTREAM_EPISODE_SLOW");
+        qunsetenv("CLOUDSTREAM_EPISODE_VIDEO");
     }
 
     void updaterSettingsRenderAndLiveCheck() {
