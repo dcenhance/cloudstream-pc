@@ -1,6 +1,7 @@
 #include <QtTest>
 #include <QTemporaryDir>
 #include <QWheelEvent>
+#include <QListWidget> // Parse Qt's private virtuals before the test-only access macro.
 #define private public
 #define main cloudstreamApplicationMain
 #include "../main.cpp"
