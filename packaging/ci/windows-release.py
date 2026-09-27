@@ -118,9 +118,14 @@ shutil.copy2(Path('C:/Qt/6.8.3/msvc2022_64/bin/Qt6Test.dll'), runtime / 'Qt6Test
 env = os.environ.copy()
 env.update(QT_OPENGL='software', QT_QPA_PLATFORM='windows',
            CLOUDSTREAM_TEST_PROVIDER_FIXTURE=str(ROOT / 'fixture.exe'),
-           CLOUDSTREAM_TEST_EVIDENCE=str(EVIDENCE), CLOUDSTREAM_UPDATER_LIVE='1',
+           CLOUDSTREAM_TEST_EVIDENCE=str(EVIDENCE),
            PATH=str(runtime) + os.pathsep + os.environ['PATH'])
+# A shared runner can exhaust GitHub's unauthenticated API quota. Keep the
+# updater's fixture-backed regression required; record the live API probe
+# separately without making the release depend on a third-party rate limit.
+env.pop('CLOUDSTREAM_UPDATER_LIVE', None)
 results = {}
+live_updater_exit = None
 for name in ['updater', 'settings-pane', 'single-window-surfaces', 'home-process-result',
              'home-render-yield', 'library-collections', 'search-pagination-model',
              'search-pagination-gui', 'episode-catalog', 'details-presentation',
@@ -131,6 +136,13 @@ for name in ['updater', 'settings-pane', 'single-window-surfaces', 'home-process
     result = run([deployed_test, '-o', str(EVIDENCE / (name + '.xml')) + ',xml', '-o', str(EVIDENCE / (name + '.txt')) + ',txt'],
                  runtime, name + '-console.txt', check=False, timeout=180, env=env)
     results[name] = result.returncode
+    if name == 'single-window-surfaces':
+        live_env = env.copy()
+        live_env['CLOUDSTREAM_UPDATER_LIVE'] = '1'
+        live = run([deployed_test, 'updaterSettingsRenderAndLiveCheck',
+                    '-o', str(EVIDENCE / 'updater-live-network.txt') + ',txt'],
+                   runtime, 'updater-live-network-console.txt', check=False, timeout=90, env=live_env)
+        live_updater_exit = live.returncode
     deployed_test.unlink()
     if name != 'mpv-player-widget' and result.returncode:
         raise RuntimeError('Required regression failed: ' + name)
@@ -152,7 +164,9 @@ assert changed_runtime_files == sorted(['cloudstream.exe', *changed_provider_fil
 (EVIDENCE / 'build-evidence.json').write_text(json.dumps({'source_commit': PIN, 'base_zip_sha256': BASE_HASH,
     'old_exe_sha256': old_exe, 'exe_sha256': after['cloudstream.exe'],
     'provider_host_sha256': after[changed_provider_files[0]], 'changed_runtime_files': changed_runtime_files,
-    'tests': results, 'physical_gpu_tested': False, 'test_fixture': 'native C++ instead of /bin/sh; assertions unchanged'}, indent=2))
+    'tests': results, 'live_updater_probe_exit': live_updater_exit,
+    'live_updater_probe_is_required': False, 'physical_gpu_tested': False,
+    'test_fixture': 'native C++ instead of /bin/sh; assertions unchanged'}, indent=2))
 shutil.copy2(ROOT / 'build-app/cloudstream-version.txt', runtime / 'cloudstream-version.txt')
 assert (runtime / 'cloudstream-version.txt').read_text().strip() == VERSION
 version_info = pefile.PE(str(runtime / 'cloudstream.exe'))
