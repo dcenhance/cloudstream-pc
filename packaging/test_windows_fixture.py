@@ -29,5 +29,22 @@ class WindowsProviderFixtureTests(unittest.TestCase):
             self.assertEqual(links[1]['url'], env['CLOUDSTREAM_EPISODE_VIDEO'] + '?alternate')
 
 
+    def test_native_fixture_returns_search_pages_for_windows_gui(self):
+        with tempfile.TemporaryDirectory() as directory:
+            binary = Path(directory) / 'fixture'
+            subprocess.run(['c++', '-std=c++17', str(FIXTURE), '-o', str(binary)], check=True)
+            listed = subprocess.run([binary, 'list'], capture_output=True, text=True, check=True)
+            self.assertEqual(json.loads(listed.stdout)[0]['name'], 'Fixture')
+            first = subprocess.run([binary, 'search', 'fixture.jar', 'Fixture', 'movie', 'all', '1', 'fast'],
+                                   capture_output=True, text=True, check=True)
+            second = subprocess.run([binary, 'search', 'fixture.jar', 'Fixture', 'movie', 'all', '2', 'fast'],
+                                    capture_output=True, text=True, check=True)
+            self.assertEqual([item['name'] for item in json.loads(first.stdout)['items']], ['First'])
+            self.assertTrue(json.loads(first.stdout)['hasNext'])
+            self.assertEqual([item['name'] for item in json.loads(second.stdout)['items']],
+                             ['First again', 'Second'])
+            self.assertFalse(json.loads(second.stdout)['hasNext'])
+
+
 if __name__ == '__main__':
     unittest.main()

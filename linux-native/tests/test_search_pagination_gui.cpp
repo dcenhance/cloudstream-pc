@@ -29,6 +29,11 @@ void SearchPaginationGuiTest::initTestCase() {
         QFile jar(profile.filePath("fixture.jar"));
         QVERIFY(jar.open(QIODevice::WriteOnly));
         jar.close();
+        const auto nativeFixture = qEnvironmentVariable("CLOUDSTREAM_TEST_SEARCH_FIXTURE");
+        if (!nativeFixture.isEmpty()) {
+            QVERIFY(QFileInfo::exists(nativeFixture));
+            qputenv("CLOUDSTREAM_PROVIDER_HOST", nativeFixture.toUtf8());
+        } else {
         QFile script(profile.filePath("provider-host"));
         QVERIFY(script.open(QIODevice::WriteOnly));
         script.write(R"SH(#!/bin/sh
@@ -49,6 +54,9 @@ esac
         script.close();
         QVERIFY(script.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner));
         qputenv("CLOUDSTREAM_PROVIDER_HOST", script.fileName().toUtf8());
+        }
+        if (!nativeFixture.isEmpty())
+            QCOMPARE(qEnvironmentVariable("CLOUDSTREAM_PROVIDER_HOST"), nativeFixture);
         CloudStream::ExtensionRegistry registry(CloudStream::XdgPaths::dataDir() + "/extension-registry.json");
         CloudStream::ExtensionRecord extension;
         extension.internalName = "fixture";

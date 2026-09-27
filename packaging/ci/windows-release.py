@@ -118,6 +118,7 @@ shutil.copy2(Path('C:/Qt/6.8.3/msvc2022_64/bin/Qt6Test.dll'), runtime / 'Qt6Test
 env = os.environ.copy()
 env.update(QT_OPENGL='software', QT_QPA_PLATFORM='windows',
            CLOUDSTREAM_TEST_PROVIDER_FIXTURE=str(ROOT / 'fixture.exe'),
+           CLOUDSTREAM_TEST_SEARCH_FIXTURE=str(ROOT / 'fixture.exe'),
            CLOUDSTREAM_TEST_EVIDENCE=str(EVIDENCE),
            PATH=str(runtime) + os.pathsep + os.environ['PATH'])
 # A shared runner can exhaust GitHub's unauthenticated API quota. Keep the

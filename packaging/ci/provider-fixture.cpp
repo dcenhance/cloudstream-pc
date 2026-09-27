@@ -7,6 +7,24 @@
 #include <thread>
 
 int main(int argc, char **argv) {
+    if (argc > 1 && std::strcmp(argv[1], "list") == 0) {
+        std::puts(R"json([{"name":"Fixture","language":"en","hasMainPage":false,"supportedTypes":["Movie","TvSeries"]}])json");
+        return 0;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "search") == 0) {
+        if (argc < 8) return 2;
+        if (std::strcmp(argv[7], "slow") == 0)
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        if (std::strcmp(argv[6], "1") == 0) {
+            std::puts(R"json({"items":[{"name":"First","url":"https://fixture.invalid/one","apiName":"Fixture","type":"Movie"}],"hasNext":true})json");
+            return 0;
+        }
+        if (std::strcmp(argv[6], "2") == 0) {
+            std::puts(R"json({"items":[{"name":"First again","url":"https://fixture.invalid/one","apiName":"Fixture","type":"Movie"},{"name":"Second","url":"https://fixture.invalid/two","apiName":"Fixture","type":"TvSeries"}],"hasNext":false})json");
+            return 0;
+        }
+        return 3;
+    }
     const char *video = std::getenv("CLOUDSTREAM_EPISODE_VIDEO");
     if (argc > 1 && std::strcmp(argv[1], "sources") == 0 && video) {
         const char *slow = std::getenv("CLOUDSTREAM_EPISODE_SLOW");
